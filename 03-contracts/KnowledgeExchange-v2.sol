@@ -31,7 +31,7 @@ contract KnowledgeExchangeContract is Ownable {
 
 
     
-    // 03 - Resources **********************************************************
+    // 03 - Data *****************************************************************
     // Structure to represent a knowledge resource
     // Data
     struct KnowledgeResource {
@@ -72,14 +72,14 @@ contract KnowledgeExchangeContract is Ownable {
 
 
 
-    // 04 - Compensation **********************************************************
+    // 04 - Compensation for Data **********************************************************
     uint256 constant MINIMUM_COMPENSATION = 10;
 
     // Events to log important contract actions
     event ResourceUploaded(uint256 indexed resourceID, address indexed creator, string title, string description);
     event ResourceAccessed(uint256 indexed resourceID, address indexed user);
 
-    // 05 - DKE
+    // 05 - DKE *********************************************************************
     mapping(uint256 => KnowledgeCluster) public knowledgeClusters;
     uint256 public nextClusterID = 1;
     uint256 public nextIdeaID = 1;
@@ -106,6 +106,7 @@ contract KnowledgeExchangeContract is Ownable {
     // Event to log when a growth idea is executed.
     event GrowthIdeaExecuted(address indexed initiator, string ideaDescription, uint256 fundsAllocated);
 
+    mapping(uint256 => Milestone[]) public ideaMileston
 
 
 
@@ -129,7 +130,7 @@ contract KnowledgeExchangeContract is Ownable {
         levelTitles[ReputationLevel.Prophet] = "Prophet";
     }
 
-    // 11 - 
+es;
 
     // 02 - Reputation ************************************************************************************************
     // Function to get the reputation rank of a user
@@ -181,7 +182,7 @@ contract KnowledgeExchangeContract is Ownable {
     }
 
 
-    // 03 - Resources ************************************************************************************************
+    // 03 - Data ************************************************************************************************
     // Function to upload a knowledge resource
     function uploadResource(
         string memory _title,
@@ -215,7 +216,7 @@ contract KnowledgeExchangeContract is Ownable {
 
         emit ResourceAccessed(_resourceID, msg.sender);
     }
-
+    // 04 - Compensation for Data *********************************************************************************
     // Calculate compensation for accessing a resource
     function calculateCompensation(
         uint256 _resourceID
@@ -307,7 +308,7 @@ contract KnowledgeExchangeContract is Ownable {
         // contributions such as reviews, ratings, collaborations, etc.
     }
 
-
+    // 11 - Models *********************************************************************************************************
     // Add compensation, payment, or incorporated into data compensation logic
     // Allow users to add their models to the marketplace.
     function addModel(uint256 _shelfLife, uint256 _price, string memory _description) external {
@@ -364,6 +365,9 @@ contract KnowledgeExchangeContract is Ownable {
     function markModelAsEthical(uint256 _modelId) external onlyOwner {
         models[_modelId].isEthical = true;
     }
+
+    // 12 - Compensation for Models ****************************************************************************************************
+    
 
 
     // 05 - Decentralized Knowledge Evolution (DKE) Functions ***************************************************************************
@@ -467,6 +471,30 @@ contract KnowledgeExchangeContract is Ownable {
     }
 
 
+    // Update Functions **************************************************************************************
+    struct Milestone {
+        string description;
+        uint256 fundsRequired;
+        bool achieved;
+    }
+    
+    function addMilestone(uint256 _ideaID, string memory _description, uint256 _fundsRequired) external {
+        Milestone memory newMilestone = Milestone({
+            description: _description,
+            fundsRequired: _fundsRequired,
+            achieved: false
+        });
+        
+        ideaMilestones[_ideaID].push(newMilestone);
+    }
+    
+    function releaseFundsForMilestone(uint256 _ideaID, uint256 _milestoneIndex) external {
+        require(!ideaMilestones[_ideaID][_milestoneIndex].achieved, "Milestone already achieved.");
+        ideaMilestones[_ideaID][_milestoneIndex].achieved = true;
+        
+        // Release funds to the initiator based on the milestone.
+        funds[idea.initiator] += ideaMilestones[_ideaID][_milestoneIndex].fundsRequired;
+    }
 
 
     // Add resource-specific compensation pools logic here
@@ -503,7 +531,7 @@ contract KnowledgeExchangeContract is Ownable {
     // ...
 
     /*
-    // xx - DKE Optional - not completed
+    // xx - DKE Optional - Future AI interaction
     // Decentralized Knowledge Evolution (DKE) Functions
     
     // Function to initiate a new Knowledge Evolution Cluster (KEC)
