@@ -1,0 +1,17 @@
+<div>
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <label for="username">Username:</label>
+    <input type="text" id="username" formControlName="username" />
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password" />
+    <button type="submit" [disabled]="!loginForm.valid">Login</button>
+  </form>
+  <p *ngIf="loginSuccess" class="success-message">
+    {{ loginResponse.message }}
+    Login successful! You can also
+    <a routerLink="/registration">register</a> if you're not a user.
+  </p>
+  <p *ngIf="loginError" class="error-message">{{ loginError }}</p>
+  <p>Not registered yet? <a routerLink="/register">Register</a>.</p>
+</div>

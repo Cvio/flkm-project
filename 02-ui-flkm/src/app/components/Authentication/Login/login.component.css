@@ -1,0 +1,77 @@
+/* Style the container */
+div {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* Style the header */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Style labels */
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Style text inputs and password inputs */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Style submit button */
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Style the submit button on hover */
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Style success message */
+.success-message {
+  color: #28a745;
+  margin-top: 10px;
+}
+
+/* Style error message */
+.error-message {
+  color: #dc3545;
+  margin-top: 10px;
+}
+
+/* Style links */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Style links on hover */
+a:hover {
+  text-decoration: underline;
+}
+
+/* Additional customizations can be added based on your specific design preferences */

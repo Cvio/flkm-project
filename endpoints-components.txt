@@ -1,0 +1,123 @@
+API Endpoints:
+
+User Registration and Authentication:
+
+/api/register - POST: User registration
+/api/login - POST: User login
+/api/logout - POST: User logout
+/api/user - GET: Fetch user profile
+/api/token - POST: Generate JWT token
+User Dashboard:
+
+/api/dashboard - GET: Fetch user dashboard data
+Federated Learning Project:
+
+/api/projects - GET/POST: List and create FLN projects
+/api/projects/:id - GET/PUT/DELETE: Get, update, and delete specific project
+/api/projects/:id/dataset - POST: Upload dataset for a project
+/api/projects/:id/participants - GET/POST/PUT/DELETE: Manage project participants
+Federated Learning Training:
+
+/api/projects/:id/training - POST: Start training session
+/api/projects/:id/training/stop - POST: Stop training session
+/api/projects/:id/models - POST: Upload models for training
+/api/projects/:id/models/validate - POST: Validate uploaded models
+Federated Learning Evaluation:
+
+/api/projects/:id/evaluation - POST: Set evaluation criteria
+/api/projects/:id/results - GET: Get training results and metrics
+Data Privacy and Security:
+
+/api/security/encryption - POST: Implement data encryption
+/api/security/compliance - POST: Ensure GDPR compliance and data privacy
+/api/security/storage/ipfs - POST/GET: IPFS data storage
+/api/security/storage/filecoin - POST/GET: Filecoin data storage
+Federated Learning Knowledge Marketplace:
+
+/api/flkm/resources - GET/POST: List and upload knowledge resources
+/api/flkm/resources/:id - GET: Get a specific resource
+/api/flkm/resources/:id/access - POST: Manage access control for resources
+/api/flkm/smart-contracts - GET: List deployed smart contracts
+Federated Learning Collaboration:
+
+/api/flkm/collaborations - GET/POST: List and create collaborations
+/api/flkm/collaborations/:id - GET/PUT/DELETE: Get, update, and delete specific collaboration
+/api/flkm/collaborations/:id/contributions - POST: Contribute to a collaboration
+/api/flkm/collaborations/:id/contributions/rewards - GET/POST: Calculate and distribute rewards
+Data Monetization:
+
+/api/flkm/monetization/terms - POST/GET: Set terms for data monetization
+/api/flkm/monetization/tracking - POST/GET: Track data contributions and calculate earnings
+/api/flkm/monetization/transactions - GET: View transaction records
+/api/flkm/monetization/payout - POST: Request payout of earnings
+AI Model Repository:
+
+/api/flkm/models - GET/POST: List and upload AI models
+/api/flkm/models/:id - GET: Get a specific AI model
+/api/flkm/models/:id/access - POST: Manage access control for AI models
+/api/flkm/models/:id/version - POST/GET: Manage model versions and updates
+Angular Components:
+
+Angular components are organized in a directory structure:
+
+Authentication Module:
+
+Registration Form Component
+Login Form Component
+Dashboard Module:
+
+Dashboard Component
+Account Balance Component
+Project Module:
+
+Project List Component
+Project Details Component
+Project Participants Component
+Dataset Upload Component
+Training Module:
+
+Start Training Component
+Stop Training Component
+Upload Models Component
+Evaluation Module:
+
+Set Evaluation Criteria Component
+Training Results Component
+Security Module:
+
+Encryption Component
+Compliance Component
+IPFS Data Storage Component
+Filecoin Data Storage Component
+FLKM Module:
+
+Resource List Component
+Upload Resource Component
+Resource Details Component
+Access Control Component
+Smart Contracts Component
+Collaboration Module:
+
+Collaboration List Component
+Collaboration Details Component
+Contribution Component
+Rewards Component
+Monetization Module:
+
+Data Monetization Terms Component
+Data Tracking Component
+Transaction Records Component
+Payout Request Component
+Model Repository Module:
+
+Model List Component
+Model Details Component
+Model Access Control Component
+Model Version Control Component
+Shared Components:
+
+Navigation Bar Component
+Footer Component
+Modal Dialog Component
+User Profile Component
+This comprehensive list outlines the major API endpoints and Angular components required for your Federated Learning Knowledge Marketplace project. The directory structure helps in organizing these components within their respective modules for better maintainability and scalability.

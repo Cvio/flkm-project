@@ -1,0 +1,22 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './components/Authentication/Registration/registration.component';
+import { LoginComponent } from './components/Authentication/Login/login.component';
+
+@NgModule({
+  declarations: [AppComponent, RegistrationComponent, LoginComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}

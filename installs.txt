@@ -1,0 +1,16 @@
+
+mkdir flkm-project
+cd flkm-project
+
+npm init
+mkdir 01-api-flkm
+cd 01-api-flkm
+npm install express --save
+npm install mongoose --save
+npm install web3 ethers --save
+node server.js
+
+npm install -g @angular/cli
+ng new 02-ui-flkm
+cd 02-ui-flkm
+ng serve
