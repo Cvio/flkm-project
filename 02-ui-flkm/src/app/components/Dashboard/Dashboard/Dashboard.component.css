@@ -1,1 +1,77 @@
-/* Add your component-specific styles here */
+/* Style the dashboard container */
+.dashboard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* Style the header */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Style the user and project data sections */
+div[data-section] {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style the loading message */
+div[data-section="loading"] {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #777;
+}
+
+/* Style the button */
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Style the button on hover */
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Center the button */
+button[data-action="logout"] {
+  display: block;
+  margin: 20px auto;
+}
+
+/* Style the project button container */
+div[data-section="add-project"] {
+  text-align: center;
+}
+
+/* Style the app-fln-project-button component (adjust as needed) */
+app-fln-project-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Style the app-fln-project-button on hover (adjust as needed) */
+app-fln-project-button:hover {
+  background-color: #1e7e34;
+}

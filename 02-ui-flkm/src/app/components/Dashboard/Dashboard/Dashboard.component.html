@@ -1,1 +1,31 @@
-<p>Dashboard works!</p>
+<div class="dashboard">
+  <h2>Welcome to Your Dashboard</h2>
+  <div *ngIf="userData">
+    <p>Name: {{ userName || "J" }}</p>
+    <p>Email: {{ userEmail || "Doe" }}</p>
+    <p>Balance: {{ accountBalance || "Zero!" }} &#x210F;</p>
+  </div>
+  <div *ngIf="projectData">
+    <p>Project title: {{ projectName || "." }}</p>
+    <p>Project description: {{ description || "|" }}</p>
+    <p>Dataset location: {{ dataset || "~" }}</p>
+  </div>
+  <div *ngIf="!userData">
+    <p>Loading user data...</p>
+  </div>
+  <div *ngIf="!projectData">
+    <p>Are you ready to add your first project?</p>
+    <p>Click the button below to get started!</p>
+    <div>
+      <div class="dashboard">
+        <div>
+          <br />
+          <app-fln-project-button></app-fln-project-button>
+        </div>
+        <!-- ... other content ... -->
+      </div>
+      <br />
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>

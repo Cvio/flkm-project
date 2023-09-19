@@ -1,6 +1,6 @@
 /* Style the container */
-div {
-  max-width: 400px;
+.container {
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -16,8 +16,8 @@ h2 {
   color: #333;
 }
 
-/* Style form elements */
-div > div {
+/* Style form groups */
+.form-group {
   margin-bottom: 20px;
 }
 
@@ -26,13 +26,30 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
-  color: #333;
 }
 
-/* Style text inputs and password input */
+/* Style text inputs and textareas */
 input[type="text"],
-input[type="email"],
-input[type="password"] {
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Style file input */
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+/* Style select dropdown */
+select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -56,27 +73,19 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-/* Style success message */
-.success-message {
-  color: #28a745;
-  margin-top: 10px;
+/* Style disabled submit button */
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-/* Style error message */
-.error-message {
-  color: #dc3545;
-  margin-top: 10px;
-}
-
-/* Style links */
-a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-/* Style links on hover */
-a:hover {
-  text-decoration: underline;
+/* Style date input */
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 /* Additional customizations can be added based on your specific design preferences */

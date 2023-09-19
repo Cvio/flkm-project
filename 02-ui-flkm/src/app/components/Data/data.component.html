@@ -1,0 +1,10 @@
+<div *ngIf="userData">
+  <h2>User Data</h2>
+  <p><strong>Username:</strong> {{ userData.username }}</p>
+  <p><strong>Email:</strong> {{ userData.email }}</p>
+  <p><strong>HBAR Balance:</strong> {{ userData.hbarBalance }}</p>
+</div>
+
+<div *ngIf="!userData">
+  <p>Loading user data...</p>
+</div>

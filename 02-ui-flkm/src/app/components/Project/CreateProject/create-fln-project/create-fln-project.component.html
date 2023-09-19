@@ -1,0 +1,130 @@
+<div class="container">
+  <h2>Create FLN Project</h2>
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <!-- Project Name -->
+    <div class="form-group">
+      <label for="projectName">Project Name:</label>
+      <input
+        type="text"
+        id="projectName"
+        formControlName="projectName"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        rows="4"
+      ></textarea>
+    </div>
+
+    <!-- Dataset Selection (you can customize this part based on your requirements) -->
+    <div class="form-group">
+      <label for="dataset">Select or Upload Dataset:</label>
+      <input type="file" id="dataset" formControlName="dataset" accept=".csv" />
+    </div>
+
+    <!-- Model Type -->
+    <div class="form-group">
+      <label for="modelType">Model Type:</label>
+      <select id="modelType" formControlName="modelType" class="form-control">
+        <option value="classification">Classification</option>
+        <option value="regression">Regression</option>
+        <!-- Add more model types as needed -->
+      </select>
+    </div>
+
+    <!-- Training Configuration (learning rate, batch size, etc.) -->
+    <div class="form-group">
+      <label for="learningRate">Learning Rate:</label>
+      <input
+        type="number"
+        id="learningRate"
+        formControlName="learningRate"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Privacy Settings (data anonymization, encryption, etc.) -->
+    <div class="form-group">
+      <label for="privacySettings">Privacy Settings:</label>
+      <input
+        type="text"
+        id="privacySettings"
+        formControlName="privacySettings"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Participant Selection (invite participants, manage contributors) -->
+    <div class="form-group">
+      <label for="participants">Participants:</label>
+      <!-- You can customize this part based on your participant selection logic -->
+    </div>
+
+    <!-- Project Timeline (start and end dates) -->
+    <div class="form-group">
+      <label for="startDate">Start Date:</label>
+      <input
+        type="date"
+        id="startDate"
+        formControlName="startDate"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date:</label>
+      <input
+        type="date"
+        id="endDate"
+        formControlName="endDate"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Access Control (role-based access, permissions) -->
+    <div class="form-group">
+      <label for="accessControl">Access Control:</label>
+      <!-- You can customize this part based on your access control settings -->
+    </div>
+
+    <!-- Data Preprocessing (data cleaning, feature engineering) -->
+    <div class="form-group">
+      <label for="dataPreprocessing">Data Preprocessing:</label>
+      <!-- You can customize this part based on your data preprocessing options -->
+    </div>
+
+    <!-- Evaluation Metrics (accuracy, F1 score, etc.) -->
+    <div class="form-group">
+      <label for="evaluationMetrics">Evaluation Metrics:</label>
+      <!-- You can customize this part based on your evaluation metric options -->
+    </div>
+
+    <!-- Acceptance Criteria -->
+    <div class="form-group">
+      <label for="acceptanceCriteria">Acceptance Criteria:</label>
+      <input
+        type="text"
+        id="acceptanceCriteria"
+        formControlName="acceptanceCriteria"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="!projectForm.valid"
+      class="btn btn-primary"
+    >
+      Create Project
+    </button>
+  </form>
+</div>

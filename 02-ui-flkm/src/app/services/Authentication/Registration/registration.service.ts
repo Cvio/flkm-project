@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RegistrationService {
-  private readonly BASE_URL = 'http://localhost:3000';
+  // update registrationUrl to match your API endpoint
+  private registrationUrl = 'http://localhost:3000/register';
 
   constructor(private http: HttpClient) {}
 
-  registerUser(userData: {
-    username: string;
-    email: string;
-    password: string;
-  }): Observable<any> {
-    return this.http.post(`${this.BASE_URL}/register`, userData);
+  registerUser(userData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.registrationUrl, userData, { headers });
   }
 }

@@ -7,6 +7,9 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/user.model"); // Import User model
 const Project = require("./models/project.model");
 const authenticate = require("./auth/authMiddleware");
+const Web3 = require("web3");
+const web3 = new Web3("HTTP://127.0.0.1:8545");
+web3.setProvider(provider);
 
 // Set up multer storage and upload configuration
 const multer = require("multer"); // import multer
@@ -150,9 +153,93 @@ app.post("/api/logout", async (req, res) => {
   // ...
 });
 
-app.get("/api/user", authenticate, async (req, res) => {
-  // Fetch user profile
-  // ...
+app.post("/api/account/create", async (req, res) => {
+  try {
+    const account = await web3.eth.accounts.create();
+    res.json(account);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+app.get("/api/account/balance/:address", async (req, res) => {
+  try {
+    const balanceWei = await web3.eth.getBalance(req.params.address);
+    const balance = web3.utils.fromWei(balanceWei, "ether");
+    res.json({ balance });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+app.post("/api/transfer", async (req, res) => {
+  try {
+    const { fromPrivateKey, toAddress, amount } = req.body;
+    const fromAccount = await web3.eth.accounts.privateKeyToAccount(
+      fromPrivateKey
+    );
+
+    const tx = {
+      from: fromAccount.address,
+      to: toAddress,
+      value: web3.utils.toWei(amount.toString(), "ether"),
+      gas: 21000,
+      nonce: await web3.eth.getTransactionCount(fromAccount.address, "latest"),
+    };
+
+    const signedTx = await fromAccount.signTransaction(tx);
+    const receipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+
+    res.json({ transactionHash: receipt.transactionHash });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// Test Polygon network connection
+app.get("/api/testnet/check", async (req, res) => {
+  try {
+    const networkId = await web3.eth.net.getId();
+    res.json({ networkId });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`FLKM backend listening at http://localhost:${port}`);
+});
+
+app.get("/user", async (req, res) => {
+  try {
+    res.status(201).json({ message: "User data here" });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ message: "Error getting user data" });
+  }
+});
+
+app.get("/user-data", authenticate, async (req, res) => {
+  try {
+    // access the authenticated user's data using req.user
+    const userId = req.user.userId;
+
+    // fetch user data from MongoDB
+    const userData = await User.findById(userId).select(
+      "username email hbarBalance"
+    );
+
+    if (!userData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(201).json(userData);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ message: "Error fetching user data" });
+  }
 });
 
 app.post("/api/token", async (req, res) => {
@@ -172,7 +259,7 @@ app.get("/api/projects", async (req, res) => {
   // ...
 });
 
-app.post("/create-project", upload.single("dataset"), async (req, res) => {
+app.post("/project/create", upload.single("dataset"), async (req, res) => {
   try {
     // get project details from the request body
     const {
@@ -457,6 +544,6 @@ app.post("/test", (req, res) => {
 
 // ... (Remaining code for server configuration and listening)
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`FLKM backend listening at http://localhost:${port}`);
 });
