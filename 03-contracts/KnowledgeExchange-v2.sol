@@ -33,6 +33,7 @@ contract KnowledgeExchangeContract is Ownable {
     
     // 03 - Resources **********************************************************
     // Structure to represent a knowledge resource
+    // Data
     struct KnowledgeResource {
         address creator;
         string title;
@@ -45,6 +46,29 @@ contract KnowledgeExchangeContract is Ownable {
     mapping(uint256 => KnowledgeResource) public knowledgeResources;
     uint256 public nextResourceID = 1;
 
+    // Models
+    struct Model {
+    address owner;
+    uint256 creationDate;
+    uint256 shelfLife;
+    uint256 price;
+    string description; // Description of what the model offers.
+    uint256 qualityScore; // Could be an average of community reviews or other metrics.
+    bool isEthical; // A flag to show if the model meets ethical standards.
+    uint256 endorsements; // Number of users that have endorsed the model.
+    }
+    
+    struct Review {
+        address reviewer;
+        uint256 modelId;
+        uint256 score; // Rating score for the model.
+        string comment; // Feedback about the model.
+    }
+
+    mapping(uint256 => Model) public models;
+    mapping(uint256 => Review[]) public modelReviews;
+    
+    uint256 public nextModelId = 1;
 
 
 
@@ -105,6 +129,7 @@ contract KnowledgeExchangeContract is Ownable {
         levelTitles[ReputationLevel.Prophet] = "Prophet";
     }
 
+    // 11 - 
 
     // 02 - Reputation ************************************************************************************************
     // Function to get the reputation rank of a user
@@ -283,6 +308,62 @@ contract KnowledgeExchangeContract is Ownable {
     }
 
 
+    // Add compensation, payment, or incorporated into data compensation logic
+    // Allow users to add their models to the marketplace.
+    function addModel(uint256 _shelfLife, uint256 _price, string memory _description) external {
+        Model memory newModel = Model({
+            owner: msg.sender,
+            creationDate: block.timestamp,
+            shelfLife: _shelfLife,
+            price: _price,
+            description: _description,
+            qualityScore: 0,
+            isEthical: false,
+            endorsements: 0
+        });
+        
+        models[nextModelId] = newModel;
+        nextModelId++;
+    }
+    
+    // Allow users to review and rate models.
+    function reviewModel(uint256 _modelId, uint256 _score, string memory _comment) external {
+        Review memory newReview = Review({
+            reviewer: msg.sender,
+            modelId: _modelId,
+            score: _score,
+            comment: _comment
+        });
+        
+        modelReviews[_modelId].push(newReview);
+        
+        // Update the model's quality score. For simplicity, just taking an average here.
+        models[_modelId].qualityScore = (models[_modelId].qualityScore + _score) / 2;
+    }
+    
+    // Function for purchasing the model. For simplicity, this will transfer funds.
+    function purchaseModel(uint256 _modelId) external payable {
+        require(msg.value == models[_modelId].price, "Incorrect payment amount.");
+        require(block.timestamp <= models[_modelId].creationDate + models[_modelId].shelfLife, "Model has expired.");
+    
+        // Transfer the funds to the model's owner.
+        payable(models[_modelId].owner).transfer(msg.value);
+        
+        // A more complex implementation might provide the buyer with some token or access right.
+    }
+
+    // Endorse a model.
+    function endorseModel(uint256 _modelId) external {
+        models[_modelId].endorsements++;
+        
+        // You could add logic here to reward endorsers or increase the model's visibility/rank.
+    }
+    
+    // Check if a model meets ethical guidelines. Create guidelines that are voted in and used to rate?
+    // For the sake of this example, we're making it a manual check by the contract owner, but it could be more decentralized.
+    function markModelAsEthical(uint256 _modelId) external onlyOwner {
+        models[_modelId].isEthical = true;
+    }
 
 
     // 05 - Decentralized Knowledge Evolution (DKE) Functions ***************************************************************************
@@ -422,7 +503,7 @@ contract KnowledgeExchangeContract is Ownable {
     // ...
 
     /*
-    // xx - DKE
+    // xx - DKE Optional - not completed
     // Decentralized Knowledge Evolution (DKE) Functions
     
     // Function to initiate a new Knowledge Evolution Cluster (KEC)
