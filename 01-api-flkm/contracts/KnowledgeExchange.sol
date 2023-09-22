@@ -79,39 +79,6 @@ contract KnowledgeExchangeContract is Ownable {
     );
     event ResourceAccessed(uint256 indexed resourceID, address indexed user);
 
-    // 05 - DKE *********************************************************************
-    mapping(uint256 => KnowledgeCluster) public knowledgeClusters;
-    uint256 public nextClusterID = 1;
-    uint256 public nextIdeaID = 1;
-
-    mapping(address => uint256) public funds;
-
-    struct KnowledgeCluster {
-        uint256 totalResources; // Represents any form of resources, can be funds, articles, research papers, etc.
-        mapping(uint256 => GrowthIdea) growthIdeas;
-        mapping(address => bool) hasSupported;
-        mapping(uint256 => address[]) supporters;
-        // cannot use mapping inside of a struct
-    }
-
-    struct GrowthIdea {
-        address initiator;
-        string idea;
-        uint256 requiredFunds;
-        uint256 supportVotes;
-        uint256 fundsPledged;
-        bool enacted;
-    }
-
-    // Event to log when a growth idea is executed.
-    event GrowthIdeaExecuted(
-        address indexed initiator,
-        string ideaDescription,
-        uint256 fundsAllocated
-    );
-
-    //mapping(uint256 => Milestone[]) public ideaMileston;
-
     // 10 - Helpers *************************************************************
     uint256 constant MAX_DEMAND = 1000; // An arbitrary cap on how much demand a resource can have.
     uint256 constant UNIQUENESS_SCALING_FACTOR = 10; // A scaling factor to make uniqueness calculations meaningful.
@@ -422,124 +389,11 @@ contract KnowledgeExchangeContract is Ownable {
     }
 
     // 12 - Compensation for Models ****************************************************************************************************
+    // ...
 
-    // 05 - Decentralized Knowledge Evolution (DKE) Functions ***************************************************************************
 
-    /*
-    Collective Knowledge Cluster (CKC): The idea is to create a space
-    that's not just a decision-making entity but a collaborative space
-    where members can drive progress through collective wisdom.
+
     
-    Proposing Ideas vs. Proposals: Instead of a bureaucratic-sounding
-    'proposal', members 'propose growth ideas', making the process seem
-    more organic and focused on development.
-    
-    Endorsements & Pledges: Instead of merely voting, members endorse ideas
-    and can also pledge funds directly to the growth ideas they believe in.
-    
-    Enacting Ideas: If a growth idea has garnered enough endorsements and
-    funds, it gets enacted. This makes the DAO more dynamic and focused on actions rather than just decision-making.
-    */
-
-    // Function to initiate a new Collective Knowledge Cluster (CKC)
-    function initiateKnowledgeCluster() external onlyOwner {
-        // Logic to initiate a new Knowledge Cluster
-        // A CKC is a collaborative space for humans to drive progress through collective wisdom.
-
-        // sarsar issues with mapping inside of a struct
-        // knowledgeClusters[nextClusterID] = KnowledgeCluster({
-        //     totalResources: 0
-        // });
-
-        nextClusterID++;
-    }
-
-    // Function to introduce a growth idea to the CKC
-    function proposeGrowthIdea(
-        uint256 _clusterID,
-        string memory _idea,
-        uint256 _requiredFunds
-    ) external {
-        // Propose a new growth idea to the CKC. Ideas could be projects, research, initiatives, etc.
-        address thinker = msg.sender;
-
-        // sarsar issues with mapping inside of a struct
-        // knowledgeClusters[_clusterID].growthIdeas[nextIdeaID] = GrowthIdea({
-        //     initiator: thinker,
-        //     idea: _idea,
-        //     requiredFunds: _requiredFunds,
-        //     supportVotes: 0,
-        //     fundsPledged: 0
-        // });
-
-        nextIdeaID++;
-    }
-
-    // Function to rally behind a growth idea within a CKC
-    function supportGrowthIdea(
-        uint256 _clusterID,
-        uint256 _ideaID,
-        bool _endorse,
-        uint256 _pledgedAmount
-    ) external {
-        // Show your support or concerns for a proposed growth idea by endorsing and/or pledging funds.
-
-        address supporter = msg.sender;
-        require(
-            !knowledgeClusters[_clusterID].hasSupported[supporter],
-            "Already showed support for this idea"
-        );
-
-        knowledgeClusters[_clusterID].hasSupported[supporter] = true;
-        knowledgeClusters[_clusterID].supporters[_ideaID].push(supporter);
-
-        if (_endorse) {
-            knowledgeClusters[_clusterID].growthIdeas[_ideaID].supportVotes++;
-            knowledgeClusters[_clusterID]
-                .growthIdeas[_ideaID]
-                .fundsPledged += _pledgedAmount;
-        }
-    }
-
-    // Function to enact a growth idea within a CKC
-    function enactGrowthIdea(uint256 _clusterID, uint256 _ideaID) external {
-        // If a growth idea meets collective criteria (e.g., enough endorsements or pledged funds), it gets enacted.
-
-        require(
-            knowledgeClusters[_clusterID].growthIdeas[_ideaID].fundsPledged >=
-                knowledgeClusters[_clusterID]
-                    .growthIdeas[_ideaID]
-                    .requiredFunds,
-            "Not enough funds pledged for this idea."
-        );
-
-        // Execute the growth idea.
-        executeGrowthIdea(knowledgeClusters[_clusterID].growthIdeas[_ideaID]);
-
-        knowledgeClusters[_clusterID].growthIdeas[_ideaID].enacted = true;
-    }
-
-    function executeGrowthIdea(GrowthIdea memory _idea) internal {
-        // Ensure that the DAO has sufficient funds to allocate.
-        require(
-            funds[address(this)] >= _idea.fundsPledged,
-            "DAO does not have enough funds to support this idea."
-        );
-
-        // Deduct funds from the DAO.
-        funds[address(this)] -= _idea.fundsPledged;
-
-        // Transfer the funds to the initiator of the idea.
-        funds[_idea.initiator] += _idea.fundsPledged;
-
-        // Emit an event for transparency and logging purposes.
-        emit GrowthIdeaExecuted(
-            _idea.initiator,
-            _idea.idea,
-            _idea.fundsPledged
-        );
-    }
-
     // Update the contract name (only callable by the contract owner)
     function updateContractName(string memory _newName) external onlyOwner {
         contractName = _newName;
