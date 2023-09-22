@@ -13,10 +13,18 @@ export class ProjectService {
 
   // Define the createProject method
   createProject(projectData: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.baseUrl}/create-project`, projectData, {
-      headers,
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     });
+    return this.http.post(
+      `${this.baseUrl}/project/create-project`,
+      projectData,
+      {
+        headers,
+      }
+    );
   }
 
   // Add more methods for other project-related operations as needed

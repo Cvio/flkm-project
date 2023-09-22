@@ -4,11 +4,11 @@ import { ProjectService } from '../../../../services/Project/CreateProject/proje
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-fln-project',
-  templateUrl: './create-fln-project.component.html',
-  styleUrls: ['./create-fln-project.component.css'],
+  selector: 'app-create-project',
+  templateUrl: './create-project.component.html',
+  styleUrls: ['./create-project.component.css'],
 })
-export class CreateFlnProjectComponent implements OnInit {
+export class CreateProjectComponent implements OnInit {
   projectForm: FormGroup; // If using forms
   projectData: any; // Variable to store project data
   createError: string | null = null; // Variable to store error message
@@ -38,6 +38,7 @@ export class CreateFlnProjectComponent implements OnInit {
       dataPreprocessing: [''],
       evaluationMetrics: ['accuracy'], // default to accuracy, other options: precision, recall, f1-score, auc, rmse, mae, r2
       acceptanceCriteria: [0.8], // default to 0.8, other options: 0.9, 0.95
+      ownerId: [''],
     });
   }
   createProject(): void {

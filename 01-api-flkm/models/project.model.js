@@ -45,6 +45,10 @@ const projectSchema = new mongoose.Schema({
     type: Number,
     default: 0.8, // Default to 0.8 if not provided
   },
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Project = mongoose.model("Project", projectSchema);

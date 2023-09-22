@@ -7,10 +7,13 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/user.model"); // Import User model
 const Project = require("./models/project.model");
 const authenticate = require("./auth/authMiddleware");
-const Web3 = require("web3");
-const web3 = new Web3("HTTP://127.0.0.1:8545");
-web3.setProvider(provider);
-
+const solc = require("solc");
+const fs = require("fs");
+const { Web3 } = require("web3");
+var provider = "https://mainnet.infura.io/v3/96cd6a7bab134c4b83b97f53ff707b00";
+var web3 = new Web3(provider);
+//"HTTP://127.0.0.1:8545"
+//96cd6a7bab134c4b83b97f53ff707b00
 // Set up multer storage and upload configuration
 const multer = require("multer"); // import multer
 
@@ -148,10 +151,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/api/logout", async (req, res) => {
-  // User logout logic
-  // ...
-});
+// app.post("/api/logout", async (req, res) => {
+//   // User logout logic
+//   // ...
+// });
 
 app.post("/api/account/create", async (req, res) => {
   try {
@@ -208,10 +211,6 @@ app.get("/api/testnet/check", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`FLKM backend listening at http://localhost:${port}`);
-});
-
 app.get("/user", async (req, res) => {
   try {
     res.status(201).json({ message: "User data here" });
@@ -223,22 +222,44 @@ app.get("/user", async (req, res) => {
 
 app.get("/user-data", authenticate, async (req, res) => {
   try {
-    // access the authenticated user's data using req.user
     const userId = req.user.userId;
 
-    // fetch user data from MongoDB
+    // Note: Assuming User is your user model, and Project is your project model.
     const userData = await User.findById(userId).select(
       "username email hbarBalance"
     );
+    const userProjects = await Project.find({ ownerId: userId }).select(
+      "projectName description"
+    );
 
-    if (!userData) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    if (!userData) return res.status(404).json({ message: "User not found" });
 
-    res.status(201).json(userData);
+    res.status(200).json({ userData, userProjects }); // Changed status to 200 as it's a successful GET request
   } catch (error) {
     console.error("Error fetching user data:", error);
     res.status(500).json({ message: "Error fetching user data" });
+  }
+});
+
+app.get("/user-projects", authenticate, async (req, res) => {
+  try {
+    // access the authenticated user's data using req.user
+    const userId = req.user.userId;
+
+    // Fetch user's projects from MongoDB where ownerId matches userId
+    const userProjects = await Project.find({ ownerId: userId });
+
+    // Check if there are any projects found
+    if (!userProjects.length) {
+      return res
+        .status(404)
+        .json({ message: "No projects found for this user" });
+    }
+
+    res.status(200).json(userProjects);
+  } catch (error) {
+    console.error("Error fetching user projects:", error);
+    res.status(500).json({ message: "Error fetching user projects" });
   }
 });
 
@@ -259,54 +280,61 @@ app.get("/api/projects", async (req, res) => {
   // ...
 });
 
-app.post("/project/create", upload.single("dataset"), async (req, res) => {
-  try {
-    // get project details from the request body
-    const {
-      projectName,
-      description,
-      dataset,
-      modelType,
-      learningRate,
-      privacySettings,
-      participants,
-      startDate,
-      endDate,
-      accessControl,
-      dataPreprocessing,
-      evaluationMetrics,
-      acceptanceCriteria,
-    } = req.body;
+app.post(
+  "/project/create-project",
+  authenticate,
+  upload.single("dataset"),
+  async (req, res) => {
+    try {
+      // get project details from the request body
+      const {
+        projectName,
+        description,
+        dataset,
+        modelType,
+        learningRate,
+        privacySettings,
+        participants,
+        startDate,
+        endDate,
+        accessControl,
+        dataPreprocessing,
+        evaluationMetrics,
+        acceptanceCriteria,
+        ownerId,
+      } = req.body;
 
-    // Get the file path of the uploaded dataset
-    //const datasetFilePath = req.file;
+      // Get the file path of the uploaded dataset
+      //const datasetFilePath = req.file;
 
-    // Create a new project in your database
-    const newProject = new Project({
-      projectName,
-      description,
-      dataset, // save the file path in the database
-      modelType,
-      learningRate,
-      privacySettings,
-      participants,
-      startDate,
-      endDate,
-      accessControl,
-      dataPreprocessing,
-      evaluationMetrics,
-      acceptanceCriteria,
-    });
+      // Create a new project in your database
+      const newProject = new Project({
+        projectName,
+        description,
+        dataset, // save the file path in the database
+        modelType,
+        learningRate,
+        privacySettings,
+        participants,
+        startDate,
+        endDate,
+        accessControl,
+        dataPreprocessing,
+        evaluationMetrics,
+        acceptanceCriteria,
+        ownerId,
+      });
+      newProject.ownerId = req.user.userId;
+      // save the project to the database
+      const savedProject = await newProject.save();
 
-    // save the project to the database
-    const savedProject = await newProject.save();
-
-    res.status(201).json(savedProject);
-  } catch (error) {
-    console.error("Error creating project:", error);
-    res.status(500).json({ message: "Error creating project" });
+      res.status(201).json(savedProject);
+    } catch (error) {
+      console.error("Error creating project:", error);
+      res.status(500).json({ message: "Error creating project" });
+    }
   }
-});
+);
 
 app.get("/api/projects/:id", async (req, res) => {
   // Get specific project details
@@ -544,6 +572,6 @@ app.post("/test", (req, res) => {
 
 // ... (Remaining code for server configuration and listening)
 
-app.listen(port, () => {
-  console.log(`FLKM backend listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`FLKM backend listening at http://localhost:${PORT}`);
 });

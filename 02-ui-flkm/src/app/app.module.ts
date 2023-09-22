@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './components/Authentication/Registration/registration.component';
 import { LoginComponent } from './components/Authentication/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/Dashboard/dashboard.component';
-import { CreateFlnProjectComponent } from './components/Project/CreateProject/create-fln-project/create-fln-project.component';
+import { CreateProjectComponent } from './components/Project/CreateProject/create-project/create-project.component';
 import { FlnProjectButtonComponent } from './components/Project/CreateProject/fln-project-button/fln-project-button.component';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { FlnProjectButtonComponent } from './components/Project/CreateProject/fl
     RegistrationComponent,
     LoginComponent,
     DashboardComponent,
-    CreateFlnProjectComponent,
+    CreateProjectComponent,
     FlnProjectButtonComponent,
   ],
   imports: [

@@ -1,7 +1,7 @@
 // dashboard.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../../services/Data/data.service'; // Import your data service
+import { UserService } from '../../../services/User/UserData/user-data.service'; // Import your data service
 import { HttpClient } from '@angular/common/http'; // Import HttpClient
 import { Router } from '@angular/router'; // Import Router
 
@@ -22,29 +22,33 @@ export class DashboardComponent implements OnInit {
   dataset: string | undefined;
 
   constructor(
-    private dataService: DataService,
+    private UserService: UserService,
     private http: HttpClient,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Retrieve user data from the backend
+    this.UserService.getUserData().subscribe(
+      (response) => {
+        console.log('Response:', response);
 
-    this.dataService.getUserData().subscribe((data) => {
-      console.log('Response Data:', data);
-      this.userData = data;
-      this.userName = this.userData.username;
-      this.userEmail = this.userData.email;
-      this.accountBalance = this.userData.hbarBalance;
-    });
+        // Access the userData and userProjects properties of the response object.
+        this.userData = response.userData;
+        this.userName = this.userData.username;
+        this.userEmail = this.userData.email;
+        this.accountBalance = this.userData.hbarBalance;
 
-    this.dataService.getProjectData().subscribe((data) => {
-      console.log('Response Data:', data);
-      this.projectData = data;
-      this.projectName = this.projectData[0].projectName;
-      this.description = this.projectData[0].description;
-      this.dataset = this.projectData[0].dataset;
-    });
+        this.projectData = response.userProjects;
+        if (this.projectData && this.projectData.length > 0) {
+          this.projectName = this.projectData[0].projectName;
+          this.description = this.projectData[0].description;
+          // You may want to handle multiple projects here.
+        }
+      },
+      (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    );
   }
 
   logout() {
