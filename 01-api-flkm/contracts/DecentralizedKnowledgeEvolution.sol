@@ -19,6 +19,16 @@ contract DecentralizedKnowledgeEvolution is Ownable, ReentrancyGuard {
     uint256 public authorRewardAmount = 500;
     uint256 public voterRewardAmount = 50;
 
+    uint256 public nextEthicalProposalID = 1;
+    uint256 public ethicalVoteRequirement = 10; // Number of votes required to pass an ethical proposal
+    
+    struct EthicalProposal {
+        uint256 knowledgeId;
+        address proposer;
+        string ethicalConsideration;
+        uint256 votes;
+    }
+
     struct Knowledge {
         address author;
         string content;
@@ -42,6 +52,13 @@ contract DecentralizedKnowledgeEvolution is Ownable, ReentrancyGuard {
         string newContent;
         uint256 votes;
     }
+
+    struct EthicalProposal {
+        uint256 knowledgeId;
+        address proposer;
+        string ethicalConsideration;
+        uint256 votes;
+    }
     
     mapping(uint256 => Knowledge) public knowledgeBase;
     mapping(uint256 => GrowthIdea) public growthIdeas;
@@ -50,6 +67,10 @@ contract DecentralizedKnowledgeEvolution is Ownable, ReentrancyGuard {
     mapping(uint256 => mapping(address => bool)) public knowledgeVoters;
     mapping(uint256 => mapping(address => bool)) public proposalVoters;
     ModificationProposal[] public modificationProposals;
+
+    mapping(uint256 => EthicalProposal) public ethicalProposals;
+    mapping(uint256 => mapping(address => bool)) public ethicalProposalVoters;
+
     
     event KnowledgeAdded(uint256 knowledgeID, address author, string content, uint256 clusterID);
     event GrowthIdeaProposed(uint256 ideaID, address initiator, string idea, uint256 requiredFunds, uint256 clusterID);
@@ -57,6 +78,9 @@ contract DecentralizedKnowledgeEvolution is Ownable, ReentrancyGuard {
     event GrowthIdeaEnacted(uint256 ideaID);
     event ModificationProposed(uint256 modificationID, uint256 knowledgeId, address proposer, string newContent);
     event ModificationImplemented(uint256 modificationID, uint256 knowledgeId, address proposer, string newContent);
+
+    event EthicalProposalCreated(uint256 proposalID, uint256 knowledgeId, address proposer, string ethicalConsideration);
+    event EthicalProposalAccepted(uint256 proposalID, uint256 knowledgeId, string ethicalConsideration);
     
     constructor(IERC20 _rewardToken) {
         rewardToken = _rewardToken;
@@ -119,6 +143,30 @@ contract DecentralizedKnowledgeEvolution is Ownable, ReentrancyGuard {
         uint256 knowledgeId = modificationProposals[_modificationId].knowledgeId;
         knowledgeBase[knowledgeId].content = modificationProposals[_modificationId].newContent;
         emit ModificationImplemented(_modificationId, knowledgeId, modificationProposals[_modificationId].proposer, modificationProposals[_modificationId].newContent);
+    }
+
+    function createEthicalProposal(uint256 _knowledgeId, string memory _ethicalConsideration) external {
+        EthicalProposal memory newProposal = EthicalProposal(_knowledgeId, msg.sender, _ethicalConsideration, 0);
+        ethicalProposals[nextEthicalProposalID] = newProposal;
+        emit EthicalProposalCreated(nextEthicalProposalID++, _knowledgeId, msg.sender, _ethicalConsideration);
+    }
+    
+    function voteOnEthicalProposal(uint256 _proposalId) external {
+        require(!ethicalProposalVoters[_proposalId][msg.sender], "Already voted");
+        ethicalProposals[_proposalId].votes += 1;
+        ethicalProposalVoters[_proposalId][msg.sender] = true;
+        rewards[msg.sender] += voterRewardAmount; // Reward the voter
+    }
+    
+    function implementEthicalProposal(uint256 _proposalId) external {
+        require(ethicalProposals[_proposalId].votes >= ethicalVoteRequirement, "Not enough votes to implement ethical consideration");
+        uint256 knowledgeId = ethicalProposals[_proposalId].knowledgeId;
+        Knowledge storage knowledge = knowledgeBase[knowledgeId];
+        
+        // ??? modify the knowledge content based on the ethical considerations.
+        // For example, flagging it as 'unethical' or appending the ethical considerations to the content.
+        
+        emit EthicalProposalAccepted(_proposalId, knowledgeId, ethicalProposals[_proposalId].ethicalConsideration);
     }
     
     function claimRewards() external nonReentrant {
