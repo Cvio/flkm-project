@@ -1,0 +1,7 @@
+<div *ngIf="isVerified">
+  <p>Email has been successfully verified!</p>
+</div>
+<div *ngIf="error">
+  <p>{{ error }}</p>
+</div>
+<button (click)="onResendEmail()">Resend Verification Email</button>

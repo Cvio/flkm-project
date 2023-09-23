@@ -9,6 +9,8 @@ import { LoginComponent } from './components/Authentication/Login/login.componen
 import { DashboardComponent } from './components/Dashboard/Dashboard/dashboard.component';
 import { CreateProjectComponent } from './components/Project/CreateProject/create-project/create-project.component';
 import { FlnProjectButtonComponent } from './components/Project/CreateProject/fln-project-button/fln-project-button.component';
+import { VerifyEmailComponent } from './components/Authentication/verify-email/verify-email.component';
+import { RegistrationConfirmationComponent } from './components/Authentication/Registration/registration-confirmation/registration-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { FlnProjectButtonComponent } from './components/Project/CreateProject/fl
     DashboardComponent,
     CreateProjectComponent,
     FlnProjectButtonComponent,
+    VerifyEmailComponent,
+    RegistrationConfirmationComponent,
   ],
   imports: [
     BrowserModule,

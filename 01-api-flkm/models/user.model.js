@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  //hbarBalance: { type: Number, default: 10000 },
+  emailVerificationToken: { type: String, unique: true, sparse: true }, // sparse: true allows multiple documents without a token
+  emailVerified: { type: Boolean, default: false },
+  emailVerificationTokenExpiresAt: { type: Date, default: undefined },
 });
 
 // Hash the password before saving

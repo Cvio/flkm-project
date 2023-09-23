@@ -5,10 +5,11 @@
     <p>Name: {{ userName || "J" }}</p>
     <p>Email: {{ userEmail || "Doe" }}</p>
     <p>Balance: {{ accountBalance || "Zero!" }} &#x210F;</p>
+    <app-fln-project-button></app-fln-project-button>
   </div>
 
   <!-- Projects Table Section -->
-  <div *ngIf="projectData?.length; else noProjects">
+  <div *ngIf="projectData?.length; else noProjects" class="project-table">
     <table>
       <thead>
         <tr>
@@ -22,19 +23,18 @@
         <tr *ngFor="let project of projectData">
           <td>{{ project.projectName || "." }}</td>
           <td>{{ project.description || "|" }}</td>
-          <!-- <td>{{ project.dataset || "~" }}</td> -->
+          <td>{{ project.dataset || "~" }}</td>
           <!-- Bind more data as per your project data structure -->
         </tr>
       </tbody>
     </table>
   </div>
 
+  <!-- Define the ng-template for noProjects -->
   <ng-template #noProjects>
     <div>
       <p>Are you ready to add your first project?</p>
-      <p>Click the button below to get started!</p>
-      <app-fln-project-button></app-fln-project-button>
-      <!-- ... other content ... -->
+      <p>Click the button above to get started!</p>
     </div>
   </ng-template>
 

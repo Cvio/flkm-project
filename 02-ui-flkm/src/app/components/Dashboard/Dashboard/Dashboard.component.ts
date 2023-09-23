@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   userName: string | undefined;
   userEmail: string | undefined;
   accountBalance: any;
-
+  public noProjects: boolean = false;
   projectData: any;
   projectName: string | undefined;
   description: string | undefined;
@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
         if (this.projectData && this.projectData.length > 0) {
           this.projectName = this.projectData[0].projectName;
           this.description = this.projectData[0].description;
+          this.dataset = this.projectData[0].dataset;
           // You may want to handle multiple projects here.
         }
       },

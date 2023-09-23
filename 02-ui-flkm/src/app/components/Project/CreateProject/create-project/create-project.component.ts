@@ -50,6 +50,7 @@ export class CreateProjectComponent implements OnInit {
         next: (response: any) => {
           this.projectData = response;
           // Handle a successful project creation response
+          this.router.navigate(['/dashboard']);
         },
         error: (error: any) => {
           console.error('Error creating project:', error);

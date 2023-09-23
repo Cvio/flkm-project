@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/user.model"); // Import User model
 const Project = require("./models/project.model");
 const authenticate = require("./auth/authMiddleware");
+const crypto = require("crypto");
 const solc = require("solc");
 const fs = require("fs");
 const { Web3 } = require("web3");
@@ -77,79 +78,6 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error.message);
   });
-
-// Authentication & User Management API Endpoints
-app.post("/register", async (req, res) => {
-  console.log("Request body:", req.body);
-  try {
-    const { username, email, password } = req.body;
-
-    console.log("Received password:", password);
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-    //const hashedPassword = password;
-
-    console.log("Hashed password:", hashedPassword); // Add this line
-
-    // Create a new user document
-    const user = new User({
-      username,
-      email,
-      password: hashedPassword,
-      //MATIC or Token balance
-    });
-
-    await user.save();
-
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error registering user", error: error.message });
-  }
-});
-
-app.post("/login", async (req, res) => {
-  try {
-    const secretKey = process.env.SECRET_KEY;
-    const { username, password } = req.body;
-
-    // Find the user by username
-    const user = await User.findOne({ username });
-    console.log("User found:", user);
-
-    if (!user) {
-      console.log("User not found");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Compare passwords
-    // Inside the /login route
-    console.log("Password from request:", password);
-
-    // Compare passwords
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    console.log("Hashed password in DB:", user.password);
-    console.log("Password match:", passwordMatch);
-
-    if (!passwordMatch) {
-      console.log("Password does not match");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Generate a JWT
-    const token = jwt.sign({ userId: user._id }, secretKey, {
-      expiresIn: "1h",
-    });
-
-    res.status(200).json({ token });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ message: "Error logging in" });
-  }
-});
 
 // app.post("/api/logout", async (req, res) => {
 //   // User logout logic
@@ -557,6 +485,110 @@ app.post("/api/flkm/models/:id/access", async (req, res) => {
 app.post("/api/flkm/models/:id/version", async (req, res) => {
   // Manage model versions and updates
   // ...
+});
+
+// Authentication & User Management API Endpoints
+app.post("/register", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Generate email verification token
+    const emailVerificationToken = crypto.randomBytes(20).toString("hex");
+
+    console.log("Generated Token:", emailVerificationToken);
+
+    const { sendVerificationEmail } = require("./services/emailService");
+
+    // Create a new user document
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,
+      emailVerificationToken,
+    });
+
+    await user.save();
+
+    // Send verification email
+    sendVerificationEmail(email, emailVerificationToken);
+
+    res.status(201).json({
+      message: "User registered successfully. Please verify your email.",
+    });
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res
+      .status(500)
+      .json({ message: "Error registering user", error: error.message });
+  }
+});
+
+// make sure you have your express app listening on some port
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const secretKey = process.env.SECRET_KEY;
+    const { username, password } = req.body;
+
+    // Find the user by username
+    const user = await User.findOne({ username });
+    console.log("User found:", user);
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    // Compare passwords
+    // Inside the /login route
+    console.log("Password from request:", password);
+
+    // Compare passwords
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    console.log("Hashed password in DB:", user.password);
+    console.log("Password match:", passwordMatch);
+
+    if (!passwordMatch) {
+      console.log("Password does not match");
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    // Generate a JWT
+    const token = jwt.sign({ userId: user._id }, secretKey, {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ message: "Error logging in" });
+  }
+});
+
+app.get("/verify-email/:token", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      emailVerificationToken: req.params.token,
+    });
+
+    if (!user) return res.status(404).send("Invalid verification link.");
+
+    user.emailVerified = true;
+    user.emailVerificationToken = undefined; // Clear the verification token
+    await user.save();
+
+    res.send("Email verified successfully. You can now log in.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Test endpoint

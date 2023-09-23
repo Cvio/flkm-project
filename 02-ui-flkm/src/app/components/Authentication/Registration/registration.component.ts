@@ -1,3 +1,5 @@
+// registration.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from '../../../services/Authentication/Registration/registration.service';
@@ -32,11 +34,13 @@ export class RegistrationComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('Registration successful:', response);
-            // After successful registration
-            this.router.navigate(['/verify-email']);
+            // Instead of immediate redirection, show a message to check email
+            this.registrationSuccess = true;
           },
           error: (error) => {
             console.error('Error registering user:', error);
+            this.registrationError =
+              'Error registering user. Please try again.';
           },
         });
     }

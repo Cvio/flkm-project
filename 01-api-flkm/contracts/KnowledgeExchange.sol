@@ -13,6 +13,8 @@ contract KnowledgeExchangeContract is Ownable, ReentrancyGuard {
     IERC20 public knowledgeToken;
 
     enum ReputationLevel {
+        Supplicant,
+        Initiate,
         Mystic,
         Luminary,
         Oracle,
