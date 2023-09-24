@@ -31,7 +31,8 @@
     <button type="submit" [disabled]="!registrationForm.valid">Register</button>
   </form>
   <p *ngIf="registrationSuccess" class="success-message">
-    Registration successful! You can now <a routerLink="/login">log in</a>.
+    Registration successful! Check your email for a verification link and then
+    <a routerLink="/login">log in</a>.
   </p>
   <p *ngIf="registrationError" class="error-message">{{ registrationError }}</p>
   <p>Already have an account? <a routerLink="/login">Log in</a>.</p>

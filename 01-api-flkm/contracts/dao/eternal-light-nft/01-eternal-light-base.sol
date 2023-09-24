@@ -6,10 +6,10 @@ pragma solidity ^0.8.0;
 import "../../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract EternalLightBase is ERC721URIStorage, Ownable {
+contract EternalLightArtifact is ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;
 
-    constructor() ERC721("EternalLightBase", "ELB") {}
+    constructor() ERC721("", "") {}
 
     function mint(address to) external onlyOwner {
         _safeMint(to, _tokenIdCounter);

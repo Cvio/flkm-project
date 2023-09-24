@@ -2,11 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../../../../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "../../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 contract CowlDAO is Ownable, ReentrancyGuard {
     IERC20 public rewardToken;
+    IERC721 public eternalLight;
     uint256 public nextClusterID = 1;
     uint256 public nextKnowledgeID = 1;
     uint256 public nextIdeaID = 1;
@@ -20,6 +22,11 @@ contract CowlDAO is Ownable, ReentrancyGuard {
 
     uint256 public nextEthicalProposalID = 1;
     uint256 public ethicalVoteRequirement = 10; // Number of votes required to pass an ethical proposal
+
+    modifier onlyMember() {
+        require(eternalLight.balanceOf(msg.sender) > 0, "Not a DAO member");
+        _;
+    }
 
     struct Knowledge {
         address author;
@@ -107,8 +114,9 @@ contract CowlDAO is Ownable, ReentrancyGuard {
         string ethicalConsideration
     );
 
-    constructor(IERC20 _rewardToken) {
+    constructor(IERC20 _rewardToken, address _eternalLight) {
         rewardToken = _rewardToken;
+        eternalLight = IERC721(_eternalLight); // Initialized the NFT contract address
     }
 
     function initiateKnowledgeCluster() external onlyOwner {

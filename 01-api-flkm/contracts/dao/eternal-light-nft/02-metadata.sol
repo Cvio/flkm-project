@@ -10,10 +10,12 @@ contract EternalLightMetadata is ERC721Enumerable, Ownable {
     EternalLightBase public eternalLightBase;
     mapping(uint256 => string) private _tokenDetails;
 
-    constructor(
-        address eternalLightBaseAddress
-    ) ERC721("EternalLightMetadata", "ELM") {
+    constructor(address eternalLightBaseAddress) ERC721("", "") {
         eternalLightBase = EternalLightBase(eternalLightBaseAddress);
+    }
+
+    function baseURI() public view returns (string memory) {
+        return _baseURI();
     }
 
     function setTokenDetails(
