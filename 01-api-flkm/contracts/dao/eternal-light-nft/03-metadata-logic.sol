@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.7;
 
 import "../../../../node_modules/@openzeppelin/contracts/utils/Strings.sol";
 import "./01-eternal-light-base.sol"; // Adjust the import path as necessary.
@@ -31,14 +31,14 @@ contract MetadataLogicContract is EternalLightBase {
             "MetadataLogic: URI query for nonexistent token"
         );
 
-        string memory tokenURI = _tokenURIs[tokenId];
+        string memory uri = _tokenURIs[tokenId];
         string memory base = _baseURI();
 
-        if (bytes(tokenURI).length > 0) {
+        if (bytes(uri).length > 0) {
             return
                 bytes(base).length > 0
-                    ? string(abi.encodePacked(base, tokenURI))
-                    : tokenURI;
+                    ? string(abi.encodePacked(base, uri))
+                    : uri;
         }
         return
             bytes(base).length > 0
@@ -46,15 +46,12 @@ contract MetadataLogicContract is EternalLightBase {
                 : "";
     }
 
-    function setTokenURI(
-        uint256 tokenId,
-        string memory tokenURI
-    ) public onlyOwner {
+    function setTokenURI(uint256 tokenId, string memory uri) public onlyOwner {
         require(
             _exists(tokenId),
             "MetadataLogic: URI set of nonexistent token"
         );
-        _tokenURIs[tokenId] = tokenURI;
-        emit TokenURISet(tokenId, tokenURI);
+        _tokenURIs[tokenId] = uri;
+        emit TokenURISet(tokenId, uri);
     }
 }
