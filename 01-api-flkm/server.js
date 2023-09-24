@@ -1,23 +1,20 @@
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
 const User = require("./models/user.model"); // Import User model
 const Project = require("./models/project.model");
 const authenticate = require("./auth/authMiddleware");
 const crypto = require("crypto");
-const solc = require("solc");
-const fs = require("fs");
-const { Web3 } = require("web3");
-var provider = "https://mainnet.infura.io/v3/96cd6a7bab134c4b83b97f53ff707b00";
-var web3 = new Web3(provider);
-//"HTTP://127.0.0.1:8545"
-//96cd6a7bab134c4b83b97f53ff707b00
-// Set up multer storage and upload configuration
-const multer = require("multer"); // import multer
 
+const accountRoutes = require("./routes/accountRoutes");
+const authRoutes = require("./routes/authRoutes");
+// const flkmRoutes = require("./routes/flkmRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+// const transferRoutes = require("./routes/transferRoutes");
+
+const multer = require("multer"); // import multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/"); // define the upload destination directory
@@ -79,190 +76,28 @@ mongoose
     console.error("Error connecting to MongoDB:", error.message);
   });
 
-// app.post("/api/logout", async (req, res) => {
-//   // User logout logic
-//   // ...
-// });
+app.use("/api", accountRoutes);
+app.use("/api", authRoutes);
+//app.use("/api", flkmRoutes);
+app.use("/api", projectRoutes);
+// app.use("/api", transferRoutes);
 
-app.post("/api/account/create", async (req, res) => {
-  try {
-    const account = await web3.eth.accounts.create();
-    res.json(account);
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-app.get("/api/account/balance/:address", async (req, res) => {
-  try {
-    const balanceWei = await web3.eth.getBalance(req.params.address);
-    const balance = web3.utils.fromWei(balanceWei, "ether");
-    res.json({ balance });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-app.post("/api/transfer", async (req, res) => {
-  try {
-    const { fromPrivateKey, toAddress, amount } = req.body;
-    const fromAccount = await web3.eth.accounts.privateKeyToAccount(
-      fromPrivateKey
-    );
-
-    const tx = {
-      from: fromAccount.address,
-      to: toAddress,
-      value: web3.utils.toWei(amount.toString(), "ether"),
-      gas: 21000,
-      nonce: await web3.eth.getTransactionCount(fromAccount.address, "latest"),
-    };
-
-    const signedTx = await fromAccount.signTransaction(tx);
-    const receipt = await web3.eth.sendSignedTransaction(
-      signedTx.rawTransaction
-    );
-
-    res.json({ transactionHash: receipt.transactionHash });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-// Test Polygon network connection
-app.get("/api/testnet/check", async (req, res) => {
-  try {
-    const networkId = await web3.eth.net.getId();
-    res.json({ networkId });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
-
-app.get("/user", async (req, res) => {
-  try {
-    res.status(201).json({ message: "User data here" });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ message: "Error getting user data" });
-  }
-});
-
-app.get("/user-data", authenticate, async (req, res) => {
-  try {
-    const userId = req.user.userId;
-
-    // Note: Assuming User is your user model, and Project is your project model.
-    const userData = await User.findById(userId).select(
-      "username email hbarBalance"
-    );
-    const userProjects = await Project.find({ ownerId: userId }).select(
-      "projectName description"
-    );
-
-    if (!userData) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ userData, userProjects }); // Changed status to 200 as it's a successful GET request
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    res.status(500).json({ message: "Error fetching user data" });
-  }
-});
-
-app.get("/user-projects", authenticate, async (req, res) => {
-  try {
-    // access the authenticated user's data using req.user
-    const userId = req.user.userId;
-
-    // Fetch user's projects from MongoDB where ownerId matches userId
-    const userProjects = await Project.find({ ownerId: userId });
-
-    // Check if there are any projects found
-    if (!userProjects.length) {
-      return res
-        .status(404)
-        .json({ message: "No projects found for this user" });
-    }
-
-    res.status(200).json(userProjects);
-  } catch (error) {
-    console.error("Error fetching user projects:", error);
-    res.status(500).json({ message: "Error fetching user projects" });
-  }
-});
-
-app.post("/api/token", async (req, res) => {
+app.post("/token", async (req, res) => {
   // Generate JWT token logic
   // ...
 });
 
 // User Dashboard API Endpoints
-app.get("/api/dashboard", authenticate, async (req, res) => {
+app.get("/dashboard", authenticate, async (req, res) => {
   // Fetch user dashboard data
   // ...
 });
 
 // Federated Learning Project API Endpoints
-app.get("/api/projects", async (req, res) => {
+app.get("/projects", async (req, res) => {
   // List FLN projects
   // ...
 });
-
-app.post(
-  "/project/create-project",
-  authenticate,
-  upload.single("dataset"),
-  async (req, res) => {
-    try {
-      // get project details from the request body
-      const {
-        projectName,
-        description,
-        dataset,
-        modelType,
-        learningRate,
-        privacySettings,
-        participants,
-        startDate,
-        endDate,
-        accessControl,
-        dataPreprocessing,
-        evaluationMetrics,
-        acceptanceCriteria,
-        ownerId,
-      } = req.body;
-
-      // Get the file path of the uploaded dataset
-      //const datasetFilePath = req.file;
-
-      // Create a new project in your database
-      const newProject = new Project({
-        projectName,
-        description,
-        dataset, // save the file path in the database
-        modelType,
-        learningRate,
-        privacySettings,
-        participants,
-        startDate,
-        endDate,
-        accessControl,
-        dataPreprocessing,
-        evaluationMetrics,
-        acceptanceCriteria,
-        ownerId,
-      });
-      newProject.ownerId = req.user.userId;
-      // save the project to the database
-      const savedProject = await newProject.save();
-
-      res.status(201).json(savedProject);
-    } catch (error) {
-      console.error("Error creating project:", error);
-      res.status(500).json({ message: "Error creating project" });
-    }
-  }
-);
 
 app.get("/api/projects/:id", async (req, res) => {
   // Get specific project details
@@ -485,110 +320,6 @@ app.post("/api/flkm/models/:id/access", async (req, res) => {
 app.post("/api/flkm/models/:id/version", async (req, res) => {
   // Manage model versions and updates
   // ...
-});
-
-// Authentication & User Management API Endpoints
-app.post("/register", async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Generate email verification token
-    const emailVerificationToken = crypto.randomBytes(20).toString("hex");
-
-    console.log("Generated Token:", emailVerificationToken);
-
-    const { sendVerificationEmail } = require("./services/emailService");
-
-    // Create a new user document
-    const user = new User({
-      username,
-      email,
-      password: hashedPassword,
-      emailVerificationToken,
-    });
-
-    await user.save();
-
-    // Send verification email
-    sendVerificationEmail(email, emailVerificationToken);
-
-    res.status(201).json({
-      message: "User registered successfully. Please verify your email.",
-    });
-  } catch (error) {
-    console.error("Error registering user:", error);
-    res
-      .status(500)
-      .json({ message: "Error registering user", error: error.message });
-  }
-});
-
-// make sure you have your express app listening on some port
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
-
-app.post("/login", async (req, res) => {
-  try {
-    const secretKey = process.env.SECRET_KEY;
-    const { username, password } = req.body;
-
-    // Find the user by username
-    const user = await User.findOne({ username });
-    console.log("User found:", user);
-
-    if (!user) {
-      console.log("User not found");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Compare passwords
-    // Inside the /login route
-    console.log("Password from request:", password);
-
-    // Compare passwords
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    console.log("Hashed password in DB:", user.password);
-    console.log("Password match:", passwordMatch);
-
-    if (!passwordMatch) {
-      console.log("Password does not match");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Generate a JWT
-    const token = jwt.sign({ userId: user._id }, secretKey, {
-      expiresIn: "1h",
-    });
-
-    res.status(200).json({ token });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ message: "Error logging in" });
-  }
-});
-
-app.get("/verify-email/:token", async (req, res) => {
-  try {
-    const user = await User.findOne({
-      emailVerificationToken: req.params.token,
-    });
-
-    if (!user) return res.status(404).send("Invalid verification link.");
-
-    user.emailVerified = true;
-    user.emailVerificationToken = undefined; // Clear the verification token
-    await user.save();
-
-    res.send("Email verified successfully. You can now log in.");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
 });
 
 // Test endpoint

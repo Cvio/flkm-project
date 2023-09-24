@@ -1,0 +1,32 @@
+### 1. **Token Contract:**
+
+- **Purpose:** Manages basic ERC-20 functionalities and token properties.
+- **Attributes:**
+  - `name`: Token name.
+  - `symbol`: Token symbol.
+  - `decimals`: Decimal places.
+  - `totalSupply`: Total supply of tokens.
+  - `balanceOf`: Maps addresses to balances.
+  - `allowance`: Maps owner addresses to spenders and values.
+  - `owner`: Contract owner.
+  - `isMinter`: Maps addresses to minter statuses.
+- **Modifiers:**
+  - `onlyOwner`: Restricts function access to the contract owner.
+  - `onlyMinter`: Restricts function access to addresses with minter role.
+- **Constructor:**
+  - Initializes token properties and assigns all initial tokens to the creator.
+- **Functions:**
+  - `transfer`, `transferFrom`: Manage token transfers.
+  - `approve`, `increaseAllowance`, `decreaseAllowance`: Manage approvals and allowances.
+  - `mint`, `burn`: Create and destroy tokens.
+  - `addMinter`, `removeMinter`: Manage minters.
+- **Events:**
+  - `Transfer`: Emitted on token transfers.
+  - `Approval`: Emitted on approval updates.
+  - `Mint`: Emitted on token creation.
+  - `Burn`: Emitted on token destruction.
+  - `MinterAdded`, `MinterRemoved`: Emitted on minter role changes.
+- **Security:**
+  - Implement security best practices to avoid vulnerabilities.
+- **Upgradeability:**
+  - Consider patterns for contract upgradeability.

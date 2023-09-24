@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract DecentralizedKnowledgeEvolution is Ownable, ReentrancyGuard {
+contract CowlDAO is Ownable, ReentrancyGuard {
     IERC20 public rewardToken;
     uint256 public nextClusterID = 1;
     uint256 public nextKnowledgeID = 1;

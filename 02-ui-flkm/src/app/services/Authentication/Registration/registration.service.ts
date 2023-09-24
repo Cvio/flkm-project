@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RegistrationService {
   // update registrationUrl to match your API endpoint
-  private registrationUrl = 'http://localhost:3000/register';
+  private registrationUrl = 'http://localhost:3000/api/register';
 
   constructor(private http: HttpClient) {}
 

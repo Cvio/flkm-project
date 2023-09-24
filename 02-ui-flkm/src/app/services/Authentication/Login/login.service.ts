@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class LoginService {
   // Update loginUrl to match your API endpoint for login
-  private loginUrl = 'http://localhost:3000/login';
+  private loginUrl = 'http://localhost:3000/api/login';
 
   constructor(private http: HttpClient, private router: Router) {}
 

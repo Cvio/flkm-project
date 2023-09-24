@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class VerifyEmailService {
-  private verifyEmailUrl = 'http://localhost:3000/verify-email'; // Update with your API endpoint
+  private verifyEmailUrl = 'http://localhost:3000/api/verify-email'; // Update with your API endpoint
 
   constructor(private http: HttpClient) {}
 

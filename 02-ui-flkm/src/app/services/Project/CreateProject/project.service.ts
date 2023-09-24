@@ -18,13 +18,9 @@ export class ProjectService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post(
-      `${this.baseUrl}/project/create-project`,
-      projectData,
-      {
-        headers,
-      }
-    );
+    return this.http.post(`${this.baseUrl}/api/create-project`, projectData, {
+      headers,
+    });
   }
 
   // Add more methods for other project-related operations as needed

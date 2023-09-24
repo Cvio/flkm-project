@@ -19,7 +19,7 @@ const sendVerificationEmail = (recipientEmail, verificationToken) => {
     from: "your_email@example.com",
     to: recipientEmail,
     subject: "Email Verification",
-    text: `Click on this link to verify your email: http://localhost:3000/verify-email/${verificationToken}`,
+    text: `Click on this link to verify your email: http://localhost:3000/api/verify-email/${verificationToken}`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

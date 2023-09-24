@@ -20,7 +20,9 @@ export class UserService {
     });
 
     // make an authenticated request to the /user-data endpoint
-    return this.http.get<any>('http://localhost:3000/user-data', { headers });
+    return this.http.get<any>('http://localhost:3000/api/user-data', {
+      headers,
+    });
   }
   getProjectData(): Observable<any> {
     // Retrieve the token from localStorage
@@ -32,11 +34,11 @@ export class UserService {
       Authorization: `Bearer ${token}`, // attach the token as a Bearer token
     });
 
-    return this.http.get<any>('http://localhost:3000//user-projects');
+    return this.http.get<any>('http://localhost:3000/api/user-projects');
   }
 
   logOut() {
     localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/api/login']);
   }
 }
