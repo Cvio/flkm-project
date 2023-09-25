@@ -16,6 +16,17 @@ contract Cowl is Ownable {
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
     mapping(address => bool) public isMinter;
+    mapping(address => bool) public isStaker;
+
+    ERC721 public reputationNFT; // Add Reputation NFT contract reference here
+    uint256 public stakingRewardRate; // Rewards per staked dataset
+    uint256 public stakingDuration; // Duration for which staking is locked
+    uint256 public stakingNFTIdCounter; // Counter for staking NFTs
+
+    struct StakingInfo {
+        uint256 stakedAmount;
+        uint256 stakingStartTime;
+    }
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(
@@ -45,6 +56,65 @@ contract Cowl is Ownable {
         totalSupply = _initialSupply.mul(10 ** _decimals);
         balanceOf[msg.sender] = totalSupply;
         isMinter[msg.sender] = true; // The contract creator is the initial minter
+        stakingRewardRate = 100; // Adjust the reward rate as needed
+        stakingDuration = 30 days; // Adjust the staking duration as needed
+        stakingNFTIdCounter = 1;
+    }
+
+    function stake(uint256 _amount) external {
+        require(_amount > 0, "Amount must be greater than 0");
+        require(
+            balanceOf[msg.sender] >= _amount,
+            "Insufficient balance to stake"
+        );
+
+        // Lock the staked amount for the staking duration
+        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_amount);
+        stakingData[msg.sender] = StakingInfo({
+            stakedAmount: _amount,
+            stakingStartTime: block.timestamp
+        });
+
+        // Mint a staking NFT as a marker
+        reputationNFT.mintWithURI(
+            msg.sender,
+            string(
+                abi.encodePacked("Staking NFT #", uint2str(stakingNFTIdCounter))
+            ),
+            stakingNFTIdCounter
+        );
+        stakingNFTIdCounter++;
+
+        emit Staked(msg.sender, _amount);
+    }
+
+    function unstake() external {
+        require(
+            stakingData[msg.sender].stakingStartTime.add(stakingDuration) <=
+                block.timestamp,
+            "Staking duration not met"
+        );
+
+        uint256 stakedAmount = stakingData[msg.sender].stakedAmount;
+
+        // Calculate rewards based on staked amount and reward rate
+        uint256 rewards = stakedAmount.mul(stakingRewardRate).div(100);
+
+        // Mint COWL tokens as rewards
+        mint(msg.sender, rewards);
+
+        // Unlock the staked amount
+        stakingData[msg.sender] = StakingInfo(0, 0);
+
+        emit Unstaked(msg.sender, stakedAmount);
+    }
+
+    // Helper function to mint COWL tokens
+    function mint(address _to, uint256 _value) internal {
+        totalSupply = totalSupply.add(_value);
+        balanceOf[_to] = balanceOf[_to].add(_value);
+        emit Mint(_to, _value);
+        emit Transfer(address(0), _to, _value);
     }
 
     function transfer(

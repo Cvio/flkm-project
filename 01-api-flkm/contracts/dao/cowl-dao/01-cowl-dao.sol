@@ -16,7 +16,7 @@ import "../../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
  * @title CowlDAO
  * @dev Contract for decentralized autonomous organization.
  */
-contract CowlDAO is Ownable, ReentrancyGuard, Pausable {
+contract CowlDaoBase is Ownable, ReentrancyGuard, Pausable {
     IERC20 public rewardToken;
     IERC721 public eternalLight;
 
@@ -143,11 +143,19 @@ contract CowlDAO is Ownable, ReentrancyGuard, Pausable {
         totalResourcesPerCluster[nextClusterID++] = 0;
     }
 
+    function validateClusterID(uint256 _clusterID) internal view {
+        require(
+            totalResourcesPerCluster[_clusterID] != 0,
+            "Invalid Cluster ID"
+        );
+    }
+
     // Function for members to contribute knowledge
     function contributeKnowledge(
         string memory _content,
         uint256 _clusterID
     ) external onlyMember whenNotPaused {
+        validateClusterID(_clusterID);
         knowledgeBase[nextKnowledgeID] = Knowledge(
             msg.sender,
             _content,
@@ -167,6 +175,10 @@ contract CowlDAO is Ownable, ReentrancyGuard, Pausable {
     function upvoteKnowledge(
         uint256 _knowledgeId
     ) external onlyMember whenNotPaused {
+        require(
+            knowledgeBase[_knowledgeId].author != address(0),
+            "Invalid Knowledge ID"
+        );
         require(!knowledgeVoters[_knowledgeId][msg.sender], "Already voted");
         knowledgeBase[_knowledgeId].upvotes += 1;
         knowledgeVoters[_knowledgeId][msg.sender] = true;
@@ -179,6 +191,10 @@ contract CowlDAO is Ownable, ReentrancyGuard, Pausable {
         uint256 _ideaID,
         uint256 _pledgedAmount
     ) external onlyMember whenNotPaused {
+        require(
+            growthIdeas[_ideaID].initiator != address(0),
+            "Invalid Idea ID"
+        );
         GrowthIdea storage idea = growthIdeas[_ideaID];
         require(!idea.enacted, "Idea already enacted");
         idea.supportVotes++;
