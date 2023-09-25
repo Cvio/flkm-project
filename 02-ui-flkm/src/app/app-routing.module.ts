@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './components/Authentication/Registration/registration.component';
 import { RegistrationConfirmationComponent } from './components/Authentication/Registration/registration-confirmation/registration-confirmation.component';
-import { VerifyEmailComponent } from './components/Authentication/verify-email/verify-email.component';
+import { VerifyEmailComponent } from './components/Authentication/VerifyEmail/verify-email.component';
 import { LoginComponent } from './components/Authentication/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/Dashboard/dashboard.component';
 import { CreateProjectComponent } from './components/Project/CreateProject/create-project/create-project.component';
+import { UserWalletComponent } from './components/User/UserWallet/user-wallet.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'create-project', component: CreateProjectComponent },
+  { path: 'user-wallet', component: CreateProjectComponent },
 ];
 
 @NgModule({

@@ -9,8 +9,9 @@ import { LoginComponent } from './components/Authentication/Login/login.componen
 import { DashboardComponent } from './components/Dashboard/Dashboard/dashboard.component';
 import { CreateProjectComponent } from './components/Project/CreateProject/create-project/create-project.component';
 import { FlnProjectButtonComponent } from './components/Project/CreateProject/fln-project-button/fln-project-button.component';
-import { VerifyEmailComponent } from './components/Authentication/verify-email/verify-email.component';
+import { VerifyEmailComponent } from './components/Authentication/VerifyEmail/verify-email.component';
 import { RegistrationConfirmationComponent } from './components/Authentication/Registration/registration-confirmation/registration-confirmation.component';
+import { UserWalletComponent } from './components/User/UserWallet/user-wallet.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RegistrationConfirmationComponent } from './components/Authentication/R
     FlnProjectButtonComponent,
     VerifyEmailComponent,
     RegistrationConfirmationComponent,
+    UserWalletComponent,
   ],
   imports: [
     BrowserModule,

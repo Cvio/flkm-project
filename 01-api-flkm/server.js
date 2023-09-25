@@ -10,6 +10,7 @@ const crypto = require("crypto");
 
 const accountRoutes = require("./routes/accountRoutes");
 const authRoutes = require("./routes/authRoutes");
+const etherRoutes = require("./routes/etherRoutes");
 // const flkmRoutes = require("./routes/flkmRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 // const transferRoutes = require("./routes/transferRoutes");
@@ -78,6 +79,7 @@ mongoose
 
 app.use("/api", accountRoutes);
 app.use("/api", authRoutes);
+app.use("/api", etherRoutes);
 //app.use("/api", flkmRoutes);
 app.use("/api", projectRoutes);
 // app.use("/api", transferRoutes);
