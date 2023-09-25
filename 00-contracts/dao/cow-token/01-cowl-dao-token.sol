@@ -6,12 +6,12 @@ pragma solidity ^0.8.7;
 // import "@openzeppelin/contracts/access/Ownable.sol";
 // import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 // import "@openzeppelin/contracts/security/Pausable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import "../../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
 
 contract CowlDaoToken is ERC20, Ownable, ReentrancyGuard, Pausable {
     using SafeMath for uint256;

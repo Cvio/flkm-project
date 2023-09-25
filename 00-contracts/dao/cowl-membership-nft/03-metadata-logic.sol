@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "../../../../node_modules/@openzeppelin/contracts/utils/Strings.sol";
+import "../../../node_modules/@openzeppelin/contracts/utils/Strings.sol";
 import "./01-eternal-light-base.sol"; // Adjust the import path as necessary.
 
 contract MetadataLogicContract is EternalLightBase {

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
+import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./01-eternal-light-base.sol";
 import "./02-metadata.sol";
 import "./03-metadata-logic.sol";

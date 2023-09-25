@@ -4,10 +4,10 @@ pragma solidity ^0.8.7;
 // import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 // import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import "../../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 contract RewardDistribution is Ownable {
     IERC20 public rewardToken;

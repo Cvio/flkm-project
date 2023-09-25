@@ -6,11 +6,11 @@ pragma solidity ^0.8.7;
 // import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
 // import "@openzeppelin/contracts/security/Pausable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "../../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
 
 /**
  * @title CowlDAO

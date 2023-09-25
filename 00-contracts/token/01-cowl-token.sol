@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 // import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
-import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 contract Cowl is Ownable {
     using SafeMath for uint256;
@@ -18,7 +22,7 @@ contract Cowl is Ownable {
     mapping(address => bool) public isMinter;
     mapping(address => bool) public isStaker;
 
-    ERC721 public reputationNFT; // Add Reputation NFT contract reference here
+    address public reputationNFT; // Add Reputation NFT contract reference here
     uint256 public stakingRewardRate; // Rewards per staked dataset
     uint256 public stakingDuration; // Duration for which staking is locked
     uint256 public stakingNFTIdCounter; // Counter for staking NFTs
@@ -27,6 +31,8 @@ contract Cowl is Ownable {
         uint256 stakedAmount;
         uint256 stakingStartTime;
     }
+
+    mapping(address => StakingInfo) public stakingData; // Mapping of stakers to staking info
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(
@@ -38,6 +44,8 @@ contract Cowl is Ownable {
     event Burn(address indexed from, uint256 value);
     event MinterAdded(address indexed minter);
     event MinterRemoved(address indexed minter);
+    event Staked(address indexed staker, uint256 amount);
+    event Unstaked(address indexed staker, uint256 amount);
 
     modifier onlyMinter() {
         require(isMinter[msg.sender], "Not a minter");
@@ -76,14 +84,14 @@ contract Cowl is Ownable {
         });
 
         // Mint a staking NFT as a marker
-        reputationNFT.mintWithURI(
-            msg.sender,
-            string(
-                abi.encodePacked("Staking NFT #", uint2str(stakingNFTIdCounter))
-            ),
-            stakingNFTIdCounter
-        );
-        stakingNFTIdCounter++;
+        // reputationNFT.mintWithURI(
+        //     msg.sender,
+        //     string(
+        //         abi.encodePacked("Staking NFT #", uint2str(stakingNFTIdCounter))
+        //     ),
+        //     stakingNFTIdCounter
+        // );
+        // stakingNFTIdCounter++;
 
         emit Staked(msg.sender, _amount);
     }
@@ -107,14 +115,6 @@ contract Cowl is Ownable {
         stakingData[msg.sender] = StakingInfo(0, 0);
 
         emit Unstaked(msg.sender, stakedAmount);
-    }
-
-    // Helper function to mint COWL tokens
-    function mint(address _to, uint256 _value) internal {
-        totalSupply = totalSupply.add(_value);
-        balanceOf[_to] = balanceOf[_to].add(_value);
-        emit Mint(_to, _value);
-        emit Transfer(address(0), _to, _value);
     }
 
     function transfer(
@@ -208,5 +208,24 @@ contract Cowl is Ownable {
     function removeMinter(address _minter) public onlyOwner {
         isMinter[_minter] = false;
         emit MinterRemoved(_minter);
+    }
+
+    function uint2str(uint256 _i) internal pure returns (string memory) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint256 j = _i;
+        uint256 length;
+        while (j != 0) {
+            length++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(length);
+        uint256 k = length - 1;
+        while (_i != 0) {
+            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
+            _i /= 10;
+        }
+        return string(bstr);
     }
 }

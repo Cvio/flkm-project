@@ -3,8 +3,8 @@ pragma solidity ^0.8.7;
 
 // import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "../../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 contract EternalLightBase is ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;

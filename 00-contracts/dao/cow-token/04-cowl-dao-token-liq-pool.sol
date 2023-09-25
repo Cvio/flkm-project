@@ -5,10 +5,10 @@ pragma solidity ^0.8.7;
 // import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 // import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract LiquidityPool is ERC20, ReentrancyGuard {
     using SafeMath for uint256;
