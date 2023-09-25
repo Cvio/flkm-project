@@ -127,30 +127,30 @@ The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutioniz
 
 ## **4. Extended Data Flow & Interactions Diagram:**
 
-/_ plaintext
-+------------------+ +-----------------+ +---------------------+
-| Data Providers | --> | Dataset Staking | --> | NFT & Reputation |
-| (Researchers, | | & Listing | | Management |
-| Businesses) | <-- | | <-- | |
-+------------------+ +-----------------+ +---------------------+
-^ | |
-| | |
-| | |
-| v v
-+---------------------+ +-------------------+ +------------------+
-| Model Developers | | Model Training | | DAO Governance |
-| & Algorithm Experts | | & Access | | & Voting |
-+---------------------+ +-------------------+ +------------------+
-| | |
-| | |
-v v v
-+----------------------+ +----------------------+ +------------------+
-| Reward & Token | | Decentralized | | Ecosystem |
-| Distribution | | Computing & | | Modifications & |
-| & DeFi Services | | Algorithm | | Enhancement |
-+----------------------+ | Optimization | +------------------+
-+----------------------+
-_/
+```
+ +------------------+     +-----------------+     +---------------------+
+ |   Data Providers | --> | Dataset Staking | --> | NFT & Reputation    |
+ | (Researchers,    |     | & Listing       |     | Management          |
+ | Businesses)      | <-- |                 | <-- |                     |
+ +------------------+     +-----------------+     +---------------------+
+                 ^               |                       |
+                 |               |                       |
+                 |               |                       |
+                 |               v                       v
+  +---------------------+   +-------------------+    +------------------+
+  |  Model Developers   |   | Model Training    |    | DAO Governance   |
+  | & Algorithm Experts |   | & Access          |    | & Voting         |
+  +---------------------+   +-------------------+    +------------------+
+                 |               |                       |
+                 |               |                       |
+                 v               v                       v
+  +----------------------+   +----------------------+   +------------------+
+  |    Reward & Token    |   | Decentralized       |   | Ecosystem        |
+  |    Distribution      |   | Computing &         |   | Modifications &  |
+  |    & DeFi Services   |   | Algorithm           |   | Enhancement      |
+  +----------------------+   | Optimization        |   +------------------+
+                             +----------------------+
+```
 
 ## **5. Data Flow Diagram Including On-Chain and Off-Chain Components:**
 
