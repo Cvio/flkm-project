@@ -1,0 +1,10 @@
+<div *ngIf="resources.length > 0; else noResources">
+  <div *ngFor="let resource of resources">
+    <!-- Render each resource here, modify as per your design -->
+    <div>{{ resource.name }}</div>
+    <!-- add more details as per your needs -->
+  </div>
+</div>
+<ng-template #noResources>
+  <div>No Resources Available.</div>
+</ng-template>

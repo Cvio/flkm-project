@@ -27,7 +27,11 @@
     <!-- Dataset Selection (you can customize this part based on your requirements) -->
     <div class="form-group">
       <label for="dataset">Select or Upload Dataset:</label>
-      <input type="file" id="dataset" formControlName="dataset" accept=".csv" />
+      <button (click)="navigateToMarketplace()">
+        Select Dataset from Marketplace
+      </button>
+
+      <!-- <input type="file" id="dataset" formControlName="dataset" accept=".csv" /> -->
     </div>
 
     <!-- Model Type -->

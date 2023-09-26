@@ -11,6 +11,25 @@ header {
   margin-bottom: 40px;
 }
 
+/* .content {
+  background-image: url('../../../images/1.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-position: top center;
+} */
+
+/* body {
+  margin: 0;
+  padding: 0;
+  background-image: url('../../../images/2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+} */
+
+
 footer {
   margin-top: 40px;
   text-align: center;

@@ -51,6 +51,9 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  navigateToUploadResource(): void {
+    this.router.navigate(['/upload-resource']); // Use the correct path to your Upload Resource component.
+  }
 
   logout() {
     // Remove the token from localStorage

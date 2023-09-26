@@ -6,10 +6,10 @@
 // const jwt = require("jsonwebtoken");
 // const User = require("./models/user.model"); // Import User model
 // const Project = require("./models/project.model");
-// const authenticate = require("./auth/authMiddleware");
+// const authenticate = require("./auth/auth-middleware");
 // const crypto = require("crypto");
 
-// const accountRoutes = require("./routes/accountRoutes");
+// const account-routes = require("./routes/account-routes");
 // // const authRoutes = require("./routes/authRoutes");
 // // const projectRoutes = require("./routes/projectRoutes");
 // // const transferRoutes = require("./routes/transferRoutes");
@@ -76,7 +76,7 @@
 //     console.error("Error connecting to MongoDB:", error.message);
 //   });
 
-// app.use("/api", accountRoutes);
+// app.use("/api", account-routes);
 // // app.use("/api", authRoutes);
 // // app.use("/api", projectRoutes);
 // // app.use("/api", transferRoutes);

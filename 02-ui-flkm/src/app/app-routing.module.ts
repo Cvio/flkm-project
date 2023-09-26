@@ -7,6 +7,9 @@ import { LoginComponent } from './components/Authentication/Login/login.componen
 import { DashboardComponent } from './components/Dashboard/Dashboard/dashboard.component';
 import { CreateProjectComponent } from './components/Project/CreateProject/create-project/create-project.component';
 import { UserWalletComponent } from './components/User/UserWallet/user-wallet.component';
+import { ResourceListComponent } from './components/Marketplace/ResourceList/resource-list/resource-list.component';
+import { MarketplaceComponent } from './components/Marketplace/marketplace.component';
+import { UploadResourceComponent } from './components/Marketplace/UploadResource/upload-resource.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -20,6 +23,9 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'create-project', component: CreateProjectComponent },
   { path: 'user-wallet', component: CreateProjectComponent },
+  { path: 'marketplace', component: MarketplaceComponent },
+  { path: 'resource-list', component: ResourceListComponent },
+  { path: 'upload-resource', component: UploadResourceComponent },
 ];
 
 @NgModule({

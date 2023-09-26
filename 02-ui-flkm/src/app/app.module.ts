@@ -12,6 +12,9 @@ import { FlnProjectButtonComponent } from './components/Project/CreateProject/fl
 import { VerifyEmailComponent } from './components/Authentication/VerifyEmail/verify-email.component';
 import { RegistrationConfirmationComponent } from './components/Authentication/Registration/registration-confirmation/registration-confirmation.component';
 import { UserWalletComponent } from './components/User/UserWallet/user-wallet.component';
+import { ResourceListComponent } from './components/Marketplace/ResourceList/resource-list/resource-list.component';
+import { MarketplaceComponent } from './components/Marketplace/marketplace.component';
+import { UploadResourceComponent } from './components/Marketplace/UploadResource/upload-resource.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { UserWalletComponent } from './components/User/UserWallet/user-wallet.co
     VerifyEmailComponent,
     RegistrationConfirmationComponent,
     UserWalletComponent,
+    ResourceListComponent,
+    MarketplaceComponent,
+    UploadResourceComponent,
   ],
   imports: [
     BrowserModule,

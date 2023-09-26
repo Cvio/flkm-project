@@ -5,14 +5,15 @@ const app = express();
 
 const User = require("./models/user.model"); // Import User model
 const Project = require("./models/project.model");
-const authenticate = require("./auth/authMiddleware");
+const authenticate = require("./auth/auth-middleware");
 const crypto = require("crypto");
 
-const accountRoutes = require("./routes/accountRoutes");
-const authRoutes = require("./routes/authRoutes");
-const etherRoutes = require("./routes/etherRoutes");
+const accountRoutes = require("./routes/account-routes");
+const authRoutes = require("./routes/auth-routes");
+const etherRoutes = require("./routes/ether-routes");
 // const flkmRoutes = require("./routes/flkmRoutes");
-const projectRoutes = require("./routes/projectRoutes");
+const projectRoutes = require("./routes/project-routes");
+const resourceRoutes = require("./routes/resource-routes");
 // const transferRoutes = require("./routes/transferRoutes");
 
 const multer = require("multer"); // import multer
@@ -82,6 +83,7 @@ app.use("/api", authRoutes);
 app.use("/api", etherRoutes);
 //app.use("/api", flkmRoutes);
 app.use("/api", projectRoutes);
+app.use("/api", resourceRoutes);
 // app.use("/api", transferRoutes);
 
 app.post("/token", async (req, res) => {

@@ -1,6 +1,9 @@
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'; // for using forms
 import { ProjectService } from '../../../../services/Project/CreateProject/project.service';
+import { SharedService } from '../../../../services/Shared/shared.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,11 +15,13 @@ export class CreateProjectComponent implements OnInit {
   projectForm: FormGroup; // If using forms
   projectData: any; // Variable to store project data
   createError: string | null = null; // Variable to store error message
+  private destroy$ = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {
     this.projectForm = this.formBuilder.group({
       projectName: ['', Validators.required],
@@ -40,6 +45,17 @@ export class CreateProjectComponent implements OnInit {
       acceptanceCriteria: [0.8], // default to 0.8, other options: 0.9, 0.95
       ownerId: [''],
     });
+
+    this.sharedService
+      .getSelectedDatasetId()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((id) => {
+        if (id) {
+          this.projectForm.patchValue({
+            dataset: id,
+          });
+        }
+      });
   }
   createProject(): void {
     if (this.projectForm.valid) {
@@ -64,9 +80,18 @@ export class CreateProjectComponent implements OnInit {
         .subscribe(projectCreationObserver);
     }
   }
+  navigateToMarketplace(): void {
+    // Assuming that the route to the marketplace component is '/marketplace'
+    this.router.navigate(['/marketplace']);
+  }
 
   onSubmit(): void {
     // You can call createProject() when the user submits the form
     this.createProject();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

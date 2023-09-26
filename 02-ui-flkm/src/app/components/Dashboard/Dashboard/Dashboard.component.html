@@ -7,7 +7,10 @@
     <p>Balance: {{ accountBalance || "Zero!" }} &#x210F;</p>
     <app-fln-project-button></app-fln-project-button>
   </div>
-
+  <div *ngIf="userData">
+    <!-- Upload Resource Button -->
+    <button (click)="navigateToUploadResource()">Upload Resource</button>
+  </div>
   <!-- Projects Table Section -->
   <div *ngIf="projectData?.length; else noProjects" class="project-table">
     <table>
