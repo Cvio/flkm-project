@@ -9,6 +9,7 @@ import { SharedService } from '../../services/Shared/shared.service';
 })
 export class MarketplaceComponent implements OnInit {
   public resources: any[] = [];
+  public error: string | null = null;
 
   constructor(
     private resourceListService: ResourceListService,
@@ -26,7 +27,7 @@ export class MarketplaceComponent implements OnInit {
     );
   }
 
-  selectDataset(selectedId: string): void {
-    this.sharedService.setSelectedDatasetId(selectedId);
+  selectDataset(datasetId: string): void {
+    this.sharedService.setSelectedDatasetId(datasetId);
   }
 }

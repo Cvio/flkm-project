@@ -9,12 +9,20 @@ import { ResourceListService } from '../../../../services/Marketplace/ResourceLi
 })
 export class ResourceListComponent implements OnInit {
   public resources: any[] = [];
+  public error: string | null = null;
 
   constructor(private resourceListService: ResourceListService) {}
 
   ngOnInit(): void {
-    this.resourceListService
-      .getResourceList()
-      .subscribe((data) => (this.resources = data));
+    this.resourceListService.getResourceList().subscribe(
+      (data) => {
+        console.log('Data Returned: ', data); // Log the returned data to the console
+        this.resources = data;
+      },
+      (error) => {
+        console.error('Error fetching resources: ', error); // Log errors to the console
+        this.error = 'Error fetching resources!';
+      }
+    );
   }
 }

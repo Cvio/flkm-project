@@ -1,0 +1,18 @@
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.resource-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.resource-name {
+  font-weight: bold;
+}
+
+.resource-details {
+  margin-top: 5px;
+}

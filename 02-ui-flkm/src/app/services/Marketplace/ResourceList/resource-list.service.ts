@@ -13,4 +13,8 @@ export class ResourceListService {
   getResourceList(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/resource-list`);
   }
+
+  getResources(resourceId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/fetch-resources/${resourceId}`);
+  }
 }
