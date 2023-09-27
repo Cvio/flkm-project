@@ -37,8 +37,8 @@ The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutioniz
 ### **c. NFTs:**
 
 - **Types:**
-  - Dataset NFTs (Based on Reputation Level)
-  - EternalLightArtifact (DAO Membership NFT)
+  - Dataset NFTs (Based on user reputation Level + attributes)
+  - EternalLightArtifact (DAO Membership)
 - **Attributes:**
   - Dynamic and reflect user contributions and reputation.
 - **Usage:**
@@ -62,6 +62,10 @@ The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutioniz
   - Accessing services within the ecosystem.
 - **Value:**
   - Derived from the ecosystem’s demand and supply dynamics.
+    
+### **f. CowlDAO Tokens:
+- **Distribution:
+  - sarsar 
 
 ## **3. Ecosystem Dynamics and Interactions:**
 
