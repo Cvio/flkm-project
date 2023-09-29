@@ -8,7 +8,7 @@ const Project = require("./models/project.model");
 const authenticate = require("./auth/auth-middleware");
 const crypto = require("crypto");
 
-const accountRoutes = require("./routes/account-routes");
+const userRoutes = require("./routes/user-routes");
 const authRoutes = require("./routes/auth-routes");
 const etherRoutes = require("./routes/ether-routes");
 // const flkmRoutes = require("./routes/flkmRoutes");
@@ -78,7 +78,7 @@ mongoose
     console.error("Error connecting to MongoDB:", error.message);
   });
 
-app.use("/api", accountRoutes);
+app.use("/api", userRoutes);
 app.use("/api", authRoutes);
 app.use("/api", etherRoutes);
 //app.use("/api", flkmRoutes);

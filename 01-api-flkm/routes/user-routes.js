@@ -6,14 +6,14 @@ const authenticate = require("../auth/auth-middleware");
 const User = require("../models/user.model"); // Import your User model
 const Project = require("../models/project.model");
 
-const accountRoutes = express.Router();
+const userRoutes = express.Router();
 
 // Test endpoint
-accountRoutes.get("/account-test", (req, res) => {
+userRoutes.get("/account-test", (req, res) => {
   res.send("Hello, account!");
 });
 
-accountRoutes.get("/user", async (req, res) => {
+userRoutes.get("/user", async (req, res) => {
   try {
     res.status(201).json({ message: "User data here" });
   } catch (error) {
@@ -22,7 +22,7 @@ accountRoutes.get("/user", async (req, res) => {
   }
 });
 
-accountRoutes.get("/user-data", authenticate, async (req, res) => {
+userRoutes.get("/user-data", authenticate, async (req, res) => {
   try {
     const userId = req.user.userId;
 
@@ -41,7 +41,7 @@ accountRoutes.get("/user-data", authenticate, async (req, res) => {
   }
 });
 
-accountRoutes.get("/user-projects", authenticate, async (req, res) => {
+userRoutes.get("/user-projects", authenticate, async (req, res) => {
   try {
     // access the authenticated user's data using req.user
     const userId = req.user.userId;
@@ -65,4 +65,4 @@ accountRoutes.get("/user-projects", authenticate, async (req, res) => {
 
 // Additional account-related routes can be added here
 
-module.exports = accountRoutes;
+module.exports = userRoutes;

@@ -1,1 +1,24 @@
-<p>resource-list works!</p>
+<div *ngIf="resources.length > 0; else noDataTemplate">
+  <table>
+    <thead>
+      <tr>
+        <th>Collection Name</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let resource of resources">
+        <td>{{ resource.collectionName }}</td>
+        <td>
+          <div *ngFor="let data of resource.data">
+            <span>{{ data | json }}</span>
+            <!-- You can modify the display format as you prefer -->
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noDataTemplate>
+  <p>No resources found.</p>
+</ng-template>

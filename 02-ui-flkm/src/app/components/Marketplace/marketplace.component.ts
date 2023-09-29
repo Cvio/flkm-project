@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ResourceListService } from '../../services/Marketplace/ResourceList/resource-list.service';
 import { SharedService } from '../../services/Shared/shared.service';
+import { MarketplaceService } from '../../services/Marketplace/marketplace.service';
+import { UserService } from '../../services/User/UserData/user-data.service';
 
 @Component({
   selector: 'app-marketplace',
@@ -13,16 +15,19 @@ export class MarketplaceComponent implements OnInit {
 
   constructor(
     private resourceListService: ResourceListService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private marketplaceService: MarketplaceService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.resourceListService.getResourceList().subscribe(
+    const username = 'asdfasdf'; // Replace with actual username
+    this.marketplaceService.getResourcesByUsername(username).subscribe(
       (data) => {
         this.resources = data;
       },
       (error) => {
-        console.error('Error fetching resources', error);
+        console.error('Error fetching resources:', error);
       }
     );
   }

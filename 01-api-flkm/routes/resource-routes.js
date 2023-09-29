@@ -33,6 +33,7 @@ resourceRoutes.post(
   upload.single("file"),
   async (req, res) => {
     try {
+      console.log(req.body);
       const ownerId = req.body.ownerId; // Get the owner ID from the request body
       const resourceId = uuidv4(); // Generate a unique Resource ID
       const filePath = req.file.path; // Get the path of the uploaded file
@@ -102,6 +103,40 @@ resourceRoutes.get("/resource-list", async (req, res) => {
       // Retrieve documents (or any other necessary data) from the dynamic collection
       const docs = await DynamicModel.find({}).lean(); // .lean() for performance, optional
       resources.push({ collectionName: collection.name, data: docs }); // Adjust the structure as needed
+    }
+
+    res.status(200).json(resources);
+  } catch (error) {
+    console.error("Error fetching resources: ", error);
+    res.status(500).send("Error fetching resources");
+  }
+});
+
+resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
+  try {
+    //const { ownerId } = req.params; // Retrieve the ownerId from the route parameters
+
+    const ownerId = "asdfasdf";
+    // Get the list of all collections (dynamic tables) in the database
+    const collectionNames = await mongoose.connection.db
+      .listCollections()
+      .toArray();
+
+    let resources = [];
+
+    for (const collection of collectionNames) {
+      // Create a dynamic model for each collection
+      const DynamicModel = mongoose.model(
+        collection.name,
+        new mongoose.Schema({}, { strict: false })
+      );
+
+      // Retrieve documents where ownerId matches the provided ownerId
+      const docs = await DynamicModel.find({ ownerId }).lean(); // .lean() for performance, optional
+
+      if (docs.length > 0) {
+        resources.push({ collectionName: collection.name, data: docs }); // Adjust the structure as needed
+      }
     }
 
     res.status(200).json(resources);

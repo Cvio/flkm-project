@@ -14,6 +14,8 @@ export class ResourceListComponent implements OnInit {
   constructor(private resourceListService: ResourceListService) {}
 
   ngOnInit(): void {
+    this.loadResourcesByOwnerId('asdfasdf');
+
     this.resourceListService.getResourceList().subscribe(
       (data) => {
         console.log('Data Returned: ', data); // Log the returned data to the console
@@ -22,6 +24,17 @@ export class ResourceListComponent implements OnInit {
       (error) => {
         console.error('Error fetching resources: ', error); // Log errors to the console
         this.error = 'Error fetching resources!';
+      }
+    );
+  }
+
+  loadResourcesByOwnerId(ownerId: string): void {
+    this.resourceListService.getResourceListByOwner(ownerId).subscribe(
+      (data) => {
+        this.resources = data;
+      },
+      (error) => {
+        console.error('Error fetching resources:', error);
       }
     );
   }

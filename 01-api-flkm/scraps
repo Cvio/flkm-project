@@ -9,7 +9,7 @@
 // const authenticate = require("./auth/auth-middleware");
 // const crypto = require("crypto");
 
-// const account-routes = require("./routes/account-routes");
+// const user-routes = require("./routes/user-routes");
 // // const authRoutes = require("./routes/authRoutes");
 // // const projectRoutes = require("./routes/projectRoutes");
 // // const transferRoutes = require("./routes/transferRoutes");
@@ -76,7 +76,7 @@
 //     console.error("Error connecting to MongoDB:", error.message);
 //   });
 
-// app.use("/api", account-routes);
+// app.use("/api", user-routes);
 // // app.use("/api", authRoutes);
 // // app.use("/api", projectRoutes);
 // // app.use("/api", transferRoutes);
