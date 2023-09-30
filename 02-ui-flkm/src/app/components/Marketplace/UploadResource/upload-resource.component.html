@@ -9,4 +9,7 @@
   <!-- ... -->
 
   <button type="submit">Upload</button>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
 </form>
