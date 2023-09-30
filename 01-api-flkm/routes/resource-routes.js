@@ -5,6 +5,8 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 
+const ResourceMetadata = require("../models/resource-metadata");
+
 resourceRoutes = express.Router();
 
 // Connect to MongoDB
@@ -14,8 +16,8 @@ resourceRoutes = express.Router();
 // });
 
 // Define a Schema
-const ResourceSchema = new mongoose.Schema({}, { strict: false });
-const Resource = mongoose.model("Resource", ResourceSchema, "resources");
+// const ResourceSchema = new mongoose.Schema({}, { strict: false });
+// const Resource = mongoose.model("Resource", ResourceSchema, "resources");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -53,10 +55,18 @@ resourceRoutes.post(
         .on("end", async () => {
           // Dynamically create a model with the specified collection name
           const DynamicModel = mongoose.model(name, ResourceSchema, name);
-
           // Store in MongoDB under the specified collection name
           await DynamicModel.insertMany(results);
 
+          // Create and save a new metadata document
+          const newResourceMetadata = new ResourceMetadata({
+            collectionName: name,
+            ownerId: ownerId,
+            createdAt: new Date(),
+            // more metadata fields?
+          });
+
+          await newResourceMetadata.save(); // Save the metadata document.
           res
             .status(200)
             .send(
@@ -129,7 +139,7 @@ resourceRoutes.get("/resource-list", async (req, res) => {
 
       // Retrieve documents (or any other necessary data) from the dynamic collection
       const docs = await DynamicModel.find({}).lean(); // .lean() for performance, optional
-      resources.push({ collectionName: collection.name, data: docs }); // Adjust the structure as needed
+      resources.push({ collectionName: collection.name, data: docs });
     }
 
     res.status(200).json(resources);
@@ -141,25 +151,45 @@ resourceRoutes.get("/resource-list", async (req, res) => {
 
 resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
   try {
-    console.log("Resource route reached!"); // Log to confirm the route is being reached
     const { ownerId } = req.params;
-    console.log("Owner ID: ", ownerId);
 
-    // Query the "resources" collection to find documents where ownerId matches the provided ownerId
-    const resources = await Resource.find({ ownerId }).lean();
+    // Query the metadata collection to find documents where ownerId matches the provided ownerId
+    const resourcesMetadata = await ResourceMetadata.find({ ownerId }).lean();
 
-    if (resources.length > 0) {
-      res.status(200).json(resources);
+    if (resourcesMetadata.length > 0) {
+      res.status(200).json(resourcesMetadata);
     } else {
       res
         .status(200)
         .json({ message: "No resources found for provided ownerId" });
     }
   } catch (error) {
-    console.error("Error fetching resources: ", error);
-    res.status(500).send("Error fetching resources");
+    console.error("Error fetching resource metadata: ", error);
+    res.status(500).send("Error fetching resource metadata");
   }
 });
+
+// resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
+//   try {
+//     console.log("Resource route reached!"); // Log to confirm the route is being reached
+//     const { ownerId } = req.params;
+//     console.log("Owner ID: ", ownerId);
+
+//     // Query the "resources" collection to find documents where ownerId matches the provided ownerId
+//     const resources = await Resource.find({ ownerId }).lean();
+
+//     if (resources.length > 0) {
+//       res.status(200).json(resources);
+//     } else {
+//       res
+//         .status(200)
+//         .json({ message: "No resources found for provided ownerId" });
+//     }
+//   } catch (error) {
+//     console.error("Error fetching resources: ", error);
+//     res.status(500).send("Error fetching resources");
+//   }
+// });
 
 // resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
 //   try {
