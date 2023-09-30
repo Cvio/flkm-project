@@ -63,7 +63,7 @@ mongoose
 
     // Fetch documents from a collection and display them
     const MyModel = mongoose.model(
-      "MyModel",
+      "resources",
       new mongoose.Schema({ name: String })
     );
 

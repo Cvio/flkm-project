@@ -14,8 +14,8 @@ resourceRoutes = express.Router();
 // });
 
 // Define a Schema
-const CsvSchema = new mongoose.Schema({}, { strict: false });
-const CsvModel = mongoose.model("Csv", CsvSchema);
+const ResourceSchema = new mongoose.Schema({}, { strict: false });
+const Resource = mongoose.model("Resource", ResourceSchema, "resources");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -37,47 +37,27 @@ resourceRoutes.post(
       const ownerId = req.body.ownerId; // Get the owner ID from the request body
       const resourceId = uuidv4(); // Generate a unique Resource ID
       const filePath = req.file.path; // Get the path of the uploaded file
-      const buffer = req.file.buffer; // Get the buffer of the uploaded file
+      // const buffer = req.file.buffer; // Get the buffer of the uploaded file
 
       const results = [];
-      const Schema = mongoose.Schema;
-      const DynamicSchema = new Schema(
-        {
-          ownerId: { type: String, required: true },
-        },
-        { strict: false, collection: resourceId }
-      );
-      const DynamicModel = mongoose.model(resourceId, DynamicSchema);
 
       // Parse CSV from file path
       fs.createReadStream(filePath)
         .pipe(csvParser())
         .on("data", (data) => {
           data.ownerId = ownerId;
+          data.resourceId = resourceId; // Add resourceId to each row
           results.push(data);
         })
         .on("end", async () => {
-          // Store in MongoDB
-          await DynamicModel.insertMany(results);
+          // Store in MongoDB under the "resources" collection
+          await Resource.insertMany(results);
           res
             .status(200)
             .send(
               `CSV Uploaded and Stored in MongoDB with Resource ID: ${resourceId}`
             );
         });
-
-      // Parse CSV from buffer
-      //   fs.createReadStream(buffer)
-      //     .pipe(csvParser())
-      //     .on("data", (data) => results.push(data))
-      //     .on("end", async () => {
-      //       await DynamicModel.insertMany(results); // Save to the new collection
-      //       res
-      //         .status(200)
-      //         .send(
-      //           `CSV Uploaded and Stored in MongoDB with Resource ID: ${resourceId}`
-      //         );
-      //     });
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -114,37 +94,67 @@ resourceRoutes.get("/resource-list", async (req, res) => {
 
 resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
   try {
-    //const { ownerId } = req.params; // Retrieve the ownerId from the route parameters
+    console.log("Resource route reached!"); // Log to confirm the route is being reached
+    const { ownerId } = req.params;
+    console.log("Owner ID: ", ownerId);
 
-    const ownerId = "asdfasdf";
-    // Get the list of all collections (dynamic tables) in the database
-    const collectionNames = await mongoose.connection.db
-      .listCollections()
-      .toArray();
+    // Query the "resources" collection to find documents where ownerId matches the provided ownerId
+    const resources = await Resource.find({ ownerId }).lean();
 
-    let resources = [];
-
-    for (const collection of collectionNames) {
-      // Create a dynamic model for each collection
-      const DynamicModel = mongoose.model(
-        collection.name,
-        new mongoose.Schema({}, { strict: false })
-      );
-
-      // Retrieve documents where ownerId matches the provided ownerId
-      const docs = await DynamicModel.find({ ownerId }).lean(); // .lean() for performance, optional
-
-      if (docs.length > 0) {
-        resources.push({ collectionName: collection.name, data: docs }); // Adjust the structure as needed
-      }
+    if (resources.length > 0) {
+      res.status(200).json(resources);
+    } else {
+      res
+        .status(200)
+        .json({ message: "No resources found for provided ownerId" });
     }
-
-    res.status(200).json(resources);
   } catch (error) {
     console.error("Error fetching resources: ", error);
     res.status(500).send("Error fetching resources");
   }
 });
+
+// resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
+//   try {
+//     console.log("Resource route reached!"); // Log to confirm the route is being reached
+//     const { ownerId } = req.params;
+//     console.log("Owner ID: ", ownerId);
+
+//     //const ownerId = "asdfasdf";
+//     // Get the list of all collections (dynamic tables) in the database
+//     const collectionNames = await mongoose.connection.db
+//       .listCollections()
+//       .toArray();
+
+//     let resources = [];
+
+//     // For each collection
+//     for (const collection of collectionNames) {
+//       let DynamicModel;
+//       // Check if the model has already been compiled
+//       if (mongoose.models[collection.name]) {
+//         // If yes, use the existing model
+//         DynamicModel = mongoose.models[collection.name];
+//       } else {
+//         // If not, create a new model
+//         DynamicModel = mongoose.model(
+//           collection.name,
+//           new mongoose.Schema({}, { strict: false })
+//         );
+//       }
+//       // Continue with the rest of the logic
+//       const docs = await DynamicModel.find({ ownerId }).lean();
+//       if (docs.length > 0) {
+//         resources.push({ collectionName: collection.name, data: docs });
+//       }
+//     }
+
+//     res.status(200).json(resources);
+//   } catch (error) {
+//     console.error("Error fetching resources: ", error);
+//     res.status(500).send("Error fetching resources");
+//   }
+// });
 
 resourceRoutes.get("/fetch-resources/:resourceId", async (req, res) => {
   try {
