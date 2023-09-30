@@ -58,21 +58,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(async () => {
+  .then(() => {
     console.log("Connected to MongoDB");
-
-    // Fetch documents from a collection and display them
-    const MyModel = mongoose.model(
-      "resources",
-      new mongoose.Schema({ name: String })
-    );
-
-    try {
-      const documents = await MyModel.find({});
-      console.log("Fetched documents:", documents);
-    } catch (error) {
-      console.error("Error fetching documents:", error.message);
-    }
   })
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error.message);

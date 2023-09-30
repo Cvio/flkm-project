@@ -69,9 +69,9 @@ resourceRoutes.post(
           await newResourceMetadata.save(); // Save the metadata document.
           res
             .status(200)
-            .send(
-              `CSV Uploaded and Stored in MongoDB with Resource ID: ${resourceId}`
-            );
+            .json({
+              message: `CSV Uploaded and Stored in MongoDB with Resource ID: ${resourceId}`,
+            });
         });
     } catch (error) {
       res.status(500).send(error.message);
