@@ -3,6 +3,7 @@ import { ResourceListService } from '../../services/Marketplace/ResourceList/res
 import { SharedService } from '../../services/Shared/shared.service';
 import { MarketplaceService } from '../../services/Marketplace/marketplace.service';
 import { UserService } from '../../services/User/UserData/user-data.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-marketplace',
@@ -12,6 +13,7 @@ import { UserService } from '../../services/User/UserData/user-data.service';
 export class MarketplaceComponent implements OnInit {
   public resources: any[] = [];
   public error: string | null = null;
+  ownerId: string | null = null;
 
   constructor(
     private resourceListService: ResourceListService,
@@ -21,18 +23,20 @@ export class MarketplaceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const username = 'asdfasdf'; // Replace with actual username
-    this.marketplaceService.getResourcesByUsername(username).subscribe(
-      (data) => {
-        this.resources = data;
-      },
-      (error) => {
-        console.error('Error fetching resources:', error);
-      }
-    );
-  }
-
-  selectDataset(datasetId: string): void {
-    this.sharedService.setSelectedDatasetId(datasetId);
+    // this.userService
+    //   .getCurrentUserId()
+    //   .pipe(
+    //     switchMap((userId) =>
+    //       this.resourceListService.getResourceListByOwner(userId)
+    //     )
+    //   )
+    //   .subscribe(
+    //     (data) => {
+    //       this.resources = data;
+    //     },
+    //     (error) => {
+    //       console.error('Error:', error);
+    //     }
+    //   );
   }
 }

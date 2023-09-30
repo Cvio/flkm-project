@@ -14,8 +14,8 @@ export class ResourceListService {
     return this.http.get<any>(`${this.apiUrl}/resource-list`);
   }
 
-  getResourceListByOwner(owner: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/resource-list/${owner}`);
+  getResourceListByOwner(ownerId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/resource-list/${ownerId}`);
   }
 
   getResources(resourceId: string): Observable<any> {

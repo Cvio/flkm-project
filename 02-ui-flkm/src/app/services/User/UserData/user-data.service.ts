@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,18 @@ export class UserService {
       headers,
     });
   }
+
+  // Define a new method in your user-data.service.ts
+  getCurrentUserId(): Observable<string | undefined> {
+    return this.getUserData().pipe(
+      map((response) => {
+        console.log('UserData:', response); // Log the entire response object.
+        console.log('User Id from response:', response.userData?._id); // Log the _id from the nested userData object.
+        return response.userData?._id; // Accessing _id from the nested userData object.
+      })
+    );
+  }
+
   getProjectData(): Observable<any> {
     // Retrieve the token from localStorage
     const token = localStorage.getItem('authToken');

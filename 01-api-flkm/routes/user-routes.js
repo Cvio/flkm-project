@@ -13,15 +13,6 @@ userRoutes.get("/account-test", (req, res) => {
   res.send("Hello, account!");
 });
 
-userRoutes.get("/user", async (req, res) => {
-  try {
-    res.status(201).json({ message: "User data here" });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ message: "Error getting user data" });
-  }
-});
-
 userRoutes.get("/user-data", authenticate, async (req, res) => {
   try {
     const userId = req.user.userId;
