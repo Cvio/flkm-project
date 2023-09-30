@@ -1,0 +1,46 @@
+/* Container styling */
+div {
+    width: 80%;
+    margin: auto;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table Header Styling */
+thead th {
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+    padding: 8px;
+}
+
+/* Table Body Styling */
+tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
+}
+
+/* Table Data Styling */
+td {
+    padding: 12px;
+}
+
+/* No Resource Paragraph Styling */
+p {
+    color: #555;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}

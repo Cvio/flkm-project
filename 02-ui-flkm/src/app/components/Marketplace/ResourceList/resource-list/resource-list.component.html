@@ -1,24 +1,24 @@
-<div *ngIf="resources.length > 0; else noDataTemplate">
+<div *ngIf="resources.length; else noResources">
   <table>
     <thead>
       <tr>
-        <th>Collection Name</th>
-        <th>Data</th>
+        <th>Name</th>
+        <th>OwnerId</th>
+        <th>Columns</th>
+        <!-- Add more headings as per your needs -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let resource of resources">
-        <td>{{ resource.collectionName }}</td>
-        <td>
-          <div *ngFor="let data of resource.data">
-            <span>{{ data | json }}</span>
-            <!-- You can modify the display format as you prefer -->
-          </div>
-        </td>
+        <td>{{ resource.name }}</td>
+        <td>{{ resource.ownerId }}</td>
+        <td>{{ resource.columns | json }}</td>
+        <!-- You can use the json pipe to display object properties, adjust as needed -->
+        <!-- Add more cells as per your needs -->
       </tr>
     </tbody>
   </table>
 </div>
-<ng-template #noDataTemplate>
+<ng-template #noResources>
   <p>No resources found.</p>
 </ng-template>

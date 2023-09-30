@@ -34,10 +34,11 @@ resourceRoutes.post(
   async (req, res) => {
     try {
       console.log(req.body);
-      const ownerId = req.body.ownerId; // Get the owner ID from the request body
-      const resourceId = uuidv4(); // Generate a unique Resource ID
-      const filePath = req.file.path; // Get the path of the uploaded file
-      // const buffer = req.file.buffer; // Get the buffer of the uploaded file
+      const ownerId = req.body.ownerId;
+      const resourceId = uuidv4();
+      const resourceAttributes = JSON.parse(req.body.resourceAttributes);
+      const name = resourceAttributes.name;
+      const filePath = req.file.path;
 
       const results = [];
 
@@ -46,12 +47,16 @@ resourceRoutes.post(
         .pipe(csvParser())
         .on("data", (data) => {
           data.ownerId = ownerId;
-          data.resourceId = resourceId; // Add resourceId to each row
+          data.resourceId = resourceId;
           results.push(data);
         })
         .on("end", async () => {
-          // Store in MongoDB under the "resources" collection
-          await Resource.insertMany(results);
+          // Dynamically create a model with the specified collection name
+          const DynamicModel = mongoose.model(name, ResourceSchema, name);
+
+          // Store in MongoDB under the specified collection name
+          await DynamicModel.insertMany(results);
+
           res
             .status(200)
             .send(
@@ -63,6 +68,48 @@ resourceRoutes.post(
     }
   }
 );
+
+// resourceRoutes.post(
+//   "/upload-resource",
+//   upload.single("file"),
+//   async (req, res) => {
+//     try {
+//       console.log(req.body);
+//       const ownerId = req.body.ownerId; // Get the owner ID from the request body
+//       const resourceId = uuidv4(); // Generate a unique Resource ID
+//       const resourceAttributes = JSON.parse(req.body.resourceAttributes); // Get the resource attributes from the request body
+//       const name = resourceAttributes.name; // Get the name of the resource
+//       const filePath = req.file.path; // Get the path of the uploaded file
+//       // const buffer = req.file.buffer; // Get the buffer of the uploaded file
+
+//       const results = [];
+
+//       // Parse CSV from file path
+//       fs.createReadStream(filePath)
+//         .pipe(csvParser())
+//         .on("data", (data) => {
+//           data.ownerId = ownerId;
+//           data.resourceId = resourceId; // Add resourceId to each row
+//           data.name = name; // Add name to each row
+//           results.push(data);
+//         })
+//         .on("end", async () => {
+//           // Store in MongoDB under the "name" collection
+//           // const collection = db.collection(name);
+//           // await collection.insertMany(results);
+//           // Store in MongoDB under the "resources" collection
+//           await Resource.insertMany(results);
+//           res
+//             .status(200)
+//             .send(
+//               `CSV Uploaded and Stored in MongoDB with Resource ID: ${resourceId}`
+//             );
+//         });
+//     } catch (error) {
+//       res.status(500).send(error.message);
+//     }
+//   }
+// );
 
 resourceRoutes.get("/resource-list", async (req, res) => {
   try {

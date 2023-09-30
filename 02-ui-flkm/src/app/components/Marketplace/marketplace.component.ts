@@ -22,21 +22,5 @@ export class MarketplaceComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    // this.userService
-    //   .getCurrentUserId()
-    //   .pipe(
-    //     switchMap((userId) =>
-    //       this.resourceListService.getResourceListByOwner(userId)
-    //     )
-    //   )
-    //   .subscribe(
-    //     (data) => {
-    //       this.resources = data;
-    //     },
-    //     (error) => {
-    //       console.error('Error:', error);
-    //     }
-    //   );
-  }
+  ngOnInit(): void {}
 }

@@ -1,6 +1,7 @@
 // resource-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ResourceListService } from '../../../../services/Marketplace/ResourceList/resource-list.service';
+import { UserService } from '../../../../services/User/UserData/user-data.service';
 
 @Component({
   selector: 'app-resource-list',
@@ -11,19 +12,22 @@ export class ResourceListComponent implements OnInit {
   public resources: any[] = [];
   public error: string | null = null;
 
-  constructor(private resourceListService: ResourceListService) {}
+  constructor(
+    private resourceListService: ResourceListService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.loadResourcesByOwnerId('asdfasdf');
-
-    this.resourceListService.getResourceList().subscribe(
-      (data) => {
-        console.log('Data Returned: ', data); // Log the returned data to the console
-        this.resources = data;
+    this.userService.getCurrentUserId().subscribe(
+      (ownerId) => {
+        if (ownerId) {
+          this.loadResourcesByOwnerId(ownerId); // Call the loadResourcesByOwnerId method with the received ownerId.
+        } else {
+          console.error('ownerId is undefined');
+        }
       },
       (error) => {
-        console.error('Error fetching resources: ', error); // Log errors to the console
-        this.error = 'Error fetching resources!';
+        console.error('Error getting user ID:', error);
       }
     );
   }
