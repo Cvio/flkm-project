@@ -4,15 +4,15 @@
       <tr>
         <th>Name</th>
         <th>OwnerId</th>
-        <th>Columns</th>
+        <th>Date Created</th>
         <!-- Add more headings as per your needs -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let resource of resources">
-        <td>{{ resource.name }}</td>
+        <td>{{ resource.collectionName }}</td>
         <td>{{ resource.ownerId }}</td>
-        <td>{{ resource.columns | json }}</td>
+        <td>{{ resource.createdAt | date }}</td>
         <!-- You can use the json pipe to display object properties, adjust as needed -->
         <!-- Add more cells as per your needs -->
       </tr>

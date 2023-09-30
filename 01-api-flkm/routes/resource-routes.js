@@ -16,7 +16,7 @@ resourceRoutes = express.Router();
 // });
 
 // Define a Schema
-// const ResourceSchema = new mongoose.Schema({}, { strict: false });
+const ResourceSchema = new mongoose.Schema({}, { strict: false });
 // const Resource = mongoose.model("Resource", ResourceSchema, "resources");
 
 const storage = multer.diskStorage({
@@ -151,21 +151,23 @@ resourceRoutes.get("/resource-list", async (req, res) => {
 
 resourceRoutes.get("/resource-list/:ownerId", async (req, res) => {
   try {
+    console.log("Resource route reached!");
     const { ownerId } = req.params;
+    console.log("Owner ID: ", ownerId);
 
-    // Query the metadata collection to find documents where ownerId matches the provided ownerId
-    const resourcesMetadata = await ResourceMetadata.find({ ownerId }).lean();
+    // Query the "ResourceMetadata" collection to find documents where ownerId matches the provided ownerId
+    const metadata = await ResourceMetadata.find({ ownerId }).lean();
 
-    if (resourcesMetadata.length > 0) {
-      res.status(200).json(resourcesMetadata);
+    if (metadata.length > 0) {
+      res.status(200).json(metadata);
     } else {
       res
         .status(200)
         .json({ message: "No resources found for provided ownerId" });
     }
   } catch (error) {
-    console.error("Error fetching resource metadata: ", error);
-    res.status(500).send("Error fetching resource metadata");
+    console.error("Error fetching resources: ", error);
+    res.status(500).send("Error fetching resources");
   }
 });
 

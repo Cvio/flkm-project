@@ -34,8 +34,8 @@ export class ResourceListComponent implements OnInit {
 
   loadResourcesByOwnerId(ownerId: string): void {
     this.resourceListService.getResourceListByOwner(ownerId).subscribe(
-      (data) => {
-        this.resources = data;
+      (metadata) => {
+        this.resources = metadata;
       },
       (error) => {
         console.error('Error fetching resources:', error);

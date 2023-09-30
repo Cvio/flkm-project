@@ -11,7 +11,6 @@ import { UserService } from '../../../services/User/UserData/user-data.service';
 export class UploadResourceComponent implements OnInit {
   uploadResourceForm!: FormGroup;
   selectedFile: File | null = null;
-  successMessage: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +21,7 @@ export class UploadResourceComponent implements OnInit {
   ngOnInit(): void {
     this.uploadResourceForm = this.formBuilder.group({
       name: ['', Validators.required],
-      ownerId: ['', Validators.required], // ownerId should be part of form group initially
+      ownerId: ['', Validators.required],
     });
 
     this.userService.getCurrentUserId().subscribe(
@@ -58,14 +57,8 @@ export class UploadResourceComponent implements OnInit {
       );
 
       this.uploadResourceService.uploadResource(formData).subscribe(
-        (response) => {
-          console.log('Resource uploaded successfully:', response);
-          this.successMessage = 'Resource uploaded successfully!'; // Set the success message here
-        },
-        (error) => {
-          console.error('Error uploading resource:', error);
-          this.successMessage = null; // Clear the success message in case of an error
-        }
+        (response) => console.log('Resource uploaded successfully:', response),
+        (error) => console.error('Error uploading resource:', error)
       );
     }
   }
