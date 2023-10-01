@@ -12,7 +12,9 @@ import { switchMap } from 'rxjs/operators';
 })
 export class MarketplaceComponent implements OnInit {
   public resources: any[] = [];
+  public filteredResources: any[] = [];
   public error: string | null = null;
+  public searchTerm: string = ''; // to hold the value of the search input
   ownerId: string | null = null;
 
   constructor(
@@ -22,5 +24,24 @@ export class MarketplaceComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Let's assume you fetch resources here and assign it to this.resources
+    // this.filteredResources should be the one used in the template to display resources.
+    this.filteredResources = [...this.resources];
+  }
+  // marketplace.component.ts
+  filterResources(): void {
+    const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
+    this.filteredResources = this.resources.filter((resource) =>
+      resource.name.toLowerCase().includes(lowerCaseSearchTerm)
+    );
+  }
+
+  onSearch(): void {
+    this.filterResources();
+  }
+
+  selectResource(resourceId: string): void {
+    // Logic to associate the selected resource with the user's project.
+  }
 }

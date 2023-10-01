@@ -1,17 +1,15 @@
-<div *ngIf="error" class="error">{{ error }}</div>
-
-<div *ngIf="resources.length > 0; else noResources">
-  <div *ngFor="let resource of resources" class="resource-card">
-    <!-- Render each resource here, modify as per your design -->
-    <div class="resource-name">{{ resource.name }}</div>
-    <div class="resource-details">
-      <!-- add more details as per your needs -->
-      <div class="resource-owner">Owner: {{ resource.ownerId }}</div>
-      <!-- add buttons/links for user interaction -->
-    </div>
+<div class="search-container">
+  <input
+    [(ngModel)]="searchTerm"
+    (input)="onSearch()"
+    placeholder="Search resources..."
+  />
+</div>
+<div class="marketplace">
+  <!-- marketplace.component.html -->
+  <div *ngFor="let resource of filteredResources" class="resource-card">
+    <h3>{{ resource.name }}</h3>
+    <p>{{ resource.description }}</p>
+    <button (click)="selectResource(resource.id)">Select</button>
   </div>
 </div>
-
-<ng-template #noResources>
-  <div>No Resources Available.</div>
-</ng-template>

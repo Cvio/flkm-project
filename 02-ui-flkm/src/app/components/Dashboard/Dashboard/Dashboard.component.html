@@ -1,45 +1,27 @@
 <div class="dashboard">
-  <h2>Welcome to Your Dashboard</h2>
-  <!-- User Info Section -->
-  <div *ngIf="userData">
+  <div class="header">
+    <h2>Welcome to Your Dashboard</h2>
+  </div>
+  <div class="user-info" *ngIf="userData">
     <p>Name: {{ userName || "J" }}</p>
     <p>Email: {{ userEmail || "Doe" }}</p>
     <p>Balance: {{ accountBalance || "Zero!" }} &#x210F;</p>
-    <app-fln-project-button></app-fln-project-button>
   </div>
-  <div *ngIf="userData">
-    <!-- Upload Resource Button -->
+  <div class="navigation">
+    <button (click)="createProject()">Create Project</button>
     <button (click)="navigateToUploadResource()">Upload Resource</button>
+    <button (click)="navigateToMarketplace()">Go to Marketplace</button>
+    <button (click)="logout()">Logout</button>
   </div>
   <!-- Projects Table Section -->
-  <div *ngIf="projectData?.length; else noProjects" class="project-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Project Title</th>
-          <th>Description</th>
-          <th>Dataset</th>
-          <!-- Add more headers as per your project data structure -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let project of projectData">
-          <td>{{ project.projectName || "." }}</td>
-          <td>{{ project.description || "|" }}</td>
-          <td>{{ project.dataset || "~" }}</td>
-          <!-- Bind more data as per your project data structure -->
-        </tr>
-      </tbody>
-    </table>
+  <div class="project-section" *ngIf="projectData?.length; else noProjects">
+    <!-- Projects Table Here -->
   </div>
-
-  <!-- Define the ng-template for noProjects -->
+  <!-- No Projects Template -->
   <ng-template #noProjects>
-    <div>
+    <div class="no-projects">
       <p>Are you ready to add your first project?</p>
-      <p>Click the button above to get started!</p>
+      <p>Click the 'Create Project' button above to get started!</p>
     </div>
   </ng-template>
-
-  <button (click)="logout()">Logout</button>
 </div>

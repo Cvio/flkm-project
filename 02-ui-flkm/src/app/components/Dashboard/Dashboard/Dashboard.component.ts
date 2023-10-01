@@ -54,7 +54,16 @@ export class DashboardComponent implements OnInit {
   navigateToUploadResource(): void {
     this.router.navigate(['/upload-resource']); // Use the correct path to your Upload Resource component.
   }
+  navigateToMarketplace(): void {
+    this.router.navigate(['/marketplace']); // Navigate to Marketplace. Adjust the path as per your routing configuration.
+  }
 
+  createProject(): void {
+    // This function will be called when the button is clicked.
+    // Add logic here to initiate the project creation process.
+    console.log('Button clicked! Start project creation.');
+    this.router.navigate(['/create-project']);
+  }
   logout() {
     // Remove the token from localStorage
     localStorage.removeItem('authToken');
