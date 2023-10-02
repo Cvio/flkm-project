@@ -1,231 +1,104 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
-import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
-contract Cowl is Ownable {
-    using SafeMath for uint256;
+contract Cowl is Initializable, ERC20Upgradeable, AccessControlUpgradeable {
+    using SafeMathUpgradeable for uint256;
 
-    string public name;
-    string public symbol;
-    uint8 public decimals;
-    uint256 public totalSupply;
-    mapping(address => uint256) public balanceOf;
-    mapping(address => mapping(address => uint256)) public allowance;
-    mapping(address => bool) public isMinter;
-    mapping(address => bool) public isStaker;
-
-    address public reputationNFT; // Add Reputation NFT contract reference here
-    uint256 public stakingRewardRate; // Rewards per staked dataset
-    uint256 public stakingDuration; // Duration for which staking is locked
-    uint256 public stakingNFTIdCounter; // Counter for staking NFTs
-
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant STAKER_ROLE = keccak256("STAKER_ROLE");
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+    
+    uint256 public stakingRewardRate;
+    uint256 public stakingDuration;
+    
     struct StakingInfo {
         uint256 stakedAmount;
         uint256 stakingStartTime;
     }
 
-    mapping(address => StakingInfo) public stakingData; // Mapping of stakers to staking info
+    mapping(address => StakingInfo) public stakingData; 
 
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
-    event Mint(address indexed to, uint256 value);
-    event Burn(address indexed from, uint256 value);
-    event MinterAdded(address indexed minter);
-    event MinterRemoved(address indexed minter);
     event Staked(address indexed staker, uint256 amount);
-    event Unstaked(address indexed staker, uint256 amount);
+    event Unstaked(address indexed staker, uint256 amount, uint256 reward);
 
-    modifier onlyMinter() {
-        require(isMinter[msg.sender], "Not a minter");
-        _;
-    }
-
-    constructor(
+    function initialize(
         string memory _name,
         string memory _symbol,
         uint8 _decimals,
-        uint256 _initialSupply
-    ) {
-        name = _name;
-        symbol = _symbol;
-        decimals = _decimals;
-        totalSupply = _initialSupply.mul(10 ** _decimals);
-        balanceOf[msg.sender] = totalSupply;
-        isMinter[msg.sender] = true; // The contract creator is the initial minter
-        stakingRewardRate = 100; // Adjust the reward rate as needed
-        stakingDuration = 30 days; // Adjust the staking duration as needed
-        stakingNFTIdCounter = 1;
+        uint256 _initialSupply,
+        address admin
+    ) public initializer {
+        __ERC20_init(_name, _symbol);
+        __AccessControl_init();
+        
+        _setupDecimals(_decimals);
+        _mint(admin, _initialSupply * (10 ** uint256(_decimals)));
+        
+        _setupRole(ADMIN_ROLE, admin);
+        _setupRole(MINTER_ROLE, admin); 
+        _setupRole(STAKER_ROLE, admin); 
+
+        stakingRewardRate = 100; // example rate, can be adjusted as per the need.
+        stakingDuration = 30 days; // example duration, can be adjusted as per the need.
     }
 
-    function stake(uint256 _amount) external {
+    function stake(uint256 _amount) external onlyRole(STAKER_ROLE) {
         require(_amount > 0, "Amount must be greater than 0");
         require(
-            balanceOf[msg.sender] >= _amount,
+            balanceOf(msg.sender) >= _amount,
             "Insufficient balance to stake"
         );
 
-        // Lock the staked amount for the staking duration
-        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_amount);
-        stakingData[msg.sender] = StakingInfo({
-            stakedAmount: _amount,
-            stakingStartTime: block.timestamp
-        });
-
-        // Mint a staking NFT as a marker
-        // reputationNFT.mintWithURI(
-        //     msg.sender,
-        //     string(
-        //         abi.encodePacked("Staking NFT #", uint2str(stakingNFTIdCounter))
-        //     ),
-        //     stakingNFTIdCounter
-        // );
-        // stakingNFTIdCounter++;
+        _burn(msg.sender, _amount);
+        
+        StakingInfo storage info = stakingData[msg.sender];
+        info.stakedAmount = info.stakedAmount.add(_amount);
+        info.stakingStartTime = block.timestamp;
 
         emit Staked(msg.sender, _amount);
     }
 
-    function unstake() external {
+    function unstake() external onlyRole(STAKER_ROLE) {
+        StakingInfo storage info = stakingData[msg.sender];
+
         require(
-            stakingData[msg.sender].stakingStartTime.add(stakingDuration) <=
-                block.timestamp,
+            info.stakingStartTime.add(stakingDuration) <= block.timestamp,
             "Staking duration not met"
         );
 
-        uint256 stakedAmount = stakingData[msg.sender].stakedAmount;
+        uint256 stakedAmount = info.stakedAmount;
+        uint256 reward = stakedAmount.mul(stakingRewardRate).div(100);
 
-        // Calculate rewards based on staked amount and reward rate
-        uint256 rewards = stakedAmount.mul(stakingRewardRate).div(100);
+        _mint(msg.sender, stakedAmount.add(reward));
+        delete stakingData[msg.sender];
 
-        // Mint COWL tokens as rewards
-        mint(msg.sender, rewards);
-
-        // Unlock the staked amount
-        stakingData[msg.sender] = StakingInfo(0, 0);
-
-        emit Unstaked(msg.sender, stakedAmount);
+        emit Unstaked(msg.sender, stakedAmount, reward);
     }
 
-    function transfer(
-        address _to,
-        uint256 _value
-    ) public returns (bool success) {
-        require(balanceOf[msg.sender] >= _value, "Insufficient balance");
-        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
-        balanceOf[_to] = balanceOf[_to].add(_value);
-        emit Transfer(msg.sender, _to, _value);
-        return true;
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+        _mint(to, amount);
     }
 
-    function transferFrom(
-        address _from,
-        address _to,
-        uint256 _value
-    ) public returns (bool success) {
-        require(
-            allowance[_from][msg.sender] >= _value,
-            "Insufficient allowance"
-        );
-        require(balanceOf[_from] >= _value, "Insufficient balance");
-        balanceOf[_from] = balanceOf[_from].sub(_value);
-        balanceOf[_to] = balanceOf[_to].add(_value);
-        allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
-        emit Transfer(_from, _to, _value);
-        return true;
+    function burn(uint256 amount) public {
+        require(hasRole(MINTER_ROLE, msg.sender) || hasRole(STAKER_ROLE, msg.sender), "Must have minter or staker role to burn");
+        _burn(_msgSender(), amount);
+    }
+    
+    function addRole(address account, bytes32 role) public onlyRole(ADMIN_ROLE) {
+        grantRole(role, account);
+    }
+    
+    function removeRole(address account, bytes32 role) public onlyRole(ADMIN_ROLE) {
+        revokeRole(role, account);
     }
 
-    function approve(
-        address _spender,
-        uint256 _value
-    ) public returns (bool success) {
-        allowance[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        return true;
-    }
-
-    function increaseAllowance(
-        address _spender,
-        uint256 _addedValue
-    ) public returns (bool success) {
-        allowance[msg.sender][_spender] = allowance[msg.sender][_spender].add(
-            _addedValue
-        );
-        emit Approval(msg.sender, _spender, allowance[msg.sender][_spender]);
-        return true;
-    }
-
-    function decreaseAllowance(
-        address _spender,
-        uint256 _subtractedValue
-    ) public returns (bool success) {
-        require(
-            allowance[msg.sender][_spender] >= _subtractedValue,
-            "Decreased allowance below zero"
-        );
-        allowance[msg.sender][_spender] = allowance[msg.sender][_spender].sub(
-            _subtractedValue
-        );
-        emit Approval(msg.sender, _spender, allowance[msg.sender][_spender]);
-        return true;
-    }
-
-    function mint(
-        address _to,
-        uint256 _value
-    ) public onlyMinter returns (bool success) {
-        totalSupply = totalSupply.add(_value);
-        balanceOf[_to] = balanceOf[_to].add(_value);
-        emit Mint(_to, _value);
-        emit Transfer(address(0), _to, _value);
-        return true;
-    }
-
-    function burn(uint256 _value) public returns (bool success) {
-        require(balanceOf[msg.sender] >= _value, "Insufficient balance");
-        totalSupply = totalSupply.sub(_value);
-        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
-        emit Burn(msg.sender, _value);
-        emit Transfer(msg.sender, address(0), _value);
-        return true;
-    }
-
-    function addMinter(address _minter) public onlyOwner {
-        isMinter[_minter] = true;
-        emit MinterAdded(_minter);
-    }
-
-    function removeMinter(address _minter) public onlyOwner {
-        isMinter[_minter] = false;
-        emit MinterRemoved(_minter);
-    }
-
-    function uint2str(uint256 _i) internal pure returns (string memory) {
-        if (_i == 0) {
-            return "0";
-        }
-        uint256 j = _i;
-        uint256 length;
-        while (j != 0) {
-            length++;
-            j /= 10;
-        }
-        bytes memory bstr = new bytes(length);
-        uint256 k = length - 1;
-        while (_i != 0) {
-            bstr[k--] = bytes1(uint8(48 + (_i % 10)));
-            _i /= 10;
-        }
-        return string(bstr);
+    function setStakingParameters(uint256 newRate, uint256 newDuration) public onlyRole(ADMIN_ROLE) {
+        stakingRewardRate = newRate;
+        stakingDuration = newDuration;
     }
 }

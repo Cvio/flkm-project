@@ -1,131 +1,117 @@
-pragma solidity ^0.8.7;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-// import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-// import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-contract DatasetStaking is ReentrancyGuard {
-    using SafeMath for uint256;
+interface IDatasetNFTContract {
+    function ownerOf(uint256 tokenId) external view returns (address);
+}
 
-    IERC20 public cowlToken;
+contract DataStakingContract is Initializable, AccessControlUpgradeable, ReentrancyGuardUpgradeable {
+    
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
-    uint256 public constant requiredStakeAmount = 100 * 1e18;
-    uint256 public constant initialReputation = 50;
+    IERC20Upgradeable public rewardToken;
+    IDatasetNFTContract public datasetNFTContract;
 
-    struct Dataset {
-        address owner;
-        uint256 stakedAmount;
-        uint256 reputation;
-        bool isActive;
-        string ipfsHash;
-        string filecoinDealId;
+    uint256 public rewardRate; // Reward rate in token per second per token staked.
+    uint256 public bonusRate; // Hypothetical additional parameter to adjust rewards.
+
+    struct Stake {
+        uint256 tokenId;
+        uint256 timestamp;
     }
 
-    mapping(address => Dataset) public datasets;
-    mapping(address => uint256) public rewards;
+    mapping(address => Stake[]) public stakes;
 
-    event DatasetStaked(address indexed user, uint256 amount, string ipfsHash);
-    event DatasetUpdated(
-        address indexed dataset,
-        uint256 reputation,
-        bool isActive
-    );
-    event RewardClaimed(address indexed user, uint256 amount);
-    event DatasetTransitionedToFilecoin(
-        address indexed dataset,
-        string filecoinDealId
-    );
+    event Staked(address indexed user, uint256 tokenId);
+    event Unstaked(address indexed user, uint256 tokenId, uint256 reward);
+    event RewardRateChanged(uint256 newRate);
 
-    modifier onlyOwnerOf(address _dataset) {
-        require(
-            msg.sender == datasets[_dataset].owner,
-            "Not the owner of the dataset"
-        );
+    function initialize(
+        address _admin,
+        address _rewardToken,
+        address _datasetNFTContract,
+        uint256 _initialRewardRate
+    ) initializer public {
+        __AccessControl_init();
+        __ReentrancyGuard_init();
+
+        rewardToken = IERC20Upgradeable(_rewardToken);
+        datasetNFTContract = IDatasetNFTContract(_datasetNFTContract);
+        rewardRate = _initialRewardRate;
+        
+        _setupRole(ADMIN_ROLE, _admin);
+    }
+
+    modifier onlyAdmin() {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Not an admin");
         _;
     }
 
-    constructor(address _cowlToken) {
-        cowlToken = IERC20(_cowlToken);
+    function setRewardRate(uint256 newRate) external onlyAdmin {
+        rewardRate = newRate;
+        emit RewardRateChanged(newRate);
     }
 
-    function stakeDataset(string memory _ipfsHash) external nonReentrant {
-        uint256 balance = cowlToken.balanceOf(msg.sender);
-        require(balance >= requiredStakeAmount, "Insufficient balance");
+    function stake(uint256 tokenId) external nonReentrant {
+        address owner = datasetNFTContract.ownerOf(tokenId);
+        require(owner == msg.sender, "Not the owner of the token");
 
-        require(
-            cowlToken.transferFrom(
-                msg.sender,
-                address(this),
-                requiredStakeAmount
-            ),
-            "Transfer failed"
-        );
+        stakes[msg.sender].push(Stake(tokenId, block.timestamp));
 
-        // Create a new dataset entry
-        datasets[msg.sender] = Dataset({
-            owner: msg.sender,
-            stakedAmount: requiredStakeAmount,
-            reputation: initialReputation,
-            isActive: true,
-            ipfsHash: _ipfsHash,
-            filecoinDealId: ""
-        });
-
-        emit DatasetStaked(msg.sender, requiredStakeAmount, _ipfsHash);
+        emit Staked(msg.sender, tokenId);
     }
 
-    function updateDataset(
-        address _dataset,
-        uint256 _newReputation,
-        bool _newStatus
-    ) external onlyOwnerOf(_dataset) {
-        Dataset storage dataset = datasets[_dataset];
-        dataset.reputation = _newReputation;
-        dataset.isActive = _newStatus;
+    function unstake(uint256 tokenId) external nonReentrant {
+        address owner = datasetNFTContract.ownerOf(tokenId);
+        require(owner == msg.sender, "Not the owner of the token");
 
-        emit DatasetUpdated(_dataset, _newReputation, _newStatus);
+        uint256 reward = _calculateReward(msg.sender, tokenId);
+        _removeStake(msg.sender, tokenId);
+        
+        rewardToken.transfer(msg.sender, reward); // Do a safe transfer in production code.
+        
+        emit Unstaked(msg.sender, tokenId, reward);
     }
 
-    function transitionToFilecoin(
-        address _dataset,
-        string memory _filecoinDealId
-    ) external onlyOwnerOf(_dataset) {
-        Dataset storage dataset = datasets[_dataset];
-        require(dataset.isActive, "Dataset is not active");
-
-        dataset.filecoinDealId = _filecoinDealId;
-
-        emit DatasetTransitionedToFilecoin(_dataset, _filecoinDealId);
+    function _removeStake(address staker, uint256 tokenId) internal {
+        uint256 len = stakes[staker].length;
+        for (uint256 i = 0; i < len; i++) {
+            if (stakes[staker][i].tokenId == tokenId) {
+                if (i != len - 1) {
+                    stakes[staker][i] = stakes[staker][len - 1];
+                }
+                stakes[staker].pop();
+                break;
+            }
+        }
     }
 
-    function claimRewards() external nonReentrant {
-        uint256 reward = rewards[msg.sender];
-        require(reward > 0, "No rewards available");
-
-        rewards[msg.sender] = 0;
-        require(cowlToken.transfer(msg.sender, reward), "Transfer failed");
-
-        emit RewardClaimed(msg.sender, reward);
+    function setRewardRate(uint256 newRate) external onlyAdmin {
+        rewardRate = newRate;
+        emit RewardRateChanged(newRate);
+    }
+    
+    function setBonusRate(uint256 newRate) external onlyAdmin {
+        bonusRate = newRate;
+        emit BonusRateChanged(newRate);
     }
 
-    function withdrawStake() external nonReentrant {
-        Dataset storage dataset = datasets[msg.sender];
-        require(dataset.stakedAmount > 0, "No staked amount available");
-
-        uint256 amountToWithdraw = dataset.stakedAmount;
-        dataset.stakedAmount = 0;
-        require(
-            cowlToken.transfer(msg.sender, amountToWithdraw),
-            "Transfer failed"
-        );
+    function _calculateReward(address staker, uint256 tokenId) internal view returns (uint256) {
+        uint256 len = stakes[staker].length;
+        for (uint256 i = 0; i < len; i++) {
+            if (stakes[staker][i].tokenId == tokenId) {
+                uint256 timeStaked = block.timestamp - stakes[staker][i].timestamp;
+                return timeStaked * rewardRate; // In real implementation, you might have different reward rates for different tokens.
+            }
+        }
+        revert("Token not staked");
     }
 
-    // Additional functionalities and internal logic can be added here.
-    // - Access Management
-    // - Rewards Calculation
-    // - Penalty & Reputation System
-    // - Interaction with other smart contracts
+    event RewardRateChanged(uint256 newRate);
+    event BonusRateChanged(uint256 newRate);
 }
