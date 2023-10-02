@@ -1,25 +1,81 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-// import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-// import "@openzeppelin/contracts/security/Pausable.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract CowlDaoToken is ERC20, Ownable, ReentrancyGuard, Pausable {
-    using SafeMath for uint256;
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-    struct StakeInfo {
-        uint256 amount;
-        uint256 timestamp;
+/**
+ * @title CowlDaoToken
+ * @dev This contract manages the staking, proposals, delegations, and governance levels of the token holders.
+ */
+contract CowlDaoToken is
+    Initializable,
+    ERC20Upgradeable,
+    AccessControlUpgradeable,
+    ReentrancyGuardUpgradeable,
+    PausableUpgradeable,
+    OwnableUpgradeable
+{
+    using SafeMathUpgradeable for uint256;
+
+    // --------------------- Initializer ---------------------
+    // Making contract upgradeable - removing constructor and using initializer
+    function initialize(
+        string memory name,
+        string memory symbol
+    ) public initializer {
+        // Initialize base contracts.
+        __ERC20_init(name, symbol);
+        __AccessControl_init();
+        __ReentrancyGuard_init();
+        __Pausable_init();
+        __Ownable_init();
+
+        // Initialize contract-specific logic.
+        daoName = name; // DAO name
+        daoSymbol = symbol; // DAO symbol
+
+        // Minting initial supply to the message sender (supposedly the deployer)
+        _mint(_msgSender(), INITIAL_SUPPLY * (10 ** decimals()));
+
+        // Setting up roles and permissions.
+        _setupRole(ADMIN_ROLE, _msgSender()); // Assigning the admin role to the deployer.
+
+        // Setting initial values for contract-specific variables.
+        minStakeToPropose = 100 * (10 ** decimals()); // Initial minimum stake to propose
+        rewardPool = 0; // Initial value for the reward pool
+        _stopped = false; // Initial circuit breaker state
     }
+
+    // --------------------- Variables Section ---------------------
+    // The below section organizes and groups related variables together for clarity and readability
+
+    // ** Basic Token and DAO Information **
+    string private daoName;
+    string private daoSymbol;
+    uint256 private INITIAL_SUPPLY = 1000000000;
+    uint256 public rewardPool; // Rewards available for stakers
+
+    // ** Security and Emergency Handling **
+    bool private _stopped = false; // Circuit breaker variable to stop contract in emergencies
+
+    // ** Roles and Governance Levels **
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     enum GovernanceLevel {
         Member,
@@ -27,26 +83,35 @@ contract CowlDaoToken is ERC20, Ownable, ReentrancyGuard, Pausable {
         Council
     }
 
+    // enum GovernanceLevel {
+    //     Zelator, // Initial level, seekers or students of the wisdom
+    //     Theoricus, // Have acquired theoretical knowledge and understanding
+    //     Practicus, // Those who practice and apply the teachings
+    //     Philosophus, // Have attained deeper understanding and insight into the philosophies and principles
+    //     AdeptusMinor, // Have achieved a level of mastery and understanding of the inner teachings
+    //     AdeptusMajor, // Possess a higher level of mastery and have more responsibilities and roles
+    //     AdeptusExemptus, // Achieved complete mastery and understanding of the teachings, exempt from the usual duties
+    //     Magister, // A master of the order, a guide, and teacher to others
+    //     Magus, // A high master, having profound understanding and wisdom, guides the overall direction
+    //     Ipsissimus // The highest level, symbolic of complete self-realization and unity with the all
+    // }
     mapping(address => GovernanceLevel) public governanceLevels;
-    mapping(address => StakeInfo) public stakers;
-    mapping(address => address) public delegates; // User delegations
 
-    // Event emissions
-    event GovernanceLevelChanged(
-        address indexed holder,
-        GovernanceLevel newLevel
-    );
-    event Staked(address indexed staker, uint256 amount);
-    event Unstaked(address indexed staker, uint256 amount);
-    event Voted(address indexed voter, uint256 proposalId, bool support);
-    event ProposalCreated(
-        uint256 indexed proposalId,
-        address proposer,
-        string description
-    );
-    event DelegateChanged(address indexed delegator, address indexed delegatee);
+    // ** Staking and Proposals **
+    uint256 public lockPeriod = 30 days;
+    Proposal[] public proposals;
+    uint256 public proposalVotingDuration = 1 days;
+    uint256 public minStakeToPropose = 100 * (10 ** decimals()); // Minimum tokens to stake to be able to propose
+
+    struct StakeInfo {
+        uint256 amount;
+        uint256 timestamp;
+    }
+    mapping(address => StakeInfo) public stakers;
 
     struct Proposal {
+        address contractAddress;
+        bytes callData;
         string description;
         uint256 forVotes;
         uint256 againstVotes;
@@ -54,31 +119,148 @@ contract CowlDaoToken is ERC20, Ownable, ReentrancyGuard, Pausable {
         bool executed;
     }
 
+    // ** Delegation and Voting **
+    mapping(address => address) public delegates;
     mapping(uint256 => mapping(address => bool)) public voters;
+    mapping(address => address) public delegateRequests;
 
-    Proposal[] public proposals;
-    uint256 public proposalVotingDuration = 1 days;
-    uint256 public minStakeToPropose = 100 * (10 ** decimals()); // Minimum tokens to stake to be able to propose
+    // ** Advanced Utility and Functions **
+    mapping(address => uint256) public votingPower; // Multi-tier governance voting power
 
-    constructor() ERC20("CowlDAO", "CDAO") {
-        _mint(msg.sender, 1000000 * (10 ** decimals()));
+    // --------------------- Events Section ---------------------
+    // The below section organizes and groups related events together for clarity and readability
+
+    event GovernanceLevelChanged(
+        address indexed holder,
+        GovernanceLevel newLevel
+    );
+    event MinStakeToProposeChanged(uint256 newMinStake);
+    event Staked(address indexed staker, uint256 amount);
+    event Unstaked(address indexed staker, uint256 amount);
+    event ProposalCreated(
+        uint256 indexed proposalId,
+        address proposer,
+        string description
+    );
+    event Voted(address indexed voter, uint256 proposalId, bool support);
+    event DelegateChanged(
+        address indexed delegator,
+        address indexed delegatee,
+        uint256 balance
+    );
+    event StateChanged(address indexed by, string change);
+    event ProposalFailed(uint256 indexed proposalId);
+    event ProposalExecuted(uint256 indexed proposalId);
+    event DelegateRequest(address indexed delegator, address indexed delegatee);
+
+    // --------------------- Constructor ---------------------
+    // A constructor that sets up basic token properties and mint the initial supply to the msg.sender
+    // Making contract upgradeable - removing constructor and using initializer
+
+    // constructor() ERC20Upgradeable(daoName, daoSymbol) {
+    //     _mint(msg.sender, INITIAL_SUPPLY * (10 ** decimals()));
+    //     minStakeToPropose = 100 * (10 ** decimals());
+    //     _setupRole(ADMIN_ROLE, msg.sender); // Set up the admin role
+    // }
+
+    // --------------------- Modifier Section ---------------------
+    // The below section organizes and groups related modifiers together for clarity and readability
+
+    modifier stopInEmergency() {
+        require(!_stopped, "Contract is stopped due to an emergency");
+        _;
+    }
+
+    modifier onlyInEmergency() {
+        require(_stopped, "Can only be accessed during an emergency");
+        _;
+    }
+
+    modifier onlyAdmin() {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Caller is not an admin");
+        _;
+    }
+
+    // --------------------- Function Section ---------------------
+    // The below section organizes and groups related functions together for clarity and readability
+
+    // ** Administrative Functions **
+
+    function setMinStakeToPropose(
+        uint256 _minStakeToPropose
+    ) external onlyAdmin {
+        minStakeToPropose = _minStakeToPropose;
+        emit MinStakeToProposeChanged(_minStakeToPropose);
     }
 
     function setGovernanceLevel(
         address holder,
         GovernanceLevel newLevel
-    ) external onlyOwner {
+    ) external onlyAdmin {
         governanceLevels[holder] = newLevel;
         emit GovernanceLevelChanged(holder, newLevel);
     }
 
-    function propose(string memory description) external {
+    function toggleCircuitBreaker() external onlyAdmin {
+        _stopped = !_stopped;
+        emit StateChanged(msg.sender, _stopped ? "stopped" : "started");
+    }
+
+    // ** Staking and Reward Distribution Functions **
+
+    function stake(uint256 amount) external nonReentrant stopInEmergency {
+        _burn(msg.sender, amount); // Remove the staked tokens from circulation
+        stakers[msg.sender].amount += amount;
+        stakers[msg.sender].timestamp = block.timestamp;
+
+        // Reward users based on stake amount and duration
+        uint256 reward = calculateReward(msg.sender);
+        _mint(msg.sender, reward); // Mint new tokens as rewards
+        rewardPool -= reward; // Reduce the rewardPool balance
+
+        emit Staked(msg.sender, amount);
+    }
+
+    function unstake(uint256 amount) external nonReentrant stopInEmergency {
+        require(
+            stakers[msg.sender].amount >= amount,
+            "Not enough tokens staked"
+        );
+
+        uint256 penalty = 0;
+        if (block.timestamp < stakers[msg.sender].timestamp + lockPeriod) {
+            penalty = amount / 10; // 10% penalty if within lock period
+        }
+
+        uint256 amountAfterPenalty = amount - penalty;
+        _mint(msg.sender, amountAfterPenalty); // Return the unstaked tokens to circulation
+        stakers[msg.sender].amount -= amount;
+
+        emit Unstaked(msg.sender, amountAfterPenalty);
+    }
+
+    function calculateReward(address staker) internal view returns (uint256) {
+        StakeInfo memory info = stakers[staker];
+        uint256 reward = (info.amount * (block.timestamp - info.timestamp)) /
+            (365 days); // Placeholder example logic
+        return reward;
+    }
+
+    // ** Proposal Creation and Execution Functions **
+
+    function propose(
+        address _contractAddress,
+        bytes memory _callData,
+        string memory description
+    ) external {
         require(
             stakers[msg.sender].amount >= minStakeToPropose,
             "Insufficient staked amount to propose"
         );
 
         Proposal memory newProposal = Proposal({
+            contractAddress: _contractAddress,
+            callData: _callData,
             description: description,
             forVotes: 0,
             againstVotes: 0,
@@ -90,90 +272,91 @@ contract CowlDaoToken is ERC20, Ownable, ReentrancyGuard, Pausable {
         emit ProposalCreated(proposals.length - 1, msg.sender, description);
     }
 
-    function vote(uint256 proposalId, bool support) external nonReentrant {
-        require(proposalId < proposals.length, "Invalid proposal ID");
-        Proposal storage proposal = proposals[proposalId];
-        require(block.timestamp < proposal.endTime, "Voting period has ended");
+    function vote(uint256 proposalId, bool support) external stopInEmergency {
         require(!voters[proposalId][msg.sender], "Already voted");
-
-        uint256 weight = stakers[msg.sender].amount;
         voters[proposalId][msg.sender] = true;
 
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp < proposal.endTime, "Voting period has ended");
+
+        uint256 weight = votingPower[msg.sender];
         if (support) proposal.forVotes += weight;
         else proposal.againstVotes += weight;
 
         emit Voted(msg.sender, proposalId, support);
     }
 
-    function executeProposal(
-        uint256 proposalId
-    ) external onlyOwner nonReentrant {
-        require(proposalId < proposals.length, "Invalid proposal ID");
+    function executeProposal(uint256 proposalId) external stopInEmergency {
         Proposal storage proposal = proposals[proposalId];
         require(
             block.timestamp >= proposal.endTime,
-            "Voting period is not over"
+            "Voting period is not over yet"
         );
-        require(!proposal.executed, "Proposal already executed");
-        require(proposal.forVotes > proposal.againstVotes, "Proposal rejected");
+        require(!proposal.executed, "Proposal has already been executed");
+        require(
+            proposal.forVotes > proposal.againstVotes,
+            "Proposal did not pass"
+        );
 
-        // Implement logic here for executing proposal. This might involve
-        // interacting with other contracts or calling specific functions
-        // based on the proposal description.
+        (bool success, ) = proposal.contractAddress.call(proposal.callData);
+        require(success, "Execution failed");
 
         proposal.executed = true;
+        emit ProposalExecuted(proposalId);
     }
 
-    function stake(uint256 amount) external nonReentrant {
-        _burn(msg.sender, amount);
-        stakers[msg.sender].amount += amount;
-        stakers[msg.sender].timestamp = block.timestamp;
-        emit Staked(msg.sender, amount);
-    }
+    // ** Delegation and Governance Level Functions **
 
-    function unstake(uint256 amount) external nonReentrant {
+    function delegate(address delegatee) external stopInEmergency {
+        require(msg.sender != delegatee, "Cannot delegate to self");
         require(
-            stakers[msg.sender].amount >= amount,
-            "Not enough tokens staked"
+            delegates[msg.sender] != delegatee,
+            "Already delegated to this address"
         );
 
-        // Calculate rewards earned by staker and distribute them
-        // before reducing staked amount and minting unstaked tokens.
+        // Delegation logic here (updating delegatee's voting power etc.)
 
-        _mint(msg.sender, amount); // + rewards
-        stakers[msg.sender].amount -= amount;
-        emit Unstaked(msg.sender, amount);
+        emit DelegateChanged(msg.sender, delegatee, balanceOf(msg.sender));
     }
 
-    function delegate(address delegatee) external {
+    function delegateRequest(address delegatee) external stopInEmergency {
         require(msg.sender != delegatee, "Cannot delegate to self");
-        delegates[msg.sender] = delegatee;
-        emit DelegateChanged(msg.sender, delegatee);
+        delegateRequests[msg.sender] = delegatee;
+        emit DelegateRequest(msg.sender, delegatee);
     }
 
-    // TODO: Implement additional advanced functionalities like
-    // - Dynamic Token Supply Adjustment
-    // - Multi-tier Governance
-    // - Voting Power Boosting
-    // - Participatory Budgeting
-    // - Conditional Token Vesting
-    // - Advanced Utility, etc.
+    function acceptDelegateRequest(address delegator) external stopInEmergency {
+        require(
+            delegateRequests[delegator] == msg.sender,
+            "No delegation request from this address"
+        );
 
-    // Function to pause contract functionalities.
-    // This function can only be called by the owner of the contract (onlyOwner modifier),
-    // and can only be executed if the contract is not already paused (whenNotPaused modifier).
-    // When executed, it will set the _paused variable to true, effectively pausing all functions
-    // in the contract that have the whenNotPaused modifier.
-    function pause() external onlyOwner whenNotPaused {
-        _pause(); // This function from the Pausable contract sets _paused to true and emits the Paused event.
+        delegates[delegator] = msg.sender;
+        delete delegateRequests[delegator];
+
+        emit DelegateChanged(delegator, msg.sender, balanceOf(delegator));
     }
 
-    // Function to unpause contract functionalities.
-    // This function can only be called by the owner of the contract (onlyOwner modifier),
-    // and can only be executed if the contract is currently paused (whenPaused modifier).
-    // When executed, it will set the _paused variable to false, effectively unpausing all
-    // functions in the contract that have the whenNotPaused modifier.
-    function unpause() external onlyOwner whenPaused {
-        _unpause(); // This function from the Pausable contract sets _paused to false and emits the Unpaused event.
+    // ** View Functions for Reading State **
+
+    function getProposal(
+        uint256 proposalId
+    ) external view returns (Proposal memory) {
+        return proposals[proposalId];
     }
+
+    function totalProposals() external view returns (uint256) {
+        return proposals.length;
+    }
+
+    function isDelegatee(
+        address delegator,
+        address delegatee
+    ) external view returns (bool) {
+        return delegates[delegator] == delegatee;
+    }
+
+    // --------------------- Fallback Function ---------------------
+    // Ensuring there’s a payable fallback to receive ether sent to the contract address
+    receive() external payable {}
 }

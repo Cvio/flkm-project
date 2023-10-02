@@ -1,43 +1,114 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-// import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-// import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/security/Pausable.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /**
  * @title CowlDAO
  * @dev Contract for decentralized autonomous organization.
  */
-contract CowlDaoBase is Ownable, ReentrancyGuard, Pausable {
-    IERC20 public rewardToken;
-    IERC721 public eternalLight;
+contract CowlDaoBase is
+    Initializable,
+    AccessControlUpgradeable,
+    ReentrancyGuardUpgradeable,
+    PausableUpgradeable
+{
+    function initialize(
+        IERC20Upgradeable _rewardToken,
+        address _eternalLight
+    ) public initializer {
+        __AccessControl_init();
+        __Pausable_init();
+        __ReentrancyGuard_init();
 
-    // ID counters
+        rewardToken = _rewardToken;
+        eternalLight = IERC721Upgradeable(_eternalLight);
+
+        _setupRole(OWNER_ROLE, msg.sender);
+        _setRoleAdmin(ADMIN_ROLE, OWNER_ROLE);
+
+        parameters[ParamType.RewardAmount] = 1000;
+        parameters[ParamType.ModificationVoteRequirement] = 10;
+        parameters[ParamType.ModificationApprovalThreshold] = 5;
+        parameters[ParamType.AuthorRewardAmount] = 500;
+        parameters[ParamType.VoterRewardAmount] = 50;
+        parameters[ParamType.EthicalVoteRequirement] = 10;
+    }
+
+    /**
+     * @dev This section declares state variables.
+     * State variables are used to store data on the blockchain.
+     */
+    // Define roles
+    bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+
+    // Define state variables
+    IERC20Upgradeable public rewardToken;
+    IERC721Upgradeable public eternalLight;
+
+    // Enum for Parameter Type
+    enum ParamType {
+        RewardAmount,
+        ModificationVoteRequirement,
+        ModificationApprovalThreshold,
+        AuthorRewardAmount,
+        VoterRewardAmount,
+        EthicalVoteRequirement
+    }
+
+    mapping(ParamType => uint256) public parameters;
+
+    // Define State variable for Circuit Breaker Pattern
+    bool private _stopped = false;
+
+    // ID counters for various entities.
     uint256 public nextClusterID = 1;
     uint256 public nextKnowledgeID = 1;
     uint256 public nextIdeaID = 1;
+    uint256 public nextEthicalProposalID = 1;
 
-    // Reward and vote requirements
+    // Reward and vote requirements.
     uint256 public rewardAmount = 1000;
     uint256 public modificationVoteRequirement = 10;
     uint256 public modificationApprovalThreshold = 5;
     uint256 public authorRewardAmount = 500;
     uint256 public voterRewardAmount = 50;
+    uint256 public ethicalVoteRequirement = 10; // Required votes to pass an ethical proposal.
 
-    uint256 public nextEthicalProposalID = 1;
-    uint256 public ethicalVoteRequirement = 10; // Required votes to pass an ethical proposal
-
-    // Modifier to restrict functions to DAO members
+    // Modifier to restrict functions to DAO roles
     modifier onlyMember() {
         require(eternalLight.balanceOf(msg.sender) > 0, "Not a DAO member");
+        _;
+    }
+
+    modifier onlyOwner() {
+        require(hasRole(OWNER_ROLE, msg.sender), "Must have owner role");
+        _;
+    }
+
+    modifier onlyAdmin() {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Must have admin role");
+        _;
+    }
+
+    modifier onlyOwnerOrAdmin() {
+        require(
+            hasRole(OWNER_ROLE, msg.sender) || hasRole(ADMIN_ROLE, msg.sender),
+            "Must have owner or admin role"
+        );
         _;
     }
 
@@ -133,10 +204,10 @@ contract CowlDaoBase is Ownable, ReentrancyGuard, Pausable {
     );
 
     // Constructor to initialize state variables
-    constructor(IERC20 _rewardToken, address _eternalLight) {
-        rewardToken = _rewardToken;
-        eternalLight = IERC721(_eternalLight);
-    }
+    // constructor(IERC20Upgradeable _rewardToken, address _eternalLight) {
+    //     rewardToken = _rewardToken;
+    //     eternalLight = IERC721Upgradeable(_eternalLight);
+    // }
 
     // Function to initiate a knowledge cluster
     function initiateKnowledgeCluster() external onlyOwner whenNotPaused {

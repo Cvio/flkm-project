@@ -11,6 +11,7 @@
   "dependencies": {
     "@hashgraph/sdk": "^2.32.0",
     "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/contracts-upgradeable": "^4.9.3",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
@@ -29,6 +30,7 @@
     "passport-local": "^1.0.0",
     "pyodide": "^0.24.0",
     "solc": "^0.8.21",
+    "truffle-hdwallet-provider": "^1.0.17",
     "uuid": "^9.0.1",
     "web3": "^4.1.2"
   }
