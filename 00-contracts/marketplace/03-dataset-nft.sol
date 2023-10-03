@@ -1,10 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-contract DatasetNFTContract is ERC721, AccessControl {
+contract DatasetNFTContract is
+    Initializable,
+    ERC721Upgradeable,
+    AccessControlUpgradeable
+{
     uint256 public totalMinted;
     string public baseTokenURI;
 
@@ -23,23 +31,34 @@ contract DatasetNFTContract is ERC721, AccessControl {
     event MetadataUpdated(uint256 tokenId);
     event BaseUriUpdated(string newUri);
 
-    constructor(
+    function initialize(
         string memory _name,
         string memory _symbol,
         string memory _baseTokenURI
-    ) ERC721(_name, _symbol) {
+    ) public initializer {
+        __ERC721_init(_name, _symbol);
+        __AccessControl_init();
+
         baseTokenURI = _baseTokenURI;
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, msg.sender);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
+    function supportsInterface(
+        bytes4 interfaceId
+    )
+        public
+        view
+        virtual
+        override(ERC721Upgradeable, AccessControlUpgradeable)
+        returns (bool)
+    {
         return super.supportsInterface(interfaceId);
     }
 
     function setBaseTokenURI(
         string memory _newBaseTokenURI
-    ) external onlyOwner {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         baseTokenURI = _newBaseTokenURI;
     }
 
@@ -49,7 +68,7 @@ contract DatasetNFTContract is ERC721, AccessControl {
         string memory dataType,
         string memory source,
         uint256 royaltyPercentage
-    ) external onlyOwner returns (uint256) {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256) {
         totalMinted++;
         uint256 newTokenId = totalMinted;
 
@@ -72,7 +91,7 @@ contract DatasetNFTContract is ERC721, AccessControl {
         string memory dataType,
         string memory source,
         uint256 royaltyPercentage
-    ) external onlyOwner {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_exists(tokenId), "Token does not exist");
         datasetMetadata[tokenId] = DatasetMetadata(
             description,
@@ -91,8 +110,14 @@ contract DatasetNFTContract is ERC721, AccessControl {
     }
 
     // For royalties (using EIP-2981)
-    function royaltyInfo(uint256 _tokenId, uint256 _salePrice) external view returns (address receiver, uint256 royaltyAmount) {
-        return (owner(), (datasetMetadata[_tokenId].royaltyPercentage * _salePrice) / 100);
+    function royaltyInfo(
+        uint256 _tokenId,
+        uint256 _salePrice
+    ) external view returns (address receiver, uint256 royaltyAmount) {
+        return (
+            ownerOf(_tokenId),
+            (datasetMetadata[_tokenId].royaltyPercentage * _salePrice) / 100
+        );
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
