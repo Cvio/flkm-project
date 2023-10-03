@@ -90,4 +90,3 @@
 6. **Testing**: Rigorously test and consider a professional audit.
 7. **Improve Documentation**: Enhance inline comments for clarity.
 
-> **Note**: This KB is informational and should be complemented with thorough testing and potentially a third-party audit, especially considering the contract handles user assets. Always prioritize smart contract security.
