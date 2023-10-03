@@ -17,6 +17,9 @@ contract DatasetNFTContract is ERC721, Ownable {
 
     mapping(uint256 => DatasetMetadata) public datasetMetadata;
 
+    event DatasetMinted(uint256 tokenId, address to, string description);
+    event MetadataUpdated(uint256 tokenId, string description);
+
     constructor(
         string memory _name,
         string memory _symbol,
@@ -76,6 +79,11 @@ contract DatasetNFTContract is ERC721, Ownable {
     ) external {
         require(ownerOf(tokenId) == msg.sender, "Caller is not the owner");
         safeTransferFrom(msg.sender, newOwner, tokenId);
+    }
+
+    // For royalties (using EIP-2981)
+    function royaltyInfo(uint256 _tokenId, uint256 _salePrice) external view returns (address receiver, uint256 royaltyAmount) {
+        return (owner(), (datasetMetadata[_tokenId].royaltyPercentage * _salePrice) / 100);
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
