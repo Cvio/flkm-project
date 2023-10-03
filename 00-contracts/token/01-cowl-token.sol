@@ -6,12 +6,19 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
+// import "../../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+// import "../../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+// import "../../@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+// import "../../@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
+
 contract Cowl is Initializable, ERC20Upgradeable, AccessControlUpgradeable {
     using SafeMathUpgradeable for uint256;
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant STAKER_ROLE = keccak256("STAKER_ROLE");
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+
+    uint8 private tokenDecimals;
     
     uint256 public stakingRewardRate;
     uint256 public stakingDuration;
@@ -36,7 +43,7 @@ contract Cowl is Initializable, ERC20Upgradeable, AccessControlUpgradeable {
         __ERC20_init(_name, _symbol);
         __AccessControl_init();
         
-        _setupDecimals(_decimals);
+        _decimals = _decimals; // set your private _decimals variable
         _mint(admin, _initialSupply * (10 ** uint256(_decimals)));
         
         _setupRole(ADMIN_ROLE, admin);
@@ -45,6 +52,10 @@ contract Cowl is Initializable, ERC20Upgradeable, AccessControlUpgradeable {
 
         stakingRewardRate = 100; // example rate, can be adjusted as per the need.
         stakingDuration = 30 days; // example duration, can be adjusted as per the need.
+    }
+
+    function decimals() public view virtual override returns (uint8) {
+        return tokenDecimals;
     }
 
     function stake(uint256 _amount) external onlyRole(STAKER_ROLE) {
