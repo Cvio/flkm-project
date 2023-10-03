@@ -4,7 +4,7 @@ pragma solidity ^0.8.7;
 import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-contract DatasetNFTContract is ERC721, Ownable {
+contract DatasetNFTContract is ERC721, AccessControl {
     uint256 public totalMinted;
     string public baseTokenURI;
 
@@ -17,8 +17,11 @@ contract DatasetNFTContract is ERC721, Ownable {
 
     mapping(uint256 => DatasetMetadata) public datasetMetadata;
 
-    event DatasetMinted(uint256 tokenId, address to, string description);
-    event MetadataUpdated(uint256 tokenId, string description);
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
+    event MintedDatasetNFT(uint256 tokenId, address to);
+    event MetadataUpdated(uint256 tokenId);
+    event BaseUriUpdated(string newUri);
 
     constructor(
         string memory _name,
@@ -26,6 +29,12 @@ contract DatasetNFTContract is ERC721, Ownable {
         string memory _baseTokenURI
     ) ERC721(_name, _symbol) {
         baseTokenURI = _baseTokenURI;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(MINTER_ROLE, msg.sender);
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     function setBaseTokenURI(
