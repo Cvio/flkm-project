@@ -1,119 +1,93 @@
-# DatasetStaking Contract Knowledge Base
+# DataStakingContract Knowledge Base
 
-## Attributes
+## Overview
+`DataStakingContract` facilitates users to stake unique tokens (NFTs) to earn rewards over time, in a specified reward token. It particularly focuses on staking NFTs related to datasets, hinting at a data marketplace scenario.
 
-### 1. `cowlToken: IERC20 public`
+## Inherited Smart Contracts
 
-- **Purpose**: Represents the token used for staking within this contract.
-- **Type**: ERC20 Token Interface.
-- **Need**: To interact with the Cowl token for staking, transferring, and balance checks.
+### 1. **Initializable** (from OpenZeppelin)
+   - Ensures a single call to the `initialize` function for initial contract setup.
+   - Replaces constructor functionality for upgradeable contracts.
 
-### 2. `requiredStakeAmount: uint256 public constant`
+### 2. **AccessControlUpgradeable** (from OpenZeppelin)
+   - Manages access permissions for contract functionalities.
+   - Enables role-based access control, defining roles like `ADMIN_ROLE`.
 
-- **Purpose**: Signifies the required amount of cowlTokens one needs to stake to register a dataset.
-- **Value**: 100 cowlTokens.
+### 3. **ReentrancyGuardUpgradeable** (from OpenZeppelin)
+   - Secures against reentrancy attacks by preventing nested function calls.
 
-### 3. `initialReputation: uint256 public constant`
+## Interface
 
-- **Purpose**: Represents the initial reputation given to a dataset once it is staked.
-- **Value**: 50.
+- **IDatasetNFTContract**
+  - Ensures compatibility with the contract of staked NFTs.
 
-### 4. `struct Dataset`
+## Variables
 
-- **Purpose**: Represents a dataset and its properties.
-- **Properties**:
-  - `owner`: Address of the owner of the dataset.
-  - `stakedAmount`: Amount of cowlTokens staked for this dataset.
-  - `reputation`: Reputation score of the dataset.
-  - `isActive`: Boolean representing whether the dataset is active or not.
-  - `ipfsHash`: String containing the IPFS hash to locate the dataset.
-  - `filecoinDealId`: String containing the Filecoin deal ID for long-term storage.
+1. **ADMIN_ROLE**
+   - Unique identifier for admin role.
+2. **rewardToken**
+   - Token in which rewards are paid (ERC-20).
+3. **datasetNFTContract**
+   - Contract of stakable NFTs.
+4. **rewardRate**
+   - Rate of reward token per second per staked NFT.
+5. **bonusRate**
+   - An unused variable meant for potential reward adjustments.
+6. **stakes**
+   - Maps an address to an array of `Stake` structs, each representing an NFT stake.
 
-### 5. `mapping(address => Dataset) public datasets`
+## Struct
 
-- **Purpose**: Stores Dataset structures, mapped by their owner's address.
-- **Need**: Allows for quick lookup and interaction with datasets owned by a particular address.
-
-### 6. `mapping(address => uint256) public rewards`
-
-- **Purpose**: Represents the rewards that are mapped to each user’s address.
-- **Need**: To manage and distribute rewards to users.
+- **Stake**
+  - **tokenId**: Identifier for the staked NFT.
+  - **timestamp**: Block timestamp representing when it was staked.
 
 ## Events
 
-### 1. `event DatasetStaked(address indexed user, uint256 amount, string ipfsHash)`
-
-- **Purpose**: Emitted when a user stakes tokens and registers a dataset.
-- **Parameters**:
-  - `user`: Address of the user who staked.
-  - `amount`: Amount staked by the user.
-  - `ipfsHash`: IPFS hash of the staked dataset.
-
-### 2. `event DatasetUpdated(address indexed dataset, uint256 reputation, bool isActive)`
-
-- **Purpose**: Emitted when a dataset’s properties are updated.
-- **Parameters**:
-  - `dataset`: Address associated with the dataset.
-  - `reputation`: Updated reputation of the dataset.
-  - `isActive`: Updated status of the dataset.
-
-### 3. `event RewardClaimed(address indexed user, uint256 amount)`
-
-- **Purpose**: Emitted when a user claims their rewards.
-- **Parameters**:
-  - `user`: Address of the user claiming the rewards.
-  - `amount`: Amount of rewards claimed.
-
-### 4. `event DatasetTransitionedToFilecoin(address indexed dataset, string filecoinDealId)`
-
-- **Purpose**: Emitted when a dataset is transitioned to Filecoin.
-- **Parameters**:
-  - `dataset`: Address associated with the dataset.
-  - `filecoinDealId`: The Filecoin deal ID.
+1. **Staked**
+   - Emitted when a token is staked.
+2. **Unstaked**
+   - Emitted upon unstaking with the reward amount.
+3. **RewardRateChanged**
+   - Emitted when the reward rate is changed.
+4. **BonusRateChanged**
+   - Emitted when the unused `bonusRate` is changed.
 
 ## Functions
 
-### 1. `constructor(address _cowlToken)`
+### Public/External
 
-- **Purpose**: Initializes the cowlToken attribute with the provided address.
+1. **initialize**
+   - Sets initial contract state.
+2. **stake**
+   - Enables a user to stake an NFT.
+3. **unstake**
+   - Permits unstaking of an NFT and claims rewards.
+4. **setRewardRate**
+   - Admin function to adjust `rewardRate`.
+5. **setBonusRate**
+   - Admin function to adjust the unused `bonusRate`.
 
-### 2. `stakeDataset(string memory _ipfsHash) external nonReentrant`
+### Internal/Private
 
-- **Purpose**: Allows users to stake tokens and register a dataset with the associated IPFS hash.
-- **Parameters**:
-  - `_ipfsHash`: IPFS hash of the dataset.
+1. **_removeStake**
+   - Removes an NFT from the staker’s array of staked tokens.
+2. **_calculateReward**
+   - Computes the reward for a staked NFT.
 
-### 3. `updateDataset(address _dataset, uint256 _newReputation, bool _newStatus) external onlyOwnerOf(_dataset)`
+## Modifiers
 
-- **Purpose**: Allows the owner of a dataset to update its properties.
-- **Parameters**:
-  - `_dataset`: Address associated with the dataset.
-  - `_newReputation`: New reputation score for the dataset.
-  - `_newStatus`: New activity status for the dataset.
+- **onlyAdmin**
+  - Restricts function calls to admin users.
 
-### 4. `transitionToFilecoin(address _dataset, string memory _filecoinDealId) external onlyOwnerOf(_dataset)`
+## Suggested Changes
 
-- **Purpose**: Allows the owner of a dataset to transition it to Filecoin.
-- **Parameters**:
-  - `_dataset`: Address associated with the dataset.
-  - `_filecoinDealId`: The Filecoin deal ID.
+1. **Remove Unused Variables**: Evaluate necessity of `bonusRate`.
+2. **Optimize for Gas**: Review loops in `_calculateReward` and `_removeStake`.
+3. **Use SafeMath**: Ensure safe arithmetic operations.
+4. **Enhance Code Structure**: Use custom modifiers for clarity and DRY compliance.
+5. **Implement Fallback**: Add function to retrieve erroneously sent tokens.
+6. **Testing**: Rigorously test and consider a professional audit.
+7. **Improve Documentation**: Enhance inline comments for clarity.
 
-### 5. `claimRewards() external nonReentrant`
-
-- **Purpose**: Allows users to claim their rewards.
-
-### 6. `withdrawStake() external nonReentrant`
-
-- **Purpose**: Allows users to withdraw their staked tokens.
-
-## Modifier
-
-### 1. `onlyOwnerOf(address _dataset)`
-
-- **Purpose**: Ensures that the caller is the owner of the specified dataset.
-
-## Purpose & Workflow
-
-### Purpose
-
-- This contract is designed to allow users to stake tokens and register datasets. It manages the properties of datasets like reputation and activity status and handles the transition of datasets to Filecoin. It also enables the claiming of rewards
+> **Note**: This KB is informational and should be complemented with thorough testing and potentially a third-party audit, especially considering the contract handles user assets. Always prioritize smart contract security.
