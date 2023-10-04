@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ResourceListService } from '../../../../services/Marketplace/ResourceList/resource-list.service';
 import { UserService } from '../../../../services/User/UserData/user-data.service';
+import { SharedService } from '../../../../services/Shared/shared.service';
 
 @Component({
   selector: 'app-resource-list',
@@ -14,7 +15,8 @@ export class ResourceListComponent implements OnInit {
 
   constructor(
     private resourceListService: ResourceListService,
-    private userService: UserService
+    private userService: UserService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -41,5 +43,9 @@ export class ResourceListComponent implements OnInit {
         console.error('Error fetching resources:', error);
       }
     );
+  }
+
+  onDatasetSelected(datasetName: string): void {
+    this.sharedService.setSelectedDatasetId(datasetName);
   }
 }

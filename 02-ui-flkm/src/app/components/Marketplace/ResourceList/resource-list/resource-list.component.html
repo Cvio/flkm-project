@@ -10,7 +10,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let resource of resources">
-        <td>{{ resource.collectionName }}</td>
+        <td (click)="onDatasetSelected(resource.collectionName)">
+          {{ resource.collectionName }}
+        </td>
         <td>{{ resource.ownerId }}</td>
         <td>{{ resource.createdAt | date }}</td>
         <!-- You can use the json pipe to display object properties, adjust as needed -->

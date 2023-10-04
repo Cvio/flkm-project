@@ -13,27 +13,3 @@
     <button (click)="selectResource(resource.id)">Select</button>
   </div>
 </div>
-<div *ngIf="resources.length; else noResources">
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>OwnerId</th>
-        <th>Date Created</th>
-        <!-- Add more headings as per your needs -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let resource of resources">
-        <td>{{ resource.collectionName }}</td>
-        <td>{{ resource.ownerId }}</td>
-        <td>{{ resource.createdAt | date }}</td>
-        <!-- You can use the json pipe to display object properties, adjust as needed -->
-        <!-- Add more cells as per your needs -->
-      </tr>
-    </tbody>
-  </table>
-</div>
-<ng-template #noResources>
-  <p>No resources found.</p>
-</ng-template>

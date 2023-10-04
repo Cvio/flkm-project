@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'AccountBalance-component',
-  templateUrl: './AccountBalance.component.html',
-  styleUrls: ['./AccountBalance.component.css']
+  selector: 'account-balance-component',
+  templateUrl: './account-balance.component.html',
+  styleUrls: ['./account-balance.component.css'],
 })
 export class AccountBalanceComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
