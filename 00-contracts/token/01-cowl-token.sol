@@ -91,24 +91,24 @@ contract Cowl is Initializable, ERC20Upgradeable, AccessControlUpgradeable {
         emit Unstaked(msg.sender, stakedAmount, reward);
     }
 
-    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+    function mint(address to, uint256 amount) external onlyRole(MINTER_ROLE) {
         _mint(to, amount);
     }
 
-    function burn(uint256 amount) public {
+    function burn(uint256 amount) external {
         require(hasRole(MINTER_ROLE, msg.sender) || hasRole(STAKER_ROLE, msg.sender), "Must have minter or staker role to burn");
         _burn(_msgSender(), amount);
     }
     
-    function addRole(address account, bytes32 role) public onlyRole(ADMIN_ROLE) {
+    function addRole(address account, bytes32 role) external onlyRole(ADMIN_ROLE) {
         grantRole(role, account);
     }
     
-    function removeRole(address account, bytes32 role) public onlyRole(ADMIN_ROLE) {
+    function removeRole(address account, bytes32 role) external onlyRole(ADMIN_ROLE) {
         revokeRole(role, account);
     }
 
-    function setStakingParameters(uint256 newRate, uint256 newDuration) public onlyRole(ADMIN_ROLE) {
+    function setStakingParameters(uint256 newRate, uint256 newDuration) external onlyRole(ADMIN_ROLE) {
         stakingRewardRate = newRate;
         stakingDuration = newDuration;
     }
