@@ -60,43 +60,38 @@ contract Cowl is Initializable, ERC20Upgradeable, AccessControlUpgradeable {
 
     function stake(uint256 _amount) external onlyRole(STAKER_ROLE) {
         require(_amount > 0, "Amount must be greater than 0");
-        require(
-            balanceOf(msg.sender) >= _amount,
-            "Insufficient balance to stake"
-        );
+        require(balanceOf(msg.sender) >= _amount, "Insufficient balance to stake");
 
-        _burn(msg.sender, _amount);
+        // Transfer tokens to the contract's address instead of burning
+        transfer(address(this), _amount);
         
-        StakingInfo storage info = stakingData[msg.sender];
-        info.stakedAmount = info.stakedAmount.add(_amount);
-        info.stakingStartTime = block.timestamp;
+        stakingData[msg.sender] = StakingInfo({
+            stakedAmount: stakingData[msg.sender].stakedAmount.add(_amount),
+            stakingStartTime: block.timestamp
+        });
 
         emit Staked(msg.sender, _amount);
     }
 
     function unstake() external onlyRole(STAKER_ROLE) {
         StakingInfo storage info = stakingData[msg.sender];
+        require(info.stakingStartTime.add(stakingDuration) <= block.timestamp, "Staking duration not met");
+        require(info.stakedAmount > 0, "No staked amount found");
 
-        require(
-            info.stakingStartTime.add(stakingDuration) <= block.timestamp,
-            "Staking duration not met"
-        );
+        uint256 reward = info.stakedAmount.mul(stakingRewardRate).div(100);
+        uint256 totalAmount = info.stakedAmount.add(reward);
 
-        uint256 stakedAmount = info.stakedAmount;
-        uint256 reward = stakedAmount.mul(stakingRewardRate).div(100);
+        // Transfer staked amount and reward to the user
+        _mint(address(this), reward); // Minting only the reward
+        transfer(msg.sender, totalAmount);
 
-        _mint(msg.sender, stakedAmount.add(reward));
         delete stakingData[msg.sender];
 
-        emit Unstaked(msg.sender, stakedAmount, reward);
-    }
-
-    function mint(address to, uint256 amount) external onlyRole(MINTER_ROLE) {
-        _mint(to, amount);
+        emit Unstaked(msg.sender, info.stakedAmount, reward);
     }
 
     function burn(uint256 amount) external {
-        require(hasRole(MINTER_ROLE, msg.sender) || hasRole(STAKER_ROLE, msg.sender), "Must have minter or staker role to burn");
+        require(hasRole(MINTER_ROLE, msg.sender), "Must have minter role to burn");
         _burn(_msgSender(), amount);
     }
     
