@@ -1,15 +1,2 @@
-<div class="search-container">
-  <input
-    [(ngModel)]="searchTerm"
-    (input)="onSearch()"
-    placeholder="Search resources..."
-  />
-</div>
-<div class="marketplace">
-  <!-- marketplace.component.html -->
-  <div *ngFor="let resource of filteredResources" class="resource-card">
-    <h3>{{ resource.name }}</h3>
-    <p>{{ resource.description }}</p>
-    <button (click)="selectResource(resource.id)">Select</button>
-  </div>
-</div>
+<!-- Embed the ResourceListComponent -->
+<app-resource-list></app-resource-list>

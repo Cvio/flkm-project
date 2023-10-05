@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'; // for using forms
 import { ProjectService } from '../../../../services/Project/CreateProject/project.service';
 import { SharedService } from '../../../../services/Shared/shared.service';
@@ -11,10 +11,11 @@ import { Router } from '@angular/router';
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.css'],
 })
-export class CreateProjectComponent implements OnInit {
-  projectForm: FormGroup; // If using forms
+export class CreateProjectComponent implements OnInit, OnDestroy {
+  projectForm: FormGroup;
   projectData: any; // Variable to store project data
-  createError: string | null = null; // Variable to store error message
+  createError: string | null = null;
+  selectedDataset: string | null = null;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -54,6 +55,7 @@ export class CreateProjectComponent implements OnInit {
           this.projectForm.patchValue({
             dataset: id,
           });
+          this.selectedDataset = id;
         }
       });
   }

@@ -27,6 +27,8 @@
     <!-- Dataset Selection (you can customize this part based on your requirements) -->
     <div class="form-group">
       <label for="dataset">Select or Upload Dataset:</label>
+      <div *ngIf="selectedDataset">Selected Dataset: {{ selectedDataset }}</div>
+      <!-- Display the selected dataset -->
       <button (click)="navigateToMarketplace()">
         Select Dataset from Marketplace
       </button>

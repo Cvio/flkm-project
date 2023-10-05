@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './components/Authentication/Registration/registration.component';
-import { RegistrationConfirmationComponent } from './components/Authentication/Registration/registration-confirmation/registration-confirmation.component';
+import { RegistrationConfirmationComponent } from './components/Authentication/Registration/RegistrationConfirmation/registration-confirmation.component';
 import { VerifyEmailComponent } from './components/Authentication/VerifyEmail/verify-email.component';
 import { LoginComponent } from './components/Authentication/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/Dashboard/dashboard.component';
-import { CreateProjectComponent } from './components/Project/CreateProject/create-project/create-project.component';
+import { CreateProjectComponent } from './components/Project/CreateProject/CreateProject/create-project.component';
 import { UserWalletComponent } from './components/User/UserWallet/user-wallet.component';
-import { ResourceListComponent } from './components/Marketplace/ResourceList/resource-list/resource-list.component';
+import { ResourceListComponent } from './components/Marketplace/ResourceList/ResourceList/resource-list.component';
 import { MarketplaceComponent } from './components/Marketplace/marketplace.component';
 import { UploadResourceComponent } from './components/Marketplace/UploadResource/upload-resource.component';
 

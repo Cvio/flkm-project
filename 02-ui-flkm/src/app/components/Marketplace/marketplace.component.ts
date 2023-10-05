@@ -37,6 +37,18 @@ export class MarketplaceComponent implements OnInit {
     );
   }
 
+  loadResourcesByOwnerId(ownerId: string): void {
+    this.resourceListService.getResourceListByOwner(ownerId).subscribe(
+      (metadata) => {
+        this.resources = metadata;
+        this.filteredResources = [...this.resources];
+      },
+      (error) => {
+        console.error('Error fetching resources:', error);
+      }
+    );
+  }
+
   onSearch(): void {
     this.filterResources();
   }
