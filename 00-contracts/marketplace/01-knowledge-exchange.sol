@@ -2,25 +2,28 @@
 
 pragma solidity ^0.8.7;
 // import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
-// import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 // import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
 import "../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
-import "../../node_modules/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
 contract KnowledgeExchangeContract is
     Initializable,
-    OwnableUpgradeable,
+    AccessControlUpgradeable,
     ReentrancyGuardUpgradeable
 {
     using SafeMathUpgradeable for uint256;
     string public contractName;
     IERC20Upgradeable public knowledgeToken;
+
+    // Define the roles
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     enum ReputationLevel {
         Supplicant,
@@ -83,8 +86,11 @@ contract KnowledgeExchangeContract is
         string memory _contractName,
         address _knowledgeTokenAddress
     ) public initializer {
-        __Ownable_init(); // Initialize the Ownable contract
-        __ReentrancyGuard_init(); // Initialize the ReentrancyGuard contract
+        __AccessControl_init(); // Initialize AccessControl
+        __ReentrancyGuard_init(); // Initialize ReentrancyGuard
+
+        // Grant the sender the admin role
+        _setupRole(ADMIN_ROLE, msg.sender);
 
         contractName = _contractName;
         knowledgeToken = IERC20Upgradeable(_knowledgeTokenAddress);
@@ -163,18 +169,16 @@ contract KnowledgeExchangeContract is
     function updateUserReputation(
         address _user,
         ReputationLevel _newLevel
-    ) external onlyOwner {
-        require(
-            userReputation[_user] < _newLevel,
-            "Cannot decrease reputation level"
-        );
+    ) external {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Must have admin role");
         userReputation[_user] = _newLevel;
     }
 
     function updateReputationBonusValue(
         ReputationLevel _level,
         uint256 _value
-    ) external onlyOwner {
+    ) external {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Must have admin role");
         reputationBonusValues[_level] = _value;
     }
 
@@ -218,7 +222,8 @@ contract KnowledgeExchangeContract is
         delete votes[_voteID];
     }
 
-    function updateContractName(string memory _newName) external onlyOwner {
+    function updateContractName(string memory _newName) external {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Must have admin role");
         contractName = _newName;
     }
 

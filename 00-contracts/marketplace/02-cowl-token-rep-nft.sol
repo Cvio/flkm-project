@@ -9,11 +9,11 @@ contract ReputationNFT is ERC721, Ownable {
     KnowledgeExchangeContract public knowledgeContract; // Reference to the KnowledgeExchangeContract
 
     constructor(
-        address _knowledgeContractAddress
+        address payable _knowledgeContractAddress
     ) ERC721("ReputationNFT", "R-NFT") {
-        // knowledgeContract = KnowledgeExchangeContract(
-        //     _knowledgeContractAddress
-        // );
+        knowledgeContract = KnowledgeExchangeContract(
+            _knowledgeContractAddress
+        );
     }
 
     // Function to check the user's reputation level in the KnowledgeExchangeContract
