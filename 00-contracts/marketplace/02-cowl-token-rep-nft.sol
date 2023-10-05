@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "../flkm/01-knowledge-exchange.sol"; // Import the KnowledgeExchangeContract
+import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "./01-knowledge-exchange.sol"; // Import the KnowledgeExchangeContract
 
 contract ReputationNFT is ERC721, Ownable {
     KnowledgeExchangeContract public knowledgeContract; // Reference to the KnowledgeExchangeContract
@@ -11,9 +11,9 @@ contract ReputationNFT is ERC721, Ownable {
     constructor(
         address _knowledgeContractAddress
     ) ERC721("ReputationNFT", "R-NFT") {
-        knowledgeContract = KnowledgeExchangeContract(
-            _knowledgeContractAddress
-        );
+        // knowledgeContract = KnowledgeExchangeContract(
+        //     _knowledgeContractAddress
+        // );
     }
 
     // Function to check the user's reputation level in the KnowledgeExchangeContract

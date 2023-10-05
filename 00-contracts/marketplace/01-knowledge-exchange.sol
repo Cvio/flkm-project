@@ -1,20 +1,26 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.7;
+// import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+// import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
-// import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
-contract KnowledgeExchangeContract is Ownable, ReentrancyGuard {
-    using SafeMath for uint256;
-
+contract KnowledgeExchangeContract is
+    Initializable,
+    OwnableUpgradeable,
+    ReentrancyGuardUpgradeable
+{
+    using SafeMathUpgradeable for uint256;
     string public contractName;
-    IERC20 public knowledgeToken;
+    IERC20Upgradeable public knowledgeToken;
 
     enum ReputationLevel {
         Supplicant,
@@ -27,6 +33,25 @@ contract KnowledgeExchangeContract is Ownable, ReentrancyGuard {
 
     mapping(address => ReputationLevel) public userReputation;
     mapping(ReputationLevel => uint256) public reputationBonusValues;
+
+    struct Vote {
+        address nominated;
+        ReputationLevel proposedLevel;
+        uint256 forVotes;
+        uint256 againstVotes;
+    }
+
+    mapping(uint256 => Vote) public votes;
+    mapping(uint256 => mapping(address => bool)) public voteTrackers; // New mapping to track user votes
+    uint256 public nextVoteID = 1;
+
+    event VoteStarted(
+        uint256 indexed voteID,
+        address indexed nominated,
+        ReputationLevel proposedLevel
+    );
+    event Voted(uint256 indexed voteID, address indexed voter, bool support);
+
     mapping(address => uint256) public userResourceCount;
     mapping(address => uint256) public userTotalDemand;
 
@@ -54,9 +79,15 @@ contract KnowledgeExchangeContract is Ownable, ReentrancyGuard {
     );
     event ResourceAccessed(uint256 indexed resourceID, address indexed user);
 
-    constructor(string memory _contractName, address _knowledgeTokenAddress) {
+    function initialize(
+        string memory _contractName,
+        address _knowledgeTokenAddress
+    ) public initializer {
+        __Ownable_init(); // Initialize the Ownable contract
+        __ReentrancyGuard_init(); // Initialize the ReentrancyGuard contract
+
         contractName = _contractName;
-        knowledgeToken = IERC20(_knowledgeTokenAddress);
+        knowledgeToken = IERC20Upgradeable(_knowledgeTokenAddress);
     }
 
     function uploadResource(
@@ -145,6 +176,46 @@ contract KnowledgeExchangeContract is Ownable, ReentrancyGuard {
         uint256 _value
     ) external onlyOwner {
         reputationBonusValues[_level] = _value;
+    }
+
+    // Start a new vote
+    function startVote(address _user, ReputationLevel _proposedLevel) external {
+        votes[nextVoteID] = Vote({
+            nominated: _user,
+            proposedLevel: _proposedLevel,
+            forVotes: 0,
+            againstVotes: 0
+        });
+        emit VoteStarted(nextVoteID, _user, _proposedLevel);
+        nextVoteID++;
+    }
+
+    // Cast vote
+    function castVote(uint256 _voteID, bool _support) external {
+        require(!voteTrackers[_voteID][msg.sender], "User has already voted");
+
+        voteTrackers[_voteID][msg.sender] = true; // Mark the user as voted
+        if (_support) {
+            votes[_voteID].forVotes++;
+        } else {
+            votes[_voteID].againstVotes++;
+        }
+        emit Voted(_voteID, msg.sender, _support);
+    }
+
+    // End a vote and update reputation
+    function endVote(uint256 _voteID) external {
+        require(
+            votes[_voteID].forVotes > votes[_voteID].againstVotes,
+            "Vote did not pass"
+        );
+
+        // You can also add a requirement for minimum quorum etc.
+
+        userReputation[votes[_voteID].nominated] = votes[_voteID].proposedLevel;
+
+        // Clean up to free storage and gas refund
+        delete votes[_voteID];
     }
 
     function updateContractName(string memory _newName) external onlyOwner {
