@@ -67,21 +67,23 @@ contract DatasetNFTContract is
         string memory description,
         string memory dataType,
         string memory source,
-        uint256 royaltyPercentage
+        uint256 royaltyPercentage,
+        string memory ipfsHash
     ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256) {
         totalMinted++;
         uint256 newTokenId = totalMinted;
-
+    
         _mint(to, newTokenId);
-
+    
         DatasetMetadata memory metadata = DatasetMetadata(
             description,
             dataType,
             source,
-            royaltyPercentage
+            royaltyPercentage,
+            ipfsHash  // Add IPFS hash here
         );
+        
         datasetMetadata[newTokenId] = metadata;
-
         return newTokenId;
     }
 
