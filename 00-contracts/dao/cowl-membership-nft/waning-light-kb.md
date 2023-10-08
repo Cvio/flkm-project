@@ -1,80 +1,95 @@
-# WaningLight NFT Contracts Knowledge Base
+# Knowledge Base: WaningLight Contracts
 
-## 1. **WaningLightBase Contract**
+## WaningLightBase Contract
 
-### Attributes:
+### Overview:
 
-- `_tokenIdCounter`: Keeps track of the current token ID, ensuring each minted token has a unique ID.
+The `WaningLightBase` contract serves as the foundation for the WaningLight NFT, encompassing fundamental attributes and behaviors. The contract inherits from `ERC721URIStorageUpgradeable` and `AccessControlUpgradeable`.
 
-### Functions:
+### Imports:
 
-- `mint(address to)`: Mints a new token and sends it to the specified address, only callable by the owner.
-- `burn(uint256 tokenId)`: Destroys the token with the given ID, only callable by the owner.
-- `mintWithURI(address to, string memory tokenURI)`: Mints a new token with a specific URI and sends it to the specified address, only callable by the owner.
-
-### Purpose:
-
-- It serves as the foundational contract, allowing for basic operations such as minting and burning of tokens.
-
-## 2. **WaningLightMetadata Contract**
+- **Initializable**: This allows for contract initialization, a crucial component for upgradeable contracts.
+- **ERC721URIStorageUpgradeable**: An ERC721 implementation designed for the storage and retrieval of token URIs.
+- **AccessControlUpgradeable**: Manages access control lists ensuring appropriate permissions.
+- **Strings**: Provides utility functions for converting data types into strings.
 
 ### Attributes:
 
-- `_tokenDetails`: A mapping to store the details of each token based on their token ID.
-- `waningLightBase`: Reference to the WaningLightBase contract.
+- **\_tokenIdCounter**: A counter ensuring that each token has a unique ID.
+- **ADMIN_ROLE & MINTER_ROLE**: These constants define roles for administration and minting capabilities.
+- **\_tokenURIs**: A mapping that associates each token ID to its respective URI.
+- **\_baseURIExtended**: Stores the extended base URI for tokens.
 
-### Functions:
+### Events:
 
-- `setTokenDetails(uint256 tokenId, string memory details)`: Sets the details for a specific token, only callable by the owner.
-- `tokenDetails(uint256 tokenId)`: Retrieves the details of a specific token.
-- `tokenURI(uint256 tokenId)`: Retrieves the URI of a specific token, combining it with details from `_tokenDetails`.
+- **MetadataChanged**: Triggered when a token's metadata undergoes a change.
 
-### Purpose:
+### Functions & Modifiers:
 
-- Manages metadata and details for each token, ensuring that the information is stored and can be retrieved as needed.
+- **initialize()**: Sets up the contract, naming conventions, and assigns initial roles.
+- **mint(address to)**: Creates a new token.
+- **burn(uint256 tokenId)**: Removes a token.
+- **mintWithTokenURI(address to, string memory \_tokenURI)**: Creates a token with a specific URI.
+- **setRole(address member, string memory role)**: Designates a role to a member.
+- **setContribution(address member, string memory contribution)**: Specifies a contribution for a member.
+- **supportsInterface(bytes4 interfaceId)**: Guarantees ERC-165 compatibility.
+- **\_baseURI()**: Retrieves the tokens' base URI.
+- **setBaseURI(string memory baseURI\_)**: Specifies the base URI.
 
-## 3. **MetadataLogicContract Contract**
+## WaningLightMetadata Contract
+
+### Overview:
+
+The `WaningLightMetadata` contract manages the metadata for each NFT. This contract inherits from `ERC721EnumerableUpgradeable` and `AccessControlUpgradeable`.
+
+### Imports:
+
+- **ERC721EnumerableUpgradeable**: An ERC721 implementation that allows token enumerability.
+- **AccessControlUpgradeable**: Provides a system to manage access control lists.
 
 ### Attributes:
 
-- `_tokenURIs`: A mapping to store the URI of each token based on their token ID.
-- `_baseURIExtended`: Holds the base URI for tokens.
+- **ADMIN_ROLE**: Defines the role for administration capabilities.
+- **waningLightBase**: A reference to the `WaningLightBase` contract.
+- **\_tokenDetails**: A mapping that links each token ID to its details.
 
 ### Functions:
 
-- `setBaseURI(string memory baseURI_)`: Sets the base URI, only callable by the owner.
-- `tokenURI(uint256 tokenId)`: Retrieves the URI of a specific token, combining it with `_baseURIExtended` if necessary.
-- `setTokenURI(uint256 tokenId, string memory uri)`: Sets the URI for a specific token, only callable by the owner.
+- **initialize(address waningLightBaseAddress)**: Initializes the contract with a reference to the `WaningLightBase` contract.
+- **setTokenDetails(uint256 tokenId, string memory details)**: Sets the details of a specific token.
+- **tokenDetails(uint256 tokenId)**: Retrieves the details of a specific token.
+- **supportsInterface(bytes4 interfaceId)**: Guarantees ERC-165 compatibility.
 
-### Purpose:
+## WaningLightMinting Contract
 
-- Responsible for managing and configuring the base URI and individual token URIs.
+### Overview:
 
-## 4. **WaningLightMinting Contract**
+The `WaningLightMinting` contract facilitates the minting of NFTs, including the definition of mint price and tracking of the current supply. The contract inherits from `Initializable`, `ERC721EnumerableUpgradeable`, `AccessControlUpgradeable`, and `PausableUpgradeable`.
+
+### Imports:
+
+- **Initializable**: This allows for contract initialization.
+- **ERC721EnumerableUpgradeable**: An ERC721 implementation that allows token enumerability.
+- **AccessControlUpgradeable**: Manages access control lists ensuring appropriate permissions.
+- **PausableUpgradeable**: Provides functionality to pause and unpause contract operations.
 
 ### Attributes:
 
-- `maxSupply`: The maximum supply of tokens that can be minted.
-- `mintPrice`: The price to mint a new token.
-- `mintedSupply`: The current number of tokens minted.
+- **ADMIN_ROLE & MINTER_ROLE**: These constants define roles for administration and minting capabilities.
+- **waningLightBase & waningLightMetadata**: References to the `WaningLightBase` and `WaningLightMetadata` contracts respectively.
+- **maxSupply**: The maximum number of tokens that can be minted.
+- **mintPrice**: The cost to mint a token.
+- **mintedSupply**: The current number of tokens that have been minted.
 
-### Functions:
+### Events:
 
-- `mintNFT(address to)`: Mints a new token and sends it to the specified address, considering the sale is open, the contract is not paused, and the sent value covers the mint price.
-- `setMintPrice(uint256 newMintPrice)`: Sets a new price for minting tokens, only callable by the owner.
-- `pauseSale()`: Pauses the sale of tokens, only callable by the owner.
-- `unpauseSale()`: Unpauses the sale of tokens, only callable by the owner.
+- **Minted**: Triggered when a new token is minted.
 
-### Purpose:
+### Functions & Modifiers:
 
-- Manages the minting process of tokens, including mint price and supply, and provides mechanisms to pause and unpause sales.
-
-## Interrelation
-
-- Each contract in the series builds on the preceding one, adding additional layers of functionality and management to the NFT system.
-- **WaningLightBase** provides foundational functionalities such as minting and burning.
-- **WaningLightMetadata** extends functionalities to manage metadata for each token, utilizing the foundational elements from WaningLightBase.
-- **MetadataLogicContract** specializes in managing the logic for URIs, defining the base URI and allowing configuration of individual token URIs.
-- Finally, **WaningLightMinting** integrates and leverages all the preceding contracts to manage the overall minting process, ensuring adherence to supply limits and providing controls for sales operations.
-
-This collective suite of contracts form a coherent, interconnected system, allowing the WaningLight NFTs to be minted, managed, and interacted with in a multifaceted and controlled manner, reflecting the intricate themes and philosophies imbued within them.
+- **initialize(address waningLightBaseAddress, address waningLightMetadataAddress, uint256 \_maxSupply, uint256 \_mintPrice)**: Sets up the contract and initializes references.
+- **mintNFT(address to)**: Creates a new token and ensures the correct ether amount has been sent.
+- **setMintPrice(uint256 newMintPrice)**: Updates the minting price.
+- **pauseSale() & unpauseSale()**: Allows for pausing and resuming of the minting process.
+- **\_baseURI()**: Retrieves the base URI for tokens.
+- **supportsInterface(bytes4 interfaceId)**: Guarantees ERC-165 compatibility.

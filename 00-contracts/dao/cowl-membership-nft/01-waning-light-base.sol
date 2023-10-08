@@ -86,12 +86,16 @@ contract WaningLightBase is
         return super.supportsInterface(interfaceId);
     }
 
+    function _baseURI() internal view override returns (string memory) {
+        return _baseURIExtended;
+    }
+
     function setBaseURI(string memory baseURI_) external onlyRole(ADMIN_ROLE) {
         _baseURIExtended = baseURI_;
     }
 
-    function _baseURI() internal view override returns (string memory) {
-        return _baseURIExtended;
+    function getBaseURI() external view returns (string memory) {
+        return _baseURI();
     }
 
     function tokenURI(
