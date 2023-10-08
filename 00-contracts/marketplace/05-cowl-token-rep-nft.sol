@@ -3,7 +3,8 @@ pragma solidity ^0.8.0;
 
 import "../../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "./01-knowledge-exchange.sol"; // Import the KnowledgeExchangeContract
+
+import "./02-knowledge-exchange.sol";
 
 contract ReputationNFT is ERC721, Ownable {
     KnowledgeExchangeContract public knowledgeContract; // Reference to the KnowledgeExchangeContract

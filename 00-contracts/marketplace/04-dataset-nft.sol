@@ -4,6 +4,7 @@ pragma solidity ^0.8.17;
 // import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 // import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+
 import "../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
@@ -21,6 +22,7 @@ contract DatasetNFTContract is
         string dataType;
         string source;
         uint256 royaltyPercentage;
+        string ipfsHash;
     }
 
     mapping(uint256 => DatasetMetadata) public datasetMetadata;
@@ -40,8 +42,8 @@ contract DatasetNFTContract is
         __AccessControl_init();
 
         baseTokenURI = _baseTokenURI;
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(MINTER_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
     }
 
     function supportsInterface(
@@ -80,7 +82,7 @@ contract DatasetNFTContract is
             dataType,
             source,
             royaltyPercentage,
-            ipfsHash // Add IPFS hash here
+            ipfsHash
         );
 
         datasetMetadata[newTokenId] = metadata;
@@ -99,7 +101,8 @@ contract DatasetNFTContract is
             description,
             dataType,
             source,
-            royaltyPercentage
+            royaltyPercentage,
+            datasetMetadata[tokenId].ipfsHash
         );
     }
 

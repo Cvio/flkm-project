@@ -132,8 +132,9 @@ contract WaningLightBase is
         _tokenURIs[tokenId] = uri;
     }
 
-    // use in Remix but not in Truffle...
-    // function _exists(uint256 tokenId) internal view returns (bool) {
+    // use in Remix but not in Truffle?
+
+    // function _exists(uint256 tokenId) external view returns (bool) {
     //     return _ownerOf(tokenId) != address(0);
     // }
 }

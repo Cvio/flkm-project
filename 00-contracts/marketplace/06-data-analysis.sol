@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+// import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+
+import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "../../node_modules/@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
 contract DataAnalysisContract is
     Initializable,
@@ -41,7 +45,7 @@ contract DataAnalysisContract is
         fee = _fee;
         datasetNFTContract = _datasetNFTContract;
 
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender); // Set Deployer as admin
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender); // Set Deployer as admin
     }
 
     function requestAnalysis(

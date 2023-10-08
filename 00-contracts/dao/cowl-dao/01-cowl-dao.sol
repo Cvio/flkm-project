@@ -36,7 +36,7 @@ contract CowlDaoBase is
         rewardToken = _rewardToken;
         waningLight = IERC721Upgradeable(_waningLight);
 
-        _setupRole(OWNER_ROLE, msg.sender);
+        _grantRole(OWNER_ROLE, msg.sender);
         _setRoleAdmin(ADMIN_ROLE, OWNER_ROLE);
 
         parameters[ParamType.RewardAmount] = 1000;

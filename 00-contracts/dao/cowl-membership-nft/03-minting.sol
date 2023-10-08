@@ -47,8 +47,8 @@ contract WaningLightMinting is
         __ERC721Enumerable_init();
         __AccessControl_init();
 
-        _setupRole(ADMIN_ROLE, msg.sender);
-        _setupRole(MINTER_ROLE, msg.sender);
+        _grantRole(ADMIN_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
 
         waningLightBase = WaningLightBase(waningLightBaseAddress);
         waningLightMetadata = WaningLightMetadata(waningLightMetadataAddress);

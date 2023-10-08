@@ -54,7 +54,7 @@ contract CowlDaoToken is
         _mint(_msgSender(), INITIAL_SUPPLY * (10 ** decimals()));
 
         // Setting up roles and permissions.
-        _setupRole(ADMIN_ROLE, _msgSender()); // Assigning the admin role to the deployer.
+        _grantRole(ADMIN_ROLE, _msgSender()); // Assigning the admin role to the deployer.
 
         // Setting initial values for contract-specific variables.
         minStakeToPropose = 100 * (10 ** decimals()); // Initial minimum stake to propose
@@ -83,18 +83,6 @@ contract CowlDaoToken is
         Council
     }
 
-    // enum GovernanceLevel {
-    //     Zelator, // Initial level, seekers or students of the wisdom
-    //     Theoricus, // Have acquired theoretical knowledge and understanding
-    //     Practicus, // Those who practice and apply the teachings
-    //     Philosophus, // Have attained deeper understanding and insight into the philosophies and principles
-    //     AdeptusMinor, // Have achieved a level of mastery and understanding of the inner teachings
-    //     AdeptusMajor, // Possess a higher level of mastery and have more responsibilities and roles
-    //     AdeptusExemptus, // Achieved complete mastery and understanding of the teachings, exempt from the usual duties
-    //     Magister, // A master of the order, a guide, and teacher to others
-    //     Magus, // A high master, having profound understanding and wisdom, guides the overall direction
-    //     Ipsissimus // The highest level, symbolic of complete self-realization and unity with the all
-    // }
     mapping(address => GovernanceLevel) public governanceLevels;
 
     // ** Staking and Proposals **
@@ -160,7 +148,7 @@ contract CowlDaoToken is
     // constructor() ERC20Upgradeable(daoName, daoSymbol) {
     //     _mint(msg.sender, INITIAL_SUPPLY * (10 ** decimals()));
     //     minStakeToPropose = 100 * (10 ** decimals());
-    //     _setupRole(ADMIN_ROLE, msg.sender); // Set up the admin role
+    //     _grantRole(ADMIN_ROLE, msg.sender); // Set up the admin role
     // }
 
     // --------------------- Modifier Section ---------------------
