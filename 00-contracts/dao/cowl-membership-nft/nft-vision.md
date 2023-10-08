@@ -1,6 +1,6 @@
-# **EternalLight Artifact NFT Roadmap**
+# **WaningLight Artifact NFT Roadmap**
 
-## 1. **Base NFT Contract (EternalLightBase)**
+## 1. **Base NFT Contract (WaningLightBase)**
 
 ### Purpose
 
@@ -28,7 +28,7 @@ Manages basic ERC-721 functionalities and token properties.
 - Transfer
 - Approval
 
-## 2. **Attributes Contract (EternalLightAttributes)**
+## 2. **Attributes Contract (WaningLightAttributes)**
 
 ### Purpose
 
@@ -52,7 +52,7 @@ Manages the dynamic and interactive attributes of the NFT.
 
 - AttributesModified
 
-## 3. **DAO Interaction Contract (EternalLightDAOInteraction)**
+## 3. **DAO Interaction Contract (WaningLightDAOInteraction)**
 
 ### Purpose
 
@@ -77,7 +77,7 @@ Manages the interactions between the NFT and the CowlDAO.
 - InteractionModified
 - RewardsClaimed
 
-## 4. **Dynamic Visuals Contract (EternalLightVisuals)**
+## 4. **Dynamic Visuals Contract (WaningLightVisuals)**
 
 ### Purpose
 
@@ -101,7 +101,7 @@ Manages the dynamic and evolving visual representations of the NFT.
 
 - VisualsModified
 
-## 5. **Upgradeability Contract (EternalLightUpgrade)**
+## 5. **Upgradeability Contract (WaningLightUpgrade)**
 
 ### Purpose
 

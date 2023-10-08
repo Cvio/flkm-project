@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.17;
 
 // import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
@@ -27,14 +27,14 @@ contract CowlDaoBase is
 {
     function initialize(
         IERC20Upgradeable _rewardToken,
-        address _eternalLight
+        address _waningLight
     ) public initializer {
         __AccessControl_init();
         __Pausable_init();
         __ReentrancyGuard_init();
 
         rewardToken = _rewardToken;
-        eternalLight = IERC721Upgradeable(_eternalLight);
+        waningLight = IERC721Upgradeable(_waningLight);
 
         _setupRole(OWNER_ROLE, msg.sender);
         _setRoleAdmin(ADMIN_ROLE, OWNER_ROLE);
@@ -57,7 +57,7 @@ contract CowlDaoBase is
 
     // Define state variables
     IERC20Upgradeable public rewardToken;
-    IERC721Upgradeable public eternalLight;
+    IERC721Upgradeable public waningLight;
 
     // Enum for Parameter Type
     enum ParamType {
@@ -90,7 +90,7 @@ contract CowlDaoBase is
 
     // Modifier to restrict functions to DAO roles
     modifier onlyMember() {
-        require(eternalLight.balanceOf(msg.sender) > 0, "Not a DAO member");
+        require(waningLight.balanceOf(msg.sender) > 0, "Not a DAO member");
         _;
     }
 
@@ -204,9 +204,9 @@ contract CowlDaoBase is
     );
 
     // Constructor to initialize state variables
-    // constructor(IERC20Upgradeable _rewardToken, address _eternalLight) {
+    // constructor(IERC20Upgradeable _rewardToken, address _waningLight) {
     //     rewardToken = _rewardToken;
-    //     eternalLight = IERC721Upgradeable(_eternalLight);
+    //     waningLight = IERC721Upgradeable(_waningLight);
     // }
 
     // Function to initiate a knowledge cluster

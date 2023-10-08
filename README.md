@@ -38,7 +38,7 @@ The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutioniz
 
 - **Types:**
   - Dataset NFTs (Based on user reputation Level + attributes)
-  - EternalLightArtifact (DAO Membership)
+  - WaningLightArtifact (DAO Membership)
 - **Attributes:**
   - Dynamic and reflect user contributions and reputation.
 - **Usage:**
@@ -52,7 +52,7 @@ The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutioniz
 - **Proposals and Voting:**
   - Members can propose and vote on ecosystem modifications.
 - **Membership Acquisition:**
-  - Through significant contributions and acquisition of the EternalLightArtifact NFT.
+  - Through significant contributions and acquisition of the WaningLightArtifact NFT.
 
 ### **e. Cowl Tokens:**
 
@@ -62,11 +62,11 @@ The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutioniz
   - Accessing services within the ecosystem.
 - **Value:**
   - Derived from the ecosystem’s demand and supply dynamics.
-    
-### **f. CowlDAO Tokens:
 
-- **Distribution:
-  - sarsar 
+### \*\*f. CowlDAO Tokens:
+
+- \*\*Distribution:
+  - sarsar
 
 ## **3. Ecosystem Dynamics and Interactions:**
 

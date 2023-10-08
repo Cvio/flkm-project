@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.17;
 
 // import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -72,17 +72,17 @@ contract DatasetNFTContract is
     ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256) {
         totalMinted++;
         uint256 newTokenId = totalMinted;
-    
+
         _mint(to, newTokenId);
-    
+
         DatasetMetadata memory metadata = DatasetMetadata(
             description,
             dataType,
             source,
             royaltyPercentage,
-            ipfsHash  // Add IPFS hash here
+            ipfsHash // Add IPFS hash here
         );
-        
+
         datasetMetadata[newTokenId] = metadata;
         return newTokenId;
     }

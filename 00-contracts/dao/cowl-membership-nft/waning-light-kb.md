@@ -1,6 +1,6 @@
-# EternalLight NFT Contracts Knowledge Base
+# WaningLight NFT Contracts Knowledge Base
 
-## 1. **EternalLightBase Contract**
+## 1. **WaningLightBase Contract**
 
 ### Attributes:
 
@@ -16,12 +16,12 @@
 
 - It serves as the foundational contract, allowing for basic operations such as minting and burning of tokens.
 
-## 2. **EternalLightMetadata Contract**
+## 2. **WaningLightMetadata Contract**
 
 ### Attributes:
 
 - `_tokenDetails`: A mapping to store the details of each token based on their token ID.
-- `eternalLightBase`: Reference to the EternalLightBase contract.
+- `waningLightBase`: Reference to the WaningLightBase contract.
 
 ### Functions:
 
@@ -50,7 +50,7 @@
 
 - Responsible for managing and configuring the base URI and individual token URIs.
 
-## 4. **EternalLightMinting Contract**
+## 4. **WaningLightMinting Contract**
 
 ### Attributes:
 
@@ -72,9 +72,9 @@
 ## Interrelation
 
 - Each contract in the series builds on the preceding one, adding additional layers of functionality and management to the NFT system.
-- **EternalLightBase** provides foundational functionalities such as minting and burning.
-- **EternalLightMetadata** extends functionalities to manage metadata for each token, utilizing the foundational elements from EternalLightBase.
+- **WaningLightBase** provides foundational functionalities such as minting and burning.
+- **WaningLightMetadata** extends functionalities to manage metadata for each token, utilizing the foundational elements from WaningLightBase.
 - **MetadataLogicContract** specializes in managing the logic for URIs, defining the base URI and allowing configuration of individual token URIs.
-- Finally, **EternalLightMinting** integrates and leverages all the preceding contracts to manage the overall minting process, ensuring adherence to supply limits and providing controls for sales operations.
+- Finally, **WaningLightMinting** integrates and leverages all the preceding contracts to manage the overall minting process, ensuring adherence to supply limits and providing controls for sales operations.
 
-This collective suite of contracts form a coherent, interconnected system, allowing the EternalLight NFTs to be minted, managed, and interacted with in a multifaceted and controlled manner, reflecting the intricate themes and philosophies imbued within them.
+This collective suite of contracts form a coherent, interconnected system, allowing the WaningLight NFTs to be minted, managed, and interacted with in a multifaceted and controlled manner, reflecting the intricate themes and philosophies imbued within them.

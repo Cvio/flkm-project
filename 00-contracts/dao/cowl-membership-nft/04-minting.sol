@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.17;
 
 import "../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 import "../../../node_modules/@openzeppelin/contracts/security/Pausable.sol";
 import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./01-eternal-light-base.sol";
+import "./01-waning-light-base.sol";
 import "./02-metadata.sol";
 import "./03-metadata-logic.sol";
 
-contract EternalLightMinting is ERC721Enumerable, Ownable, Pausable {
+contract WaningLightMinting is ERC721Enumerable, Ownable, Pausable {
     using SafeMath for uint256;
 
-    EternalLightBase public eternalLightBase;
-    EternalLightMetadata public eternalLightMetadata;
+    WaningLightBase public waningLightBase;
+    WaningLightMetadata public waningLightMetadata;
 
     uint256 public maxSupply;
     uint256 public mintPrice;
@@ -26,15 +26,13 @@ contract EternalLightMinting is ERC721Enumerable, Ownable, Pausable {
     );
 
     constructor(
-        address eternalLightBaseAddress,
-        address eternalLightMetadataAddress,
+        address waningLightBaseAddress,
+        address waningLightMetadataAddress,
         uint256 _maxSupply,
         uint256 _mintPrice
-    ) ERC721("EternalLight", "EL") {
-        eternalLightBase = EternalLightBase(eternalLightBaseAddress);
-        eternalLightMetadata = EternalLightMetadata(
-            eternalLightMetadataAddress
-        );
+    ) ERC721("WaningLight", "EL") {
+        waningLightBase = WaningLightBase(waningLightBaseAddress);
+        waningLightMetadata = WaningLightMetadata(waningLightMetadataAddress);
         maxSupply = _maxSupply;
         mintPrice = _mintPrice;
         mintedSupply = 0;
@@ -77,7 +75,7 @@ contract EternalLightMinting is ERC721Enumerable, Ownable, Pausable {
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
-        return eternalLightMetadata.baseURI(); // Accessing the public function from EternalLightMetadata
+        return waningLightMetadata.baseURI(); // Accessing the public function from WaningLightMetadata
     }
 
     function _saleIsOpen() internal view returns (bool) {

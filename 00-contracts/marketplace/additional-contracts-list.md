@@ -1,6 +1,6 @@
-# Additional Contracts Architecture for EternalLight Ecosystem
+# Additional Contracts Architecture for WaningLight Ecosystem
 
-## **1. Staking Contract (EternalLightStaking)**
+## **1. Staking Contract (WaningLightStaking)**
 
 ### **Purpose:**
 
@@ -17,7 +17,7 @@
 - Interacts with `KnowledgeExchangeContract` to check the user's reputation and adjust rewards accordingly.
 - Could also update user reputation based on staking and contribution.
 
-## **2. Governance Contract (EternalLightGovernance)**
+## **2. Governance Contract (WaningLightGovernance)**
 
 ### **Purpose:**
 
@@ -35,7 +35,7 @@
 - Interacts to check the reputation level of users for voting power.
 - Could modify user reputation based on participation in governance.
 
-## **3. Marketplace Contract (EternalLightMarketplace)**
+## **3. Marketplace Contract (WaningLightMarketplace)**
 
 ### **Purpose:**
 
@@ -52,7 +52,7 @@
 - Checks the availability and validity of resources.
 - Updates resource demand and user reputation based on transactions.
 
-## **4. Royalty Contract (EternalLightRoyalty)**
+## **4. Royalty Contract (WaningLightRoyalty)**
 
 ### **Purpose:**
 
@@ -68,7 +68,7 @@
 - Interacts to identify the creators and users of resources.
 - Calculates royalties based on resource demand and transactions in the ecosystem.
 
-## **5. Upgradeability Proxy Contract (EternalLightUpgradeProxy)**
+## **5. Upgradeability Proxy Contract (WaningLightUpgradeProxy)**
 
 ### **Purpose:**
 
@@ -84,7 +84,7 @@
 - Acts as a delegate to call functionalities from `KnowledgeExchangeContract`.
 - Upgrades `KnowledgeExchangeContract` and other contracts as needed.
 
-## **6. Dynamic Attributes and DAO Interaction Contract (EternalLightDynamicDAO)**
+## **6. Dynamic Attributes and DAO Interaction Contract (WaningLightDynamicDAO)**
 
 ### **Purpose:**
 
@@ -119,7 +119,7 @@
                                         +-------+--------+
                                                 |
                                         +-------v-------------+
-                                        | EternalLightRoyalty |
+                                        | WaningLightRoyalty |
                                         +---------------------+
 ```
 

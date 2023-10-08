@@ -6,7 +6,7 @@
 
 - The token used to reward users.
 
-### `eternalLight: IERC721`
+### `waningLight: IERC721`
 
 - The NFT representing membership in the DAO.
 

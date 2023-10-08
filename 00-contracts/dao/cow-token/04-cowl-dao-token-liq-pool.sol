@@ -1,20 +1,16 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.17;
 
 // import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 // import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 // import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 
-contract LiquidityPool is ERC20, ReentrancyGuard {
-    using SafeMath for uint256;
-
-    IERC20 public tokenA;
-    IERC20 public tokenB;
+contract LiquidityPool is ERC20Upgradeable, ReentrancyGuardUpgradeable {
+    IERC20Upgradeable public tokenA;
+    IERC20Upgradeable public tokenB;
 
     event LiquidityAdded(
         address indexed provider,
@@ -30,12 +26,11 @@ contract LiquidityPool is ERC20, ReentrancyGuard {
     );
     event Swapped(address indexed swapper, uint256 amountIn, uint256 amountOut);
 
-    constructor(
-        address _tokenA,
-        address _tokenB
-    ) ERC20("LiquidityToken", "LPT") {
-        tokenA = IERC20(_tokenA);
-        tokenB = IERC20(_tokenB);
+    function initialize(address _tokenA, address _tokenB) public initializer {
+        __ERC20_init("LiquidityToken", "LPT");
+        __ReentrancyGuard_init();
+        tokenA = IERC20Upgradeable(_tokenA);
+        tokenB = IERC20Upgradeable(_tokenB);
     }
 
     function addLiquidity(
@@ -52,10 +47,10 @@ contract LiquidityPool is ERC20, ReentrancyGuard {
 
         uint256 liquidityMinted;
         if (totalSupply() == 0) {
-            liquidityMinted = amountA.add(amountB);
+            liquidityMinted = amountA + amountB;
         } else {
-            uint256 liquidityA = totalSupply().mul(amountA).div(_totalA);
-            uint256 liquidityB = totalSupply().mul(amountB).div(_totalB);
+            uint256 liquidityA = (totalSupply() * amountA) / _totalA;
+            uint256 liquidityB = (totalSupply() * amountB) / _totalB;
             liquidityMinted = liquidityA < liquidityB ? liquidityA : liquidityB;
         }
 
@@ -69,14 +64,10 @@ contract LiquidityPool is ERC20, ReentrancyGuard {
             "Invalid liquidity amount"
         );
 
-        uint256 amountA = tokenA
-            .balanceOf(address(this))
-            .mul(liquidityAmount)
-            .div(totalSupply());
-        uint256 amountB = tokenB
-            .balanceOf(address(this))
-            .mul(liquidityAmount)
-            .div(totalSupply());
+        uint256 amountA = (tokenA.balanceOf(address(this)) * liquidityAmount) /
+            totalSupply();
+        uint256 amountB = (tokenB.balanceOf(address(this)) * liquidityAmount) /
+            totalSupply();
 
         _burn(msg.sender, liquidityAmount); // Burn LP tokens from the liquidity provider
         tokenA.transfer(msg.sender, amountA);
@@ -115,6 +106,6 @@ contract LiquidityPool is ERC20, ReentrancyGuard {
         uint256 reserveIn,
         uint256 reserveOut
     ) public pure returns (uint256) {
-        return amountIn.mul(reserveOut).div(reserveIn.add(amountIn));
+        return (amountIn * reserveOut) / (reserveIn + amountIn);
     }
 }

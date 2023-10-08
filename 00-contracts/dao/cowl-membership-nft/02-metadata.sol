@@ -1,30 +1,38 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "./01-eternal-light-base.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "./01-waning-light-base.sol";
 
-contract EternalLightMetadata is ERC721Enumerable, Ownable {
+contract WaningLightMetadata is
+    ERC721EnumerableUpgradeable,
+    AccessControlUpgradeable
+{
     using Strings for uint256;
 
-    EternalLightBase public eternalLightBase;
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+
+    WaningLightBase public waningLightBase;
     mapping(uint256 => string) private _tokenDetails;
 
-    constructor(address eternalLightBaseAddress) ERC721("", "") {
-        eternalLightBase = EternalLightBase(eternalLightBaseAddress);
-    }
+    function initialize(address waningLightBaseAddress) external initializer {
+        __ERC721Enumerable_init();
+        __AccessControl_init();
 
-    function baseURI() public view returns (string memory) {
-        return _baseURI();
+        _grantRole(ADMIN_ROLE, msg.sender);
+
+        waningLightBase = WaningLightBase(waningLightBaseAddress);
     }
 
     function setTokenDetails(
         uint256 tokenId,
         string memory details
-    ) external onlyOwner {
+    ) external onlyRole(ADMIN_ROLE) {
         require(
-            eternalLightBase.ownerOf(tokenId) == address(this),
+            waningLightBase.ownerOf(tokenId) == address(this),
             "Token not owned by this contract"
         );
         _tokenDetails[tokenId] = details;
@@ -36,11 +44,15 @@ contract EternalLightMetadata is ERC721Enumerable, Ownable {
         return _tokenDetails[tokenId];
     }
 
-    function tokenURI(
-        uint256 tokenId
-    ) public view virtual override returns (string memory) {
-        string memory uri = eternalLightBase.tokenURI(tokenId);
-        string memory details = _tokenDetails[tokenId];
-        return string(abi.encodePacked(uri, details));
+    function supportsInterface(
+        bytes4 interfaceId
+    )
+        public
+        view
+        virtual
+        override(ERC721EnumerableUpgradeable, AccessControlUpgradeable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }
