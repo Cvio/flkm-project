@@ -7,7 +7,7 @@ pragma solidity ^0.8.17;
 
 import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "../../node_modules/@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "../../node_modules/@chainlink/contracts/src/v0.7/ChainlinkClient.sol";
 
 contract DataAnalysisContract is
     Initializable,

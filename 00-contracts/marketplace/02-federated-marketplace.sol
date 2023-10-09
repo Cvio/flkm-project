@@ -5,22 +5,23 @@ pragma solidity ^0.8.17;
 // import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-// import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
 import "../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "../../node_modules/@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 
-contract KnowledgeExchangeContract is
+contract FederatedMarketplace is
     Initializable,
     AccessControlUpgradeable,
     ReentrancyGuardUpgradeable
 {
-    using SafeMathUpgradeable for uint256;
     string public contractName;
-    IERC20Upgradeable public knowledgeToken;
+    IERC20Upgradeable public cowlToken;
+
+    uint256 public initialRewardRate;
+    uint256 public decayDuration; // In blocks ?
+    uint256 public initialBlock;
 
     // Define the roles
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
@@ -97,7 +98,7 @@ contract KnowledgeExchangeContract is
 
     function initialize(
         string memory _contractName,
-        address _knowledgeTokenAddress
+        address _cowlTokenAddress
     ) public initializer {
         __AccessControl_init(); // Initialize AccessControl
         __ReentrancyGuard_init(); // Initialize ReentrancyGuard
@@ -106,7 +107,7 @@ contract KnowledgeExchangeContract is
         _grantRole(ADMIN_ROLE, msg.sender);
 
         contractName = _contractName;
-        knowledgeToken = IERC20Upgradeable(_knowledgeTokenAddress);
+        cowlToken = IERC20Upgradeable(_cowlTokenAddress);
     }
 
     function uploadResource(
@@ -114,8 +115,8 @@ contract KnowledgeExchangeContract is
         string memory _description
     ) external {
         require(
-            knowledgeToken.balanceOf(msg.sender) >= 100,
-            "Insufficient knowledge tokens"
+            cowlToken.balanceOf(msg.sender) >= 100,
+            "Insufficient cowl tokens"
         );
 
         knowledgeResources[nextResourceID] = KnowledgeResource({
@@ -141,7 +142,7 @@ contract KnowledgeExchangeContract is
         userTotalDemand[knowledgeResources[_resourceID].creator]++;
 
         uint256 compensationAmount = calculateCompensation(_resourceID);
-        knowledgeToken.transferFrom(
+        cowlToken.transferFrom(
             msg.sender,
             knowledgeResources[_resourceID].creator,
             compensationAmount
@@ -162,17 +163,17 @@ contract KnowledgeExchangeContract is
         uint256 reputationBonus = reputationBonusValues[
             userReputation[msg.sender]
         ];
-        uint256 uniquenessFactor = MAX_DEMAND.sub(demand).mul(
-            UNIQUENESS_SCALING_FACTOR
-        );
-        uint256 contributionBonus = userResourceCount[msg.sender]
-            .mul(CONTRIBUTION_SCALING_FACTOR)
-            .add(userTotalDemand[msg.sender]);
+        uint256 uniquenessFactor = MAX_DEMAND -
+            demand *
+            UNIQUENESS_SCALING_FACTOR;
+        uint256 contributionBonus = userResourceCount[msg.sender] *
+            CONTRIBUTION_SCALING_FACTOR +
+            userTotalDemand[msg.sender];
 
-        uint256 compensation = demand
-            .add(reputationBonus)
-            .add(uniquenessFactor)
-            .add(contributionBonus);
+        uint256 compensation = demand +
+            reputationBonus +
+            uniquenessFactor +
+            contributionBonus;
         return
             (compensation < MINIMUM_COMPENSATION)
                 ? MINIMUM_COMPENSATION
@@ -233,6 +234,29 @@ contract KnowledgeExchangeContract is
 
         // Clean up to free storage and gas refund
         delete votes[_voteID];
+    }
+
+    function setInitialRewardRate(
+        uint256 _initialRewardRate
+    ) external onlyRole(ADMIN_ROLE) {
+        initialRewardRate = _initialRewardRate;
+        initialBlock = block.number;
+    }
+
+    function setDecayDuration(
+        uint256 _decayDuration
+    ) external onlyRole(ADMIN_ROLE) {
+        decayDuration = _decayDuration;
+    }
+
+    function getCurrentRewardRate() public view returns (uint256) {
+        if (block.number - initialBlock > decayDuration) {
+            return 0; // No more rewards after the decay duration
+        }
+        return
+            initialRewardRate *
+            (decayDuration - block.number - initialBlock) *
+            (decayDuration);
     }
 
     function updateContractName(string memory _newName) external {
