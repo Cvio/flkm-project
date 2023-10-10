@@ -1,33 +1,41 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-// import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../../../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import "../../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract VestingContract is Ownable {
-    using SafeMath for uint256;
+contract VestingContract is Initializable, AccessControlUpgradeable {
+    using SafeMathUpgradeable for uint256;
 
-    IERC20 public token;
+    IERC20Upgradeable public token;
     mapping(address => uint256) public vestedAmount;
     mapping(address => uint256) public claimedAmount;
     uint256 public vestingDuration;
+    bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
 
-    constructor(IERC20 _token, uint256 _vestingDuration) {
+    function initialize(
+        IERC20Upgradeable _token,
+        uint256 _vestingDuration,
+        address initialOwner
+    ) public initializer {
         token = _token;
         vestingDuration = _vestingDuration;
+
+        _grantRole(OWNER_ROLE, initialOwner);
+        _setRoleAdmin(OWNER_ROLE, OWNER_ROLE);
     }
 
     function addVesting(
         address beneficiary,
         uint256 amount
-    ) external onlyOwner {
+    ) external onlyRole(OWNER_ROLE) {
         vestedAmount[beneficiary] = vestedAmount[beneficiary].add(amount);
     }
 

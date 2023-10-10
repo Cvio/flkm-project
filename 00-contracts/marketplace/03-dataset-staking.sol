@@ -10,7 +10,7 @@ import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initi
 import "../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-import "./02-knowledge-exchange.sol";
+import "./02-federated-marketplace.sol";
 
 interface IDatasetNFTContract {
     function ownerOf(uint256 tokenId) external view returns (address);
