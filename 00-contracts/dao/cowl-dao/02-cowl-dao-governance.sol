@@ -1,19 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-// Importing the required interfaces and contracts from the OpenZeppelin library
 // import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 // import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
 import "../../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "../../../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 // Main contract for the DAO Governance
-contract CowlDaoGovernance is ReentrancyGuard, Ownable {
+contract CowlDaoGovernance is
+    Initializable,
+    AccessControlUpgradeable,
+    ReentrancyGuard
+{
     // Reference to the ERC20 token used for voting.
     // It is public so anyone can see which token is used for governance.
     IERC20 public governanceToken;
+
+    // Add role bytes for clarity and control
+    bytes32 public constant PROPOSER_ROLE = keccak256("PROPOSER_ROLE");
+    bytes32 public constant VOTER_ROLE = keccak256("VOTER_ROLE");
+    bytes32 public constant EXECUTOR_ROLE = keccak256("EXECUTOR_ROLE");
 
     // Struct for representing a proposal
     struct Proposal {
@@ -50,13 +61,18 @@ contract CowlDaoGovernance is ReentrancyGuard, Ownable {
     // Constant for the voting duration, set to 1 day for now. This can be changed based on requirements.
     uint256 public constant VOTING_DURATION = 1 days;
 
-    // Constructor for initializing the contract with the governance token's address
-    constructor(address _governanceToken) {
+    function initialize(address _governanceToken) public initializer {
         governanceToken = IERC20(_governanceToken);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PROPOSER_ROLE, msg.sender);
+        _grantRole(VOTER_ROLE, msg.sender);
+        _grantRole(EXECUTOR_ROLE, msg.sender);
     }
 
     // External function to allow users to propose a new governance proposal
     function propose(string memory _description) external {
+        require(hasRole(PROPOSER_ROLE, msg.sender), "Caller is not a proposer");
+
         // Constructing a new proposal object
         Proposal memory newProposal = Proposal({
             description: _description,
@@ -81,6 +97,8 @@ contract CowlDaoGovernance is ReentrancyGuard, Ownable {
 
     // External function to allow users to vote on a given proposal
     function vote(uint256 _proposalId, bool _vote) external nonReentrant {
+        require(hasRole(VOTER_ROLE, msg.sender), "Caller is not a voter");
+
         // nonReentrant ensures no recursive calls
         require(_proposalId < proposals.length, "Proposal does not exist"); // Check if proposal exists
         Proposal storage proposal = proposals[_proposalId]; // Retrieving the proposal from storage
@@ -105,7 +123,12 @@ contract CowlDaoGovernance is ReentrancyGuard, Ownable {
 
     // Function for the owner to execute a proposal. For simplicity, only the owner can execute.
     // In a more decentralized scenario, this might be changed to a more complex mechanism.
-    function execute(uint256 _proposalId) external nonReentrant onlyOwner {
+    function execute(uint256 _proposalId) external nonReentrant {
+        require(
+            hasRole(EXECUTOR_ROLE, msg.sender),
+            "Caller is not an executor"
+        );
+
         // onlyOwner ensures only the contract's owner can call
         require(_proposalId < proposals.length, "Proposal does not exist"); // Check if proposal exists
         Proposal storage proposal = proposals[_proposalId]; // Retrieving the proposal from storage
@@ -123,4 +146,25 @@ contract CowlDaoGovernance is ReentrancyGuard, Ownable {
         // Emitting an event to indicate the proposal has been executed
         emit ProposalExecuted(_proposalId);
     }
+
+    // function giveRole(bytes32 role, address account) public virtual {
+    //     require(
+    //         hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
+    //         "Caller is not an admin"
+    //     );
+    //     _grantRole(role, account);
+    // }
+
+    // function takeRole(bytes32 role, address account) public virtual {
+    //     require(
+    //         hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
+    //         "Caller is not an admin"
+    //     );
+    //     _revokeRole(role, account);
+    // }
+
+    // function tossRole(bytes32 role, address account) public virtual {
+    //     require(account == msg.sender, "Can only renounce roles for self");
+    //     _revokeRole(role, account);
+    // }
 }

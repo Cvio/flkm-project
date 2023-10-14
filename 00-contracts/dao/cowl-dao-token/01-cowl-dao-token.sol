@@ -28,8 +28,7 @@ contract CowlDaoToken is
     ERC20Upgradeable,
     AccessControlUpgradeable,
     ReentrancyGuardUpgradeable,
-    PausableUpgradeable,
-    OwnableUpgradeable
+    PausableUpgradeable
 {
     using SafeMathUpgradeable for uint256;
 
@@ -39,24 +38,18 @@ contract CowlDaoToken is
         string memory name,
         string memory symbol
     ) public initializer {
-        // Initialize base contracts.
         __ERC20_init(name, symbol);
         __AccessControl_init();
         __ReentrancyGuard_init();
         __Pausable_init();
-        __Ownable_init();
 
-        // Initialize contract-specific logic.
         daoName = name; // DAO name
         daoSymbol = symbol; // DAO symbol
 
-        // Minting initial supply to the message sender (supposedly the deployer)
         _mint(_msgSender(), INITIAL_SUPPLY * (10 ** decimals()));
 
-        // Setting up roles and permissions.
-        _grantRole(ADMIN_ROLE, _msgSender()); // Assigning the admin role to the deployer.
+        _grantRole(ADMIN_ROLE, _msgSender());
 
-        // Setting initial values for contract-specific variables.
         minStakeToPropose = 100 * (10 ** decimals()); // Initial minimum stake to propose
         rewardPool = 0; // Initial value for the reward pool
         _stopped = false; // Initial circuit breaker state
@@ -115,9 +108,6 @@ contract CowlDaoToken is
     // ** Advanced Utility and Functions **
     mapping(address => uint256) public votingPower; // Multi-tier governance voting power
 
-    // --------------------- Events Section ---------------------
-    // The below section organizes and groups related events together for clarity and readability
-
     event GovernanceLevelChanged(
         address indexed holder,
         GovernanceLevel newLevel
@@ -141,19 +131,6 @@ contract CowlDaoToken is
     event ProposalExecuted(uint256 indexed proposalId);
     event DelegateRequest(address indexed delegator, address indexed delegatee);
 
-    // --------------------- Constructor ---------------------
-    // A constructor that sets up basic token properties and mint the initial supply to the msg.sender
-    // Making contract upgradeable - removing constructor and using initializer
-
-    // constructor() ERC20Upgradeable(daoName, daoSymbol) {
-    //     _mint(msg.sender, INITIAL_SUPPLY * (10 ** decimals()));
-    //     minStakeToPropose = 100 * (10 ** decimals());
-    //     _grantRole(ADMIN_ROLE, msg.sender); // Set up the admin role
-    // }
-
-    // --------------------- Modifier Section ---------------------
-    // The below section organizes and groups related modifiers together for clarity and readability
-
     modifier stopInEmergency() {
         require(!_stopped, "Contract is stopped due to an emergency");
         _;
@@ -168,9 +145,6 @@ contract CowlDaoToken is
         require(hasRole(ADMIN_ROLE, msg.sender), "Caller is not an admin");
         _;
     }
-
-    // --------------------- Function Section ---------------------
-    // The below section organizes and groups related functions together for clarity and readability
 
     // ** Administrative Functions **
 
@@ -344,7 +318,5 @@ contract CowlDaoToken is
         return delegates[delegator] == delegatee;
     }
 
-    // --------------------- Fallback Function ---------------------
-    // Ensuring there’s a payable fallback to receive ether sent to the contract address
     receive() external payable {}
 }

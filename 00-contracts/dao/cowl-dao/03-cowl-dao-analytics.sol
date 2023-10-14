@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-// Import necessary libraries and interfaces
-// import "@openzeppelin/contracts/access/Ownable.sol";
-import "../../../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
 // Define the DAO Analytics contract
-contract DAOAnalytics is Ownable {
+contract DAOAnalytics is AccessControlUpgradeable {
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+
     // Structure to store DAO activity data
     struct Activity {
         uint256 timestamp;
@@ -26,11 +27,18 @@ contract DAOAnalytics is Ownable {
         string description
     );
 
+    function initialize() public initializer {
+        __AccessControl_init();
+
+        _grantRole(ADMIN_ROLE, msg.sender);
+    }
+
     // Function to add a new activity
     function addActivity(
         uint256 activityType,
         string memory description
-    ) external onlyOwner {
+    ) external {
+        require(hasRole(ADMIN_ROLE, msg.sender), "Caller is not an admin");
         uint256 timestamp = block.timestamp;
         Activity memory newActivity = Activity(timestamp, description);
 
@@ -77,5 +85,7 @@ contract DAOAnalytics is Ownable {
         } else if (activityType == 3) {
             return membershipChanges;
         }
+        // Just in case, though the require statement should handle invalid types
+        revert("Invalid activity type");
     }
 }
