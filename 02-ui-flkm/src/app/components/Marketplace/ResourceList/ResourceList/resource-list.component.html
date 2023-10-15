@@ -1,3 +1,14 @@
+<!-- Sorting Dropdown -->
+<div class="sorting-container">
+  <label for="sortOptions">Sort by:</label>
+  <select id="sortOptions" (change)="onSortOptionChange($event)">
+    <option value="popular">Most Popular</option>
+    <option value="recent">Recently Added</option>
+    <!-- Add more options here -->
+  </select>
+</div>
+
+<!-- Resource Table -->
 <div *ngIf="resources.length; else noResources">
   <table>
     <thead>
@@ -15,12 +26,13 @@
         </td>
         <td>{{ resource.ownerId }}</td>
         <td>{{ resource.createdAt | date }}</td>
-        <!-- You can use the json pipe to display object properties, adjust as needed -->
         <!-- Add more cells as per your needs -->
       </tr>
     </tbody>
   </table>
 </div>
+
+<!-- No Resources Template -->
 <ng-template #noResources>
   <p>No resources found.</p>
 </ng-template>

@@ -56,4 +56,29 @@ export class MarketplaceComponent implements OnInit {
   selectResource(resourceId: string): void {
     // Logic to associate the selected resource with the user's project.
   }
+
+  applyFilter(filterType: string): void {
+    switch (filterType) {
+      case 'popular':
+        this.sortResourcesByPopularity();
+        break;
+      case 'recent':
+        this.sortResourcesByRecent();
+        break;
+      // Add more cases here
+      default:
+        break;
+    }
+  }
+
+  sortResourcesByPopularity(): void {
+    this.filteredResources.sort((a, b) => b.popularity - a.popularity);
+  }
+
+  sortResourcesByRecent(): void {
+    this.filteredResources.sort(
+      (a, b) =>
+        new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+    );
+  }
 }

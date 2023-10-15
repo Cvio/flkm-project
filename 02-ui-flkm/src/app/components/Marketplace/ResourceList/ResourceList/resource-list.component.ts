@@ -51,4 +51,35 @@ export class ResourceListComponent implements OnInit {
     this.sharedService.setSelectedDatasetId(datasetName);
     this.router.navigate(['/create-project']);
   }
+
+  applyFilter(filterType: string): void {
+    switch (filterType) {
+      case 'popular':
+        this.sortResourcesByPopularity();
+        break;
+      case 'recent':
+        this.sortResourcesByRecent();
+        break;
+      // Add more cases here
+      default:
+        break;
+    }
+  }
+
+  sortResourcesByPopularity(): void {
+    this.resources.sort((a, b) => b.popularity - a.popularity);
+  }
+
+  sortResourcesByRecent(): void {
+    this.resources.sort(
+      (a, b) =>
+        new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+    );
+  }
+
+  onSortOptionChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const value = target.value;
+    this.applyFilter(value);
+  }
 }

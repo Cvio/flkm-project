@@ -1,2 +1,7 @@
 <!-- Embed the ResourceListComponent -->
 <app-resource-list></app-resource-list>
+<select (change)="applyFilter($event.target.value)">
+  <option value="popular">Most Popular</option>
+  <option value="recent">Recently Added</option>
+  <!-- Add more options here -->
+</select>
