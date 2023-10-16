@@ -71,11 +71,21 @@ export class ResourceListComponent implements OnInit {
   }
 
   sortResourcesByRecent(): void {
-    this.resources.sort(
-      (a, b) =>
-        new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
-    );
+    this.resources.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      console.log(`Date A: ${dateA}, Date B: ${dateB}`);
+      return dateB - dateA;
+    });
+    console.log('Sorted Resources:', this.resources);
   }
+
+  // sortResourcesByRecent(): void {
+  //   this.resources.sort(
+  //     (a, b) =>
+  //       new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+  //   );
+  // }
 
   onSortOptionChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
