@@ -29,6 +29,26 @@
       "address": "0x0F2383e25b4E65fceC2884b7168f4FBE9cc6a076",
       "txHash": "0xbb6d7805cee7170ef934393319adfd491c597d0e9f52cf293b9886f081298e5b",
       "kind": "transparent"
+    },
+    {
+      "address": "0xF05EDa2eFeF2b2AFc043F4efE3973fE8b84A0437",
+      "txHash": "0xf7e147cfe074a9213007e723dd8b2a5024246c3dfb21ab7bdd475dd29badc82b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x36b1D60c1ccE334bf6CfDad5077f61863e4E023b",
+      "txHash": "0xa1ba28d6d1e5155d8a2edb511c4d5f6bd3feaa0409c5564cccfeed67e3e81d15",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x445D35987F61DBc859c5E5660352cAB4ae16e291",
+      "txHash": "0x4381291ec9ac05bb7fdcef3fd9ba627cc2f90fea0b242589fa510cb7e4c3bc4f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x95Dd1ddaEf26DFbC57d915aB2A592991A32A8A09",
+      "txHash": "0x954e6ff491302b901e7f6f38b8a43f714fdf030115722e360f084572c1313ad2",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -75,6 +95,46 @@
     "db0b6096b1f1dbcc2c4d2df4c92fb8a33990d6424af3f333eb5c82366d7d68d6": {
       "address": "0x8f43f09958f21bF3E3AA0EF4d6d94d9d76Fa82Fe",
       "txHash": "0x18b44616a62fde2619f15d7d9f6fc74884ce3549bd10d201b6151300b38ab8c0",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_uint8",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "contract": "HelloWorld",
+            "label": "message",
+            "type": "t_string_storage",
+            "src": "..\\project:\\contracts\\HelloWorld.sol:7"
+          }
+        ],
+        "types": {
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "c0f43408d811175528601e8cc4aa459a71fcab8bd255c3121c7227bc8f14ff54": {
+      "address": "0x8D0C7b50fE95Cf412D21FceB4A11f29eb5D0e2E1",
+      "txHash": "0xa44082f67a4477abdc972275df4d8e11c8df1fb678ed29152c46daf141480ecc",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
