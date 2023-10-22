@@ -301,7 +301,7 @@
     "absolutePath": "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol",
     "exportedSymbols": {
       "IERC165Upgradeable": [
-        3477
+        3882
       ],
       "IERC721Upgradeable": [
         2617
@@ -329,7 +329,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2618,
-        "sourceUnit": 3478,
+        "sourceUnit": 3883,
         "src": "133:58:13",
         "symbolAliases": [],
         "unitAlias": ""
@@ -345,7 +345,7 @@
                 "293:18:13"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3477,
+              "referencedDeclaration": 3882,
               "src": "293:18:13"
             },
             "id": 2507,
@@ -366,7 +366,7 @@
         "id": 2617,
         "linearizedBaseContracts": [
           2617,
-          3477
+          3882
         ],
         "name": "IERC721Upgradeable",
         "nameLocation": "271:18:13",
@@ -1654,7 +1654,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-21T22:49:23.847Z",
+  "updatedAt": "2023-10-22T01:35:13.959Z",
   "devdoc": {
     "details": "Required interface of an ERC721 compliant contract.",
     "events": {

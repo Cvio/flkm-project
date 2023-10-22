@@ -333,7 +333,7 @@
     "absolutePath": "@openzeppelin/contracts-upgradeable/interfaces/IERC4906Upgradeable.sol",
     "exportedSymbols": {
       "IERC165Upgradeable": [
-        3477
+        3882
       ],
       "IERC4906Upgradeable": [
         433
@@ -392,7 +392,7 @@
                 "281:18:3"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3477,
+              "referencedDeclaration": 3882,
               "src": "281:18:3"
             },
             "id": 418,
@@ -429,7 +429,7 @@
         "linearizedBaseContracts": [
           433,
           2617,
-          3477
+          3882
         ],
         "name": "IERC4906Upgradeable",
         "nameLocation": "258:19:3",
@@ -577,7 +577,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-21T22:49:23.821Z",
+  "updatedAt": "2023-10-22T01:35:13.928Z",
   "devdoc": {
     "events": {
       "BatchMetadataUpdate(uint256,uint256)": {
