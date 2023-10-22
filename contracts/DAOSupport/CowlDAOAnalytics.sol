@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
 // Define the DAO Analytics contract
-contract DAOAnalytics is AccessControlUpgradeable {
+contract DaoAnalytics is AccessControlUpgradeable {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     // Structure to store DAO activity data

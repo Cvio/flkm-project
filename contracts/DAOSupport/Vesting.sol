@@ -4,9 +4,8 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract VestingContract is Initializable, AccessControlUpgradeable {
+contract Vesting is Initializable, AccessControlUpgradeable {
     using SafeMathUpgradeable for uint256;
 
     IERC20Upgradeable public token;
