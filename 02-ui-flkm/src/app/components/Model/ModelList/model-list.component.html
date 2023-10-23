@@ -1,0 +1,12 @@
+<!-- model-list.component.html -->
+
+<div class="model-list-container">
+  <h1>Your Models</h1>
+
+  <!-- Add Model Button -->
+  <button (click)="openUploadModelDialog()">Upload Model</button>
+
+  <div *ngFor="let model of models">
+    <!-- Existing code to display each model -->
+  </div>
+</div>

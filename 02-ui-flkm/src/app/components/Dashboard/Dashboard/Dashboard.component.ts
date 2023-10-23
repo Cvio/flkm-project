@@ -54,6 +54,12 @@ export class DashboardComponent implements OnInit {
   navigateToUploadResource(): void {
     this.router.navigate(['/upload-resource']); // Use the correct path to your Upload Resource component.
   }
+  navigateToModelUpload(): void {
+    this.router.navigate(['/model-upload']); // Use the correct path to your Model Upload component.
+  }
+  navigateToModelList(): void {
+    this.router.navigate(['/model-list']); // Use the correct path to your Model List component.
+  }
   navigateToMarketplace(): void {
     this.router.navigate(['/marketplace']); // Navigate to Marketplace. Adjust the path as per your routing configuration.
   }

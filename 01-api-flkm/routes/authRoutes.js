@@ -4,8 +4,8 @@ const crypto = require("crypto"); // Required for generating tokens
 const bcrypt = require("bcrypt"); // Required for password hashing
 const jwt = require("jsonwebtoken");
 const authenticate = require("../auth/auth-middleware");
-const User = require("../models/user.model"); // Import your User model
-const Project = require("../models/project.model");
+const User = require("../models/user"); // Import your User model
+const Project = require("../models/project");
 
 const authRoutes = express.Router();
 

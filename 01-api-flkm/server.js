@@ -3,17 +3,18 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-const User = require("./models/user.model"); // Import User model
-const Project = require("./models/project.model");
+const User = require("./models/user"); // Import User model
+const Project = require("./models/project");
 const authenticate = require("./auth/auth-middleware");
 const crypto = require("crypto");
 
-const userRoutes = require("./routes/user-routes");
-const authRoutes = require("./routes/auth-routes");
-const etherRoutes = require("./routes/ether-routes");
+const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
+const etherRoutes = require("./routes/etherRoutes");
 // const flkmRoutes = require("./routes/flkmRoutes");
-const projectRoutes = require("./routes/project-routes");
-const resourceRoutes = require("./routes/resource-routes");
+const projectRoutes = require("./routes/projectRoutes");
+const resourceRoutes = require("./routes/resourceRoutes");
+const modelRoutes = require("./routes/modelRoutes");
 // const transferRoutes = require("./routes/transferRoutes");
 
 const multer = require("multer"); // import multer

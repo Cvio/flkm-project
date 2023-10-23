@@ -4,8 +4,8 @@
 // const app = express();
 // const bcrypt = require("bcrypt");
 // const jwt = require("jsonwebtoken");
-// const User = require("./models/user.model"); // Import User model
-// const Project = require("./models/project.model");
+// const User = require("./models/user"); // Import User model
+// const Project = require("./models/project");
 // const authenticate = require("./auth/auth-middleware");
 // const crypto = require("crypto");
 
