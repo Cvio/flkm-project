@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ModelUploadService {
-  private apiUrl = 'http://localhost:3000/api/models/upload'; // Replace with your API URL
+  private apiUrl = 'http://localhost:3000/api/'; // Replace with your API URL
 
   constructor(private http: HttpClient) {}
 
   uploadModel(formData: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, formData);
+    return this.http.post<any>(`${this.apiUrl}/model-upload`, formData);
   }
 }

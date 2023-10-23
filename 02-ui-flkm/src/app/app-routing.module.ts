@@ -10,6 +10,8 @@ import { UserWalletComponent } from './components/User/UserWallet/user-wallet.co
 import { ResourceListComponent } from './components/Marketplace/ResourceList/ResourceList/resource-list.component';
 import { MarketplaceComponent } from './components/Marketplace/marketplace.component';
 import { UploadResourceComponent } from './components/Marketplace/UploadResource/upload-resource.component';
+import { ModelListComponent } from './components/Model/ModelList/model-list.component';
+import { ModelUploadComponent } from './components/Model/ModelUpload/model-upload.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'marketplace', component: MarketplaceComponent },
   { path: 'resource-list', component: ResourceListComponent },
   { path: 'upload-resource', component: UploadResourceComponent },
+  { path: 'model-list', component: ModelListComponent },
+  { path: 'model-upload', component: ModelUploadComponent },
 ];
 
 @NgModule({

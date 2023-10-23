@@ -1,38 +1,70 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModelUploadService } from '../../../services/Model/ModelUpload/model-upload.service';
+import { UserService } from '../../../services/User/UserData/user-data.service';
 
 @Component({
   selector: 'app-model-upload',
   templateUrl: './model-upload.component.html',
   styleUrls: ['./model-upload.component.css'],
 })
-export class ModelUploadComponent {
-  modelFile: File | null = null;
+export class ModelUploadComponent implements OnInit {
+  modelUploadForm!: FormGroup;
+  selectedFile: File | null = null;
+  successMessage: string | null = null;
 
-  constructor(private modelUploadService: ModelUploadService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private modelUploadService: ModelUploadService,
+    private userService: UserService
+  ) {}
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.modelFile = input.files[0];
-    }
+  ngOnInit(): void {
+    this.modelUploadForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      ownerId: ['', Validators.required],
+    });
+
+    this.userService.getCurrentUserId().subscribe(
+      (userId) => {
+        console.log('userId: ', userId); // Now this should log the userId directly.
+        if (userId) {
+          this.modelUploadForm.patchValue({ ownerId: userId });
+        } else {
+          console.error('userId is undefined');
+        }
+      },
+      (error) => {
+        console.error('Error getting user ID:', error);
+      }
+    );
   }
 
-  onUpload(): void {
-    if (this.modelFile) {
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  uploadModel(): void {
+    if (this.modelUploadForm.valid && this.selectedFile) {
       const formData = new FormData();
-      formData.append('modelFile', this.modelFile);
-      formData.append('name', 'Model Name'); // Replace with actual name
-      formData.append('version', '1.0'); // Replace with actual version
-      formData.append('description', 'Description'); // Replace with actual description
-      formData.append('ownerId', 'ownerId'); // Replace with actual ownerId
+      formData.append('file', this.selectedFile);
+      formData.append(
+        'ownerId',
+        this.modelUploadForm.get('ownerId')?.value || ''
+      );
+      formData.append(
+        'modelAttributes',
+        JSON.stringify(this.modelUploadForm.value)
+      );
 
       this.modelUploadService.uploadModel(formData).subscribe(
-        (result) => {
-          console.log('Upload successful', result);
+        (response) => {
+          console.log('Model uploaded successfully:', response);
+          this.successMessage = 'Model uploaded successfully!';
         },
-        (err) => {
-          console.log('Upload failed', err);
+        (error) => {
+          console.error('Error uploading model:', error);
+          this.successMessage = 'Error uploading model!';
         }
       );
     }

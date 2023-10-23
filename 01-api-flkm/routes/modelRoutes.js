@@ -28,7 +28,7 @@ const ModelMetadata = require("../models/modelMetadata");
 
 // Upload Model
 modelRoutes.post(
-  "/models/upload",
+  "/model-upload",
   upload.single("modelFile"),
   async (req, res) => {
     try {
