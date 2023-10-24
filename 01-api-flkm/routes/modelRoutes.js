@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-modelRoutes.post("/upload-model", upload.single("file"), async (req, res) => {
+modelRoutes.post("/model-upload", upload.single("file"), async (req, res) => {
   try {
     const ownerId = req.body.ownerId;
     const modelId = uuidv4();
