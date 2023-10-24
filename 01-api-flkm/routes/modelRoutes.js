@@ -1,81 +1,67 @@
 const express = require("express");
 const multer = require("multer");
-const GridFsStorage = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
-const csvParser = require("csv-parser");
 const fs = require("fs");
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 
-const ModelsMetadata = require("../models/modelMetadata");
-
-// Initialize MongoDB and GridFS
-let gfs;
-const conn = mongoose.createConnection(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-conn.once("open", () => {
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("uploads");
-});
+const ModelMetadata = require("../models/modelMetadata");
 
 const modelRoutes = express.Router();
 
 // Define a Schema
-const ModelsSchema = new mongoose.Schema({}, { strict: false });
+const ModelSchema = new mongoose.Schema({}, { strict: false });
 
-const storage = new GridFsStorage({
-  url: process.env.MONGO_URI,
-  file: (req, file) => {
-    return {
-      filename: `model_${Date.now()}_${file.originalname}`,
-      bucketName: "uploads",
-    };
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
-const Model = require("../models/modelAttributes");
-const ModelMetadata = require("../models/modelMetadata");
+modelRoutes.post("/upload-model", upload.single("file"), async (req, res) => {
+  try {
+    const ownerId = req.body.ownerId;
+    const modelId = uuidv4();
+    const modelAttributes = JSON.parse(req.body.modelAttributes);
+    const name = modelAttributes.name;
+    const filePath = req.file.path;
 
-// Upload Model
-modelRoutes.post(
-  "/model-upload",
-  upload.single("modelFile"),
-  async (req, res) => {
-    try {
-      const newModelId = new mongoose.Types.ObjectId();
+    // Read the model file and store its content
+    const modelContent = fs.readFileSync(filePath, "utf8");
 
-      const newModel = new Model({
-        modelId: newModelId,
-        name: req.body.name,
-        version: req.body.version,
-        description: req.body.description,
-        filePath: req.file.filename,
-        ownerId: req.body.ownerId,
-      });
+    const newModel = {
+      ownerId,
+      modelId,
+      modelContent,
+      // other attributes
+    };
 
-      await newModel.save();
+    // Dynamically create a model with the specified collection name
+    const DynamicModel = mongoose.model(name, ModelSchema, name);
 
-      const newModelMetadata = new ModelMetadata({
-        modelId: newModelId,
-        downloadCount: 0,
-        lastAccessed: new Date(),
-        rating: 0,
-      });
+    // Store in MongoDB under the specified collection name
+    await new DynamicModel(newModel).save();
 
-      await newModelMetadata.save();
+    // Create and save a new metadata document
+    const newModelMetadata = new ModelMetadata({
+      collectionName: name,
+      ownerId: ownerId,
+      createdAt: new Date(),
+      // more metadata fields?
+    });
 
-      res.status(201).json({ modelId: newModelId, status: "uploaded" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
+    await newModelMetadata.save();
+    res.status(200).json({
+      message: `Model Uploaded and Stored in MongoDB with Model ID: ${modelId}`,
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
   }
-);
+});
 
 // Download Model
 modelRoutes.get("/models/download/:modelId", (req, res) => {
