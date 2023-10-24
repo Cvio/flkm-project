@@ -9,15 +9,8 @@ const ResourceMetadata = require("../models/resourceMetadata");
 
 resourceRoutes = express.Router();
 
-// Connect to MongoDB
-// mongoose.connect("mongodb://localhost:27017/csvdb", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
 // Define a Schema
 const ResourceSchema = new mongoose.Schema({}, { strict: false });
-// const Resource = mongoose.model("Resource", ResourceSchema, "resources");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class SharedService {
   private selectedDatasetId = new BehaviorSubject<string | null>(null);
+  private selectedModelId = new BehaviorSubject<string | null>(null);
 
   setSelectedDatasetId(id: string): void {
     this.selectedDatasetId.next(id);
@@ -13,5 +14,12 @@ export class SharedService {
 
   getSelectedDatasetId() {
     return this.selectedDatasetId.asObservable();
+  }
+  setSelectedModelId(id: string): void {
+    this.selectedModelId.next(id);
+  }
+
+  getSelectedModelId() {
+    return this.selectedModelId.asObservable();
   }
 }

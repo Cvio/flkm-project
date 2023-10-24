@@ -1,5 +1,7 @@
 const express = require("express");
 const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
 const csvParser = require("csv-parser");
 const fs = require("fs");
 const mongoose = require("mongoose");
@@ -7,21 +9,34 @@ const { v4: uuidv4 } = require("uuid");
 
 const ModelsMetadata = require("../models/modelMetadata");
 
-modelRoutes = express.Router();
+// Initialize MongoDB and GridFS
+let gfs;
+const conn = mongoose.createConnection(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
+const modelRoutes = express.Router();
 
 // Define a Schema
 const ModelsSchema = new mongoose.Schema({}, { strict: false });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
+const storage = new GridFsStorage({
+  url: process.env.MONGO_URI,
+  file: (req, file) => {
+    return {
+      filename: `model_${Date.now()}_${file.originalname}`,
+      bucketName: "uploads",
+    };
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 const Model = require("../models/modelAttributes");
 const ModelMetadata = require("../models/modelMetadata");
@@ -32,31 +47,19 @@ modelRoutes.post(
   upload.single("modelFile"),
   async (req, res) => {
     try {
-      // Upload file to S3
-      const s3Params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `models/${req.file.originalname}`,
-        Body: req.file.buffer,
-      };
-
-      const s3Upload = await s3.upload(s3Params).promise();
-
-      // Generate a new model ID
       const newModelId = new mongoose.Types.ObjectId();
 
-      // Save primary attributes to MongoDB
       const newModel = new Model({
         modelId: newModelId,
-        name: req.body.name, // Assuming the name is passed in the request
+        name: req.body.name,
         version: req.body.version,
         description: req.body.description,
-        filePath: s3Upload.Location,
-        ownerId: req.body.ownerId, // Assuming the ownerId is passed in the request
+        filePath: req.file.filename,
+        ownerId: req.body.ownerId,
       });
 
       await newModel.save();
 
-      // Create a new metadata entry
       const newModelMetadata = new ModelMetadata({
         modelId: newModelId,
         downloadCount: 0,

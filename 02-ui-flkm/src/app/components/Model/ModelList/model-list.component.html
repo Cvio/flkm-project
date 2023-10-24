@@ -1,12 +1,39 @@
 <!-- model-list.component.html -->
-
-<div class="model-list-container">
-  <h1>Your Models</h1>
-
-  <!-- Add Model Button -->
-  <button (click)="openUploadModelDialog()">Upload Model</button>
-
-  <div *ngFor="let model of models">
-    <!-- Existing code to display each model -->
-  </div>
+<!-- Sorting Dropdown -->
+<div class="sorting-container">
+  <label for="sortOptions">Sort by:</label>
+  <select id="sortOptions" (change)="onSortOptionChange($event)">
+    <option value="popular">Most Popular</option>
+    <option value="recent">Recently Added</option>
+    <!-- Add more options here -->
+  </select>
 </div>
+
+<!-- Model Table -->
+<div *ngIf="models.length; else noModels">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>OwnerId</th>
+        <th>Date Created</th>
+        <!-- Add more headings as per your needs -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let model of models">
+        <td (click)="onModelSelected(model.collectionName)">
+          {{ model.collectionName }}
+        </td>
+        <td>{{ model.ownerId }}</td>
+        <td>{{ model.createdAt | date }}</td>
+        <!-- Add more cells as per your needs -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- No Resources Template -->
+<ng-template #noModels>
+  <p>No resources found.</p>
+</ng-template>

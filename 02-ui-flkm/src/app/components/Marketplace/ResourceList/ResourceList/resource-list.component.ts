@@ -80,13 +80,6 @@ export class ResourceListComponent implements OnInit {
     console.log('Sorted Resources:', this.resources);
   }
 
-  // sortResourcesByRecent(): void {
-  //   this.resources.sort(
-  //     (a, b) =>
-  //       new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
-  //   );
-  // }
-
   onSortOptionChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const value = target.value;
