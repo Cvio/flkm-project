@@ -72,6 +72,7 @@ app.use("/api", etherRoutes);
 //app.use("/api", flkmRoutes);
 app.use("/api", projectRoutes);
 app.use("/api", resourceRoutes);
+app.use("/api", modelRoutes);
 // app.use("/api", transferRoutes);
 
 app.post("/token", async (req, res) => {

@@ -24,6 +24,7 @@ const upload = multer({ storage: storage });
 
 modelRoutes.post("/model-upload", upload.single("file"), async (req, res) => {
   try {
+    console.log(req.body);
     const ownerId = req.body.ownerId;
     const modelId = uuidv4();
     const modelAttributes = JSON.parse(req.body.modelAttributes);
