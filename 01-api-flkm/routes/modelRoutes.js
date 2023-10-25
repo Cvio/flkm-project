@@ -42,7 +42,7 @@ modelRoutes.post("/model-upload", upload.single("file"), async (req, res) => {
     };
 
     // Dynamically create a model with the specified collection name
-    const DynamicModel = mongoose.model(name, ModelSchema, name);
+    const DynamicModel = mongoose.model(name, ModelSchema, "models");
 
     // Store in MongoDB under the specified collection name
     await new DynamicModel(newModel).save();
