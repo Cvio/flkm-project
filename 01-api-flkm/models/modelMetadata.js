@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ModelMetadataSchema = new mongoose.Schema({
   modelId: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
   },
   downloadCount: {

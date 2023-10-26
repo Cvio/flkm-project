@@ -42,7 +42,7 @@ modelRoutes.post("/model-upload", upload.single("file"), async (req, res) => {
     };
 
     // Dynamically create a model with the specified collection name
-    const DynamicModel = mongoose.model(name, ModelSchema, "models");
+    const DynamicModel = mongoose.model(name, ModelSchema, name);
 
     // Store in MongoDB under the specified collection name
     await new DynamicModel(newModel).save();
@@ -50,6 +50,7 @@ modelRoutes.post("/model-upload", upload.single("file"), async (req, res) => {
     // Create and save a new metadata document
     const newModelMetadata = new ModelMetadata({
       collectionName: name,
+      modelId: modelId,
       ownerId: ownerId,
       createdAt: new Date(),
       // more metadata fields?

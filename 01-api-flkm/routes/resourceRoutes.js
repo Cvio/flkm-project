@@ -47,11 +47,7 @@ resourceRoutes.post(
         })
         .on("end", async () => {
           // Dynamically create a model with the specified collection name
-          const DynamicModel = mongoose.model(
-            name,
-            ResourceSchema,
-            "resources"
-          );
+          const DynamicModel = mongoose.model(name, ResourceSchema, name);
           // Store in MongoDB under the specified collection name
           await DynamicModel.insertMany(results);
 
