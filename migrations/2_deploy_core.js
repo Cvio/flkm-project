@@ -10,5 +10,5 @@ module.exports = async function (deployer, network, accounts) {
   const cowlMarketplaceBase = await CowlMarketplaceBase.deployed();
 
   // initialize the marketplace with the address of the token
-  await cowlMarketplaceBase.initialize(cowlToken.address);
+  await cowlMarketplaceBase.initialize("CowlMarketplace", cowlToken.address);
 };
