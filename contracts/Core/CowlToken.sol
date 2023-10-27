@@ -40,6 +40,8 @@ contract CowlToken is
         uint256 _initialSupply,
         address admin
     ) public initializer {
+        _name = "Cowl";
+        _symbol = "COWL";
         __ERC20_init(_name, _symbol);
         __AccessControl_init();
 

@@ -1,5 +1,6 @@
 const CowlToken = artifacts.require("CowlToken");
 const CowlMarketplaceBase = artifacts.require("CowlMarketplaceBase");
+const ReputationNFT = artifacts.require("ReputationNFT");
 
 module.exports = async function (deployer, network, accounts) {
   await deployer.deploy(CowlToken);
@@ -11,4 +12,11 @@ module.exports = async function (deployer, network, accounts) {
 
   // initialize the marketplace with the address of the token
   await cowlMarketplaceBase.initialize("CowlMarketplace", cowlToken.address);
+  const cowlMarketplaceBaseAddress = await cowlMarketplaceBase.address;
+
+  // deploy and initialize the ReputationNFT contract with the address of the marketplace
+  await deployer.deploy(ReputationNFT);
+  const reputationNFT = await ReputationNFT.deployed();
+
+  await reputationNFT.initialize(cowlMarketplaceBaseAddress);
 };

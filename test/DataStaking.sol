@@ -5,12 +5,12 @@ pragma solidity ^0.8.0;
 // import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 // import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-import "../../node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
-import "../../node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "../../node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
-import "../../node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-import "./CowlMarketplace.sol";
+import "./CowlMarketplaceBase.sol";
 
 interface IDatasetNFTContract {
     function ownerOf(uint256 tokenId) external view returns (address);

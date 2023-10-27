@@ -1,8 +1,8 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0xd60a3123E681790e24670FAb80CF90f6A94b60ec",
-    "txHash": "0xe2cbeaae7ea3b0146b563bc34f34fe2b437e4390742a6719f25e47f7fc2b9035"
+    "address": "0x59a032B59c25c2730406a15C9f6080aDEC126D22",
+    "txHash": "0x7ed757e165ac11824a0b7ea29ca6a06712348a6b4b3e52623a7857b9248534f5"
   },
   "proxies": [
     {
@@ -68,6 +68,31 @@
     {
       "address": "0x1120a6104f03415273cfAFd02Ab3A346835a2928",
       "txHash": "0xc480af9bc39afbf604ef5b9ffcc1ee9c5f8dfdb60475b9613d6f0556c5ca3d76",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x796f137A12F961a2Fb4675793F6265E12350bd06",
+      "txHash": "0xb7f9a16be1bc997e7af8114af892c0ff25aad382d661a3e0eb6b33da82a92ff0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x61166a0576b41D016C0Aed7CA918B1abC7D562D9",
+      "txHash": "0x7864471a3c3c881d7fc5e29c919401cc40904ea63cde20b9255ce1a9e053f146",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x88cC7f342087c808655734672F1E3CCbec57Ec29",
+      "txHash": "0xb5cccdf9e23758e425e979b105c3e4ebefe388267ae6558201370e6ccb4c056e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4f3EA76c72De32c60D75a8e622b27161E8aa8600",
+      "txHash": "0xfcc5ac55a01946453ed57a19db2ce7f46c88f716a26c4877e6470e4a9c8e8cb3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xd6c64dffd3236Cc270Bc49D26F5466DabE2c7687",
+      "txHash": "0xf46b949af807af2f06b1e3a37dcbda9a13f2135380a356fbb13bc55188301d70",
       "kind": "transparent"
     }
   ],
@@ -153,8 +178,8 @@
       }
     },
     "c0f43408d811175528601e8cc4aa459a71fcab8bd255c3121c7227bc8f14ff54": {
-      "address": "0xF09B4c1fa85C9F382c7EFF09b7DeB078c2F13079",
-      "txHash": "0x43a47a3bb9d20dbbe99e71b43ee0a172d7e9dd66146af27174542de1b9b9b94f",
+      "address": "0x4970893e077d24cAd8Da75D975Ce7B3BfB611ECf",
+      "txHash": "0xe6fbe639b7f228b42ef5154fff145204021d42302e272940c6f08457e89e138c",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
