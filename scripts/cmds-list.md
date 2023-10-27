@@ -53,3 +53,6 @@
 
 - **Flatten a contract**:  
   truffle-flattener ./contracts/YourContract.sol > ./FlatYourContract.sol
+
+  truffle compile --al
+  truffle migrate --reset
