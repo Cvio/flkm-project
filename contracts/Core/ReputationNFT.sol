@@ -39,6 +39,12 @@ contract ReputationNFT is ERC721Upgradeable, AccessControlUpgradeable {
         return marketplaceContract.userReputation(user);
     }
 
+    function showUserReputationLevel(
+        address user
+    ) external view returns (CowlMarketplaceBase.ReputationLevel) {
+        return getUserReputationLevel(user);
+    }
+
     // Function to mint an NFT based on a user's reputation level
     function mintNFT(address user) external onlyRole(ADMIN_ROLE) {
         // Check the user's reputation level

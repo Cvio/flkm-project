@@ -40,8 +40,8 @@ contract CowlToken is
         uint256 _initialSupply,
         address admin
     ) public initializer {
-        _name = "Cowl";
-        _symbol = "COWL";
+        // string memory _name = "Cowl";
+        // string memory _symbol = "COWL";
         __ERC20_init(_name, _symbol);
         __AccessControl_init();
 
@@ -152,5 +152,12 @@ contract CowlToken is
     ) external onlyRole(ADMIN_ROLE) {
         stakingRewardRate = newRate;
         stakingDuration = newDuration;
+    }
+
+    function mintTokens(
+        address to,
+        uint256 amount
+    ) external onlyRole(MINTER_ROLE) {
+        _mint(to, amount);
     }
 }

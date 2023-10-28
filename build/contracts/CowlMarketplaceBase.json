@@ -21206,12 +21206,12 @@
         }
       },
       "links": {},
-      "address": "0x9cC02CB89Ab111AB2fF80C86bfAe596aB951C989",
-      "transactionHash": "0xa7a3382235c0ad3695f0d7555cc8eb44496afe8528d68fa90f70b32c4b336093"
+      "address": "0x6A142e24995C20Ce271D5e36F143bd47F28040AB",
+      "transactionHash": "0xc36d2c0ed06e98570f0e032ca847717e54438c1b31c667997f3c8c4b9a99fe90"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-27T02:44:16.939Z",
+  "updatedAt": "2023-10-28T01:20:33.826Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

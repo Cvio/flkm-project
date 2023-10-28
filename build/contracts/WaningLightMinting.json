@@ -1979,7 +1979,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_contract$_WaningLightBase_$9858__to_t_address__fromStack_reversed",
+            "name": "abi_encode_tuple_t_contract$_WaningLightBase_$9879__to_t_address__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -3666,7 +3666,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_contract$_WaningLightMetadata_$11186__to_t_address__fromStack_reversed",
+            "name": "abi_encode_tuple_t_contract$_WaningLightMetadata_$11207__to_t_address__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -13457,7 +13457,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function validator_revert_bytes4(value)\n    {\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function copy_memory_to_memory_with_cleanup(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        mstore(add(dst, length), 0)\n    }\n    function abi_encode_string(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        copy_memory_to_memory_with_cleanup(add(value, 0x20), add(pos, 0x20), length)\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_string(value0, add(headStart, 32))\n    }\n    function abi_encode_tuple_t_contract$_WaningLightBase_$9858__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_decode_address(offset) -> value\n    {\n        value := calldataload(offset)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := calldataload(add(headStart, 32))\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_decode_tuple_t_bytes32(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_bytes32t_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n    }\n    function abi_encode_tuple_t_contract$_WaningLightMetadata_$11186__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_decode_tuple_t_addresst_bool(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        let value := calldataload(add(headStart, 32))\n        if iszero(eq(value, iszero(iszero(value)))) { revert(0, 0) }\n        value1 := value\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function allocate_memory(size) -> memPtr\n    {\n        memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(size, 31), not(31)))\n        if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n    }\n    function array_allocation_size_bytes(length) -> size\n    {\n        if gt(length, 0xffffffffffffffff) { panic_error_0x41() }\n        size := add(and(add(length, 31), not(31)), 0x20)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256t_bytes_memory_ptr(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n        let offset := calldataload(add(headStart, 96))\n        if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n        let _1 := add(headStart, offset)\n        if iszero(slt(add(_1, 0x1f), dataEnd)) { revert(0, 0) }\n        let _2 := calldataload(_1)\n        let array := allocate_memory(array_allocation_size_bytes(_2))\n        mstore(array, _2)\n        if gt(add(add(_1, _2), 32), dataEnd) { revert(0, 0) }\n        calldatacopy(add(array, 32), add(_1, 32), _2)\n        mstore(add(add(array, _2), 32), 0)\n        value3 := array\n    }\n    function abi_decode_tuple_t_addresst_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256t_uint256(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n        value3 := calldataload(add(headStart, 96))\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := shr(1, data)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function abi_encode_tuple_t_stringliteral_b51b4875eede07862961e8f9365c6749f5fe55c6ee5d7a9e42b6912ad0b15942__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"ERC721: approval to current owne\")\n        mstore(add(headStart, 96), \"r\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c6e14a63ffb144eeef7cce6988e5dce07c60a7e0a7b1ef25dbe18c61483e0a83__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 61)\n        mstore(add(headStart, 64), \"ERC721: approve caller is not to\")\n        mstore(add(headStart, 96), \"ken owner or approved for all\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_12a8e5623d251e191fe4a291d9a59bcc01a4db7a1f5c20fc8de44358c18308af__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 45)\n        mstore(add(headStart, 64), \"ERC721: caller is not token owne\")\n        mstore(add(headStart, 96), \"r or approved\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_1d7f5dcf03a65f41ee49b0ab593e3851cfbe3fd7da53b6cf4eddd83c7df5734c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"ERC721Enumerable: owner index ou\")\n        mstore(add(headStart, 96), \"t of bounds\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_fb06fa8ff2141e8ed74502f6792273793f25f0e9d3cf15344f3f5a0d4948fd4b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 47)\n        mstore(add(headStart, 64), \"AccessControl: can only renounce\")\n        mstore(add(headStart, 96), \" roles for self\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_d269a4e9f5820dcdb69ea21f528512eb9b927c8d846d48aa51c9219f461d4dcc__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721Enumerable: global index o\")\n        mstore(add(headStart, 96), \"ut of bounds\")\n        tail := add(headStart, 128)\n    }\n    function panic_error_0x32()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x32)\n        revert(0, 0x24)\n    }\n    function abi_encode_tuple_t_stringliteral_6be7da67171dbe543876200a3adc009172d7c67658279f5f514229a2405fedb2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 22)\n        mstore(add(headStart, 64), \"Maximum supply reached\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_46687e78edf06d33481de8028d3bcbe9b5ff6830ada4b6d3582166176f9aa648__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 23)\n        mstore(add(headStart, 64), \"Insufficient Ether sent\")\n        tail := add(headStart, 96)\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_b08d2b0fec7cc108ab049809a8beb42779d969a49299d0c317c907d9db22974f__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 24)\n        mstore(add(headStart, 64), \"ERC721: invalid token ID\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_6d05c90094f31cfeb8f0eb86f0a513af3f7f8992991fbde41b08aa7960677159__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 41)\n        mstore(add(headStart, 64), \"ERC721: address zero is not a va\")\n        mstore(add(headStart, 96), \"lid owner\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_packed_t_string_memory_ptr_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory_with_cleanup(add(value0, 0x20), pos, length)\n        let end_1 := add(pos, length)\n        let length_1 := mload(value1)\n        copy_memory_to_memory_with_cleanup(add(value1, 0x20), end_1, length_1)\n        end := add(end_1, length_1)\n    }\n    function abi_encode_tuple_t_stringliteral_7a2a4e26842155ea933fe6eb6e3137eb5a296dcdf55721c552be7b4c3cc23759__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"Initializable: contract is alrea\")\n        mstore(add(headStart, 96), \"dy initialized\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_rational_1_by_1__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xff))\n    }\n    function abi_encode_tuple_t_stringliteral_277f8ee9d5b4fc3c4149386f24de0fc1bbc63a8210e2197bfd1c0376a2ac5f48__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 37)\n        mstore(add(headStart, 64), \"ERC721: transfer from incorrect \")\n        mstore(add(headStart, 96), \"owner\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_455fea98ea03c32d7dd1a6f1426917d80529bf47b3ccbde74e7206e889e709f4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 36)\n        mstore(add(headStart, 64), \"ERC721: transfer to the zero add\")\n        mstore(add(headStart, 96), \"ress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_45fe4329685be5ecd250fd0e6a25aea0ea4d0e30fb6a73c118b95749e6d70d05__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 25)\n        mstore(add(headStart, 64), \"ERC721: approve to caller\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_1e766a06da43a53d0f4c380e06e5a342e14d5af1bf8501996c844905530ca84e__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"ERC721: transfer to non ERC721Re\")\n        mstore(add(headStart, 96), \"ceiver implementer\")\n        tail := add(headStart, 128)\n    }\n    function abi_decode_tuple_t_string_memory_ptr_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let offset := mload(headStart)\n        if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n        let _1 := add(headStart, offset)\n        if iszero(slt(add(_1, 0x1f), dataEnd)) { revert(0, 0) }\n        let _2 := mload(_1)\n        let array := allocate_memory(array_allocation_size_bytes(_2))\n        mstore(array, _2)\n        if gt(add(add(_1, _2), 32), dataEnd) { revert(0, 0) }\n        copy_memory_to_memory_with_cleanup(add(_1, 32), add(array, 32), _2)\n        value0 := array\n    }\n    function panic_error_0x12()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x12)\n        revert(0, 0x24)\n    }\n    function abi_encode_tuple_t_stringliteral_d688db918bb9dd50354922faa108595679886fe9ff08046ad1ffe30aaea55f8b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Initializable: contract is not i\")\n        mstore(add(headStart, 96), \"nitializing\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_da49291af84b6a1e37ed9eacd9a67360593e4a0e561cb261a6a738f621783314__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 53)\n        mstore(add(headStart, 64), \"ERC721Enumerable: consecutive tr\")\n        mstore(add(headStart, 96), \"ansfers not supported\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_da0d07ce4a2849fbfc4cb9d6f939e9bd93016c372ca4a5ff14fe06caf3d67874_t_string_memory_ptr_t_stringliteral_f986ce851518a691bccd44ea42a5a185d1b866ef6cb07984a09b81694d20ab69_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, \"AccessControl: account \")\n        let length := mload(value0)\n        copy_memory_to_memory_with_cleanup(add(value0, 0x20), add(pos, 23), length)\n        let _1 := add(pos, length)\n        mstore(add(_1, 23), \" is missing role \")\n        let length_1 := mload(value1)\n        copy_memory_to_memory_with_cleanup(add(value1, 0x20), add(_1, 40), length_1)\n        end := add(add(_1, length_1), 40)\n    }\n    function abi_encode_tuple_t_stringliteral_68571e1369f7a6dcdcd736cb0343b35a58ed0f64d245c2ed839c98d412744f8a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 16)\n        mstore(add(headStart, 64), \"Pausable: paused\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_bytes_memory_ptr__to_t_address_t_address_t_uint256_t_bytes_memory_ptr__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), 128)\n        tail := abi_encode_string(value3, add(headStart, 128))\n    }\n    function abi_decode_tuple_t_bytes4_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_encode_tuple_t_stringliteral_0d1d997348c4b502650619e51f7d09f80514d98b6993be5051d07f703984619a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 20)\n        mstore(add(headStart, 64), \"Pausable: not paused\")\n        tail := add(headStart, 96)\n    }\n    function panic_error_0x31()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x31)\n        revert(0, 0x24)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function decrement_t_uint256(value) -> ret\n    {\n        if iszero(value) { panic_error_0x11() }\n        ret := add(value, not(0))\n    }\n    function abi_encode_tuple_t_stringliteral_04fc88320d7c9f639317c75102c103ff0044d3075a5c627e24e76e5bbb2733c2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Strings: hex length insufficient\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_8a66f4bb6512ffbfcc3db9b42318eb65f26ac15163eaa9a1e5cfa7bee9d1c7c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"ERC721: mint to the zero address\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_2a63ce106ef95058ed21fd07c42a10f11dc5c32ac13a4e847923f7759f635d57__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"ERC721: token already minted\")\n        tail := add(headStart, 96)\n    }\n}",
+      "contents": "{\n    { }\n    function validator_revert_bytes4(value)\n    {\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function copy_memory_to_memory_with_cleanup(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        mstore(add(dst, length), 0)\n    }\n    function abi_encode_string(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        copy_memory_to_memory_with_cleanup(add(value, 0x20), add(pos, 0x20), length)\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_string(value0, add(headStart, 32))\n    }\n    function abi_encode_tuple_t_contract$_WaningLightBase_$9879__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_decode_address(offset) -> value\n    {\n        value := calldataload(offset)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := calldataload(add(headStart, 32))\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_decode_tuple_t_bytes32(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_bytes32t_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n    }\n    function abi_encode_tuple_t_contract$_WaningLightMetadata_$11207__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_decode_tuple_t_addresst_bool(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        let value := calldataload(add(headStart, 32))\n        if iszero(eq(value, iszero(iszero(value)))) { revert(0, 0) }\n        value1 := value\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function allocate_memory(size) -> memPtr\n    {\n        memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(size, 31), not(31)))\n        if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n    }\n    function array_allocation_size_bytes(length) -> size\n    {\n        if gt(length, 0xffffffffffffffff) { panic_error_0x41() }\n        size := add(and(add(length, 31), not(31)), 0x20)\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256t_bytes_memory_ptr(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n        let offset := calldataload(add(headStart, 96))\n        if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n        let _1 := add(headStart, offset)\n        if iszero(slt(add(_1, 0x1f), dataEnd)) { revert(0, 0) }\n        let _2 := calldataload(_1)\n        let array := allocate_memory(array_allocation_size_bytes(_2))\n        mstore(array, _2)\n        if gt(add(add(_1, _2), 32), dataEnd) { revert(0, 0) }\n        calldatacopy(add(array, 32), add(_1, 32), _2)\n        mstore(add(add(array, _2), 32), 0)\n        value3 := array\n    }\n    function abi_decode_tuple_t_addresst_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256t_uint256(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(0, 0) }\n        value0 := abi_decode_address(headStart)\n        value1 := abi_decode_address(add(headStart, 32))\n        value2 := calldataload(add(headStart, 64))\n        value3 := calldataload(add(headStart, 96))\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := shr(1, data)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function abi_encode_tuple_t_stringliteral_b51b4875eede07862961e8f9365c6749f5fe55c6ee5d7a9e42b6912ad0b15942__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"ERC721: approval to current owne\")\n        mstore(add(headStart, 96), \"r\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c6e14a63ffb144eeef7cce6988e5dce07c60a7e0a7b1ef25dbe18c61483e0a83__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 61)\n        mstore(add(headStart, 64), \"ERC721: approve caller is not to\")\n        mstore(add(headStart, 96), \"ken owner or approved for all\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_12a8e5623d251e191fe4a291d9a59bcc01a4db7a1f5c20fc8de44358c18308af__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 45)\n        mstore(add(headStart, 64), \"ERC721: caller is not token owne\")\n        mstore(add(headStart, 96), \"r or approved\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_1d7f5dcf03a65f41ee49b0ab593e3851cfbe3fd7da53b6cf4eddd83c7df5734c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"ERC721Enumerable: owner index ou\")\n        mstore(add(headStart, 96), \"t of bounds\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_fb06fa8ff2141e8ed74502f6792273793f25f0e9d3cf15344f3f5a0d4948fd4b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 47)\n        mstore(add(headStart, 64), \"AccessControl: can only renounce\")\n        mstore(add(headStart, 96), \" roles for self\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_d269a4e9f5820dcdb69ea21f528512eb9b927c8d846d48aa51c9219f461d4dcc__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721Enumerable: global index o\")\n        mstore(add(headStart, 96), \"ut of bounds\")\n        tail := add(headStart, 128)\n    }\n    function panic_error_0x32()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x32)\n        revert(0, 0x24)\n    }\n    function abi_encode_tuple_t_stringliteral_6be7da67171dbe543876200a3adc009172d7c67658279f5f514229a2405fedb2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 22)\n        mstore(add(headStart, 64), \"Maximum supply reached\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_46687e78edf06d33481de8028d3bcbe9b5ff6830ada4b6d3582166176f9aa648__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 23)\n        mstore(add(headStart, 64), \"Insufficient Ether sent\")\n        tail := add(headStart, 96)\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        diff := sub(x, y)\n        if gt(diff, x) { panic_error_0x11() }\n    }\n    function abi_encode_tuple_t_stringliteral_b08d2b0fec7cc108ab049809a8beb42779d969a49299d0c317c907d9db22974f__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 24)\n        mstore(add(headStart, 64), \"ERC721: invalid token ID\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_6d05c90094f31cfeb8f0eb86f0a513af3f7f8992991fbde41b08aa7960677159__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 41)\n        mstore(add(headStart, 64), \"ERC721: address zero is not a va\")\n        mstore(add(headStart, 96), \"lid owner\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_packed_t_string_memory_ptr_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory_with_cleanup(add(value0, 0x20), pos, length)\n        let end_1 := add(pos, length)\n        let length_1 := mload(value1)\n        copy_memory_to_memory_with_cleanup(add(value1, 0x20), end_1, length_1)\n        end := add(end_1, length_1)\n    }\n    function abi_encode_tuple_t_stringliteral_7a2a4e26842155ea933fe6eb6e3137eb5a296dcdf55721c552be7b4c3cc23759__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"Initializable: contract is alrea\")\n        mstore(add(headStart, 96), \"dy initialized\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_rational_1_by_1__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xff))\n    }\n    function abi_encode_tuple_t_stringliteral_277f8ee9d5b4fc3c4149386f24de0fc1bbc63a8210e2197bfd1c0376a2ac5f48__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 37)\n        mstore(add(headStart, 64), \"ERC721: transfer from incorrect \")\n        mstore(add(headStart, 96), \"owner\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_455fea98ea03c32d7dd1a6f1426917d80529bf47b3ccbde74e7206e889e709f4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 36)\n        mstore(add(headStart, 64), \"ERC721: transfer to the zero add\")\n        mstore(add(headStart, 96), \"ress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_45fe4329685be5ecd250fd0e6a25aea0ea4d0e30fb6a73c118b95749e6d70d05__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 25)\n        mstore(add(headStart, 64), \"ERC721: approve to caller\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_1e766a06da43a53d0f4c380e06e5a342e14d5af1bf8501996c844905530ca84e__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"ERC721: transfer to non ERC721Re\")\n        mstore(add(headStart, 96), \"ceiver implementer\")\n        tail := add(headStart, 128)\n    }\n    function abi_decode_tuple_t_string_memory_ptr_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let offset := mload(headStart)\n        if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n        let _1 := add(headStart, offset)\n        if iszero(slt(add(_1, 0x1f), dataEnd)) { revert(0, 0) }\n        let _2 := mload(_1)\n        let array := allocate_memory(array_allocation_size_bytes(_2))\n        mstore(array, _2)\n        if gt(add(add(_1, _2), 32), dataEnd) { revert(0, 0) }\n        copy_memory_to_memory_with_cleanup(add(_1, 32), add(array, 32), _2)\n        value0 := array\n    }\n    function panic_error_0x12()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x12)\n        revert(0, 0x24)\n    }\n    function abi_encode_tuple_t_stringliteral_d688db918bb9dd50354922faa108595679886fe9ff08046ad1ffe30aaea55f8b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Initializable: contract is not i\")\n        mstore(add(headStart, 96), \"nitializing\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_da49291af84b6a1e37ed9eacd9a67360593e4a0e561cb261a6a738f621783314__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 53)\n        mstore(add(headStart, 64), \"ERC721Enumerable: consecutive tr\")\n        mstore(add(headStart, 96), \"ansfers not supported\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_da0d07ce4a2849fbfc4cb9d6f939e9bd93016c372ca4a5ff14fe06caf3d67874_t_string_memory_ptr_t_stringliteral_f986ce851518a691bccd44ea42a5a185d1b866ef6cb07984a09b81694d20ab69_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, \"AccessControl: account \")\n        let length := mload(value0)\n        copy_memory_to_memory_with_cleanup(add(value0, 0x20), add(pos, 23), length)\n        let _1 := add(pos, length)\n        mstore(add(_1, 23), \" is missing role \")\n        let length_1 := mload(value1)\n        copy_memory_to_memory_with_cleanup(add(value1, 0x20), add(_1, 40), length_1)\n        end := add(add(_1, length_1), 40)\n    }\n    function abi_encode_tuple_t_stringliteral_68571e1369f7a6dcdcd736cb0343b35a58ed0f64d245c2ed839c98d412744f8a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 16)\n        mstore(add(headStart, 64), \"Pausable: paused\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_bytes_memory_ptr__to_t_address_t_address_t_uint256_t_bytes_memory_ptr__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), 128)\n        tail := abi_encode_string(value3, add(headStart, 128))\n    }\n    function abi_decode_tuple_t_bytes4_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_encode_tuple_t_stringliteral_0d1d997348c4b502650619e51f7d09f80514d98b6993be5051d07f703984619a__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 20)\n        mstore(add(headStart, 64), \"Pausable: not paused\")\n        tail := add(headStart, 96)\n    }\n    function panic_error_0x31()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x31)\n        revert(0, 0x24)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function decrement_t_uint256(value) -> ret\n    {\n        if iszero(value) { panic_error_0x11() }\n        ret := add(value, not(0))\n    }\n    function abi_encode_tuple_t_stringliteral_04fc88320d7c9f639317c75102c103ff0044d3075a5c627e24e76e5bbb2733c2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Strings: hex length insufficient\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_8a66f4bb6512ffbfcc3db9b42318eb65f26ac15163eaa9a1e5cfa7bee9d1c7c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"ERC721: mint to the zero address\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_2a63ce106ef95058ed21fd07c42a10f11dc5c32ac13a4e847923f7759f635d57__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"ERC721: token already minted\")\n        tail := add(headStart, 96)\n    }\n}",
       "id": 46,
       "language": "Yul",
       "name": "#utility.yul"
@@ -13537,21 +13537,21 @@
         3826
       ],
       "WaningLightBase": [
-        9858
+        9879
       ],
       "WaningLightMetadata": [
-        11186
+        11207
       ],
       "WaningLightMinting": [
-        11438
+        11459
       ]
     },
-    "id": 11439,
+    "id": 11460,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 11188,
+        "id": 11209,
         "literals": [
           "solidity",
           "^",
@@ -13564,10 +13564,10 @@
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
         "file": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
-        "id": 11189,
+        "id": 11210,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 11439,
+        "scope": 11460,
         "sourceUnit": 606,
         "src": "61:75:43",
         "symbolAliases": [],
@@ -13576,10 +13576,10 @@
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol",
         "file": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol",
-        "id": 11190,
+        "id": 11211,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 11439,
+        "scope": 11460,
         "sourceUnit": 2992,
         "src": "138:101:43",
         "symbolAliases": [],
@@ -13588,10 +13588,10 @@
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
         "file": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
-        "id": 11191,
+        "id": 11212,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 11439,
+        "scope": 11460,
         "sourceUnit": 336,
         "src": "241:81:43",
         "symbolAliases": [],
@@ -13600,10 +13600,10 @@
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
         "file": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
-        "id": 11192,
+        "id": 11213,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 11439,
+        "scope": 11460,
         "sourceUnit": 733,
         "src": "324:78:43",
         "symbolAliases": [],
@@ -13612,11 +13612,11 @@
       {
         "absolutePath": "project:/contracts/DAOCore/WaningLightBase.sol",
         "file": "../DAOCore/WaningLightBase.sol",
-        "id": 11193,
+        "id": 11214,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 11439,
-        "sourceUnit": 9859,
+        "scope": 11460,
+        "sourceUnit": 9880,
         "src": "406:40:43",
         "symbolAliases": [],
         "unitAlias": ""
@@ -13624,11 +13624,11 @@
       {
         "absolutePath": "project:/contracts/DAOSupport/WaningLightMetadata.sol",
         "file": "./WaningLightMetadata.sol",
-        "id": 11194,
+        "id": 11215,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 11439,
-        "sourceUnit": 11187,
+        "scope": 11460,
+        "sourceUnit": 11208,
         "src": "448:35:43",
         "symbolAliases": [],
         "unitAlias": ""
@@ -13638,7 +13638,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 11195,
+              "id": 11216,
               "name": "Initializable",
               "nameLocations": [
                 "523:13:43"
@@ -13647,13 +13647,13 @@
               "referencedDeclaration": 605,
               "src": "523:13:43"
             },
-            "id": 11196,
+            "id": 11217,
             "nodeType": "InheritanceSpecifier",
             "src": "523:13:43"
           },
           {
             "baseName": {
-              "id": 11197,
+              "id": 11218,
               "name": "ERC721EnumerableUpgradeable",
               "nameLocations": [
                 "543:27:43"
@@ -13662,13 +13662,13 @@
               "referencedDeclaration": 2991,
               "src": "543:27:43"
             },
-            "id": 11198,
+            "id": 11219,
             "nodeType": "InheritanceSpecifier",
             "src": "543:27:43"
           },
           {
             "baseName": {
-              "id": 11199,
+              "id": 11220,
               "name": "AccessControlUpgradeable",
               "nameLocations": [
                 "577:24:43"
@@ -13677,13 +13677,13 @@
               "referencedDeclaration": 335,
               "src": "577:24:43"
             },
-            "id": 11200,
+            "id": 11221,
             "nodeType": "InheritanceSpecifier",
             "src": "577:24:43"
           },
           {
             "baseName": {
-              "id": 11201,
+              "id": 11222,
               "name": "PausableUpgradeable",
               "nameLocations": [
                 "608:19:43"
@@ -13692,7 +13692,7 @@
               "referencedDeclaration": 732,
               "src": "608:19:43"
             },
-            "id": 11202,
+            "id": 11223,
             "nodeType": "InheritanceSpecifier",
             "src": "608:19:43"
           }
@@ -13701,9 +13701,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 11438,
+        "id": 11459,
         "linearizedBaseContracts": [
-          11438,
+          11459,
           732,
           335,
           2991,
@@ -13723,9 +13723,9 @@
         "nodes": [
           {
             "global": false,
-            "id": 11205,
+            "id": 11226,
             "libraryName": {
-              "id": 11203,
+              "id": 11224,
               "name": "Strings",
               "nameLocations": [
                 "642:7:43"
@@ -13737,7 +13737,7 @@
             "nodeType": "UsingForDirective",
             "src": "636:26:43",
             "typeName": {
-              "id": 11204,
+              "id": 11225,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "654:7:43",
@@ -13750,12 +13750,12 @@
           {
             "constant": true,
             "functionSelector": "75b238fc",
-            "id": 11210,
+            "id": 11231,
             "mutability": "constant",
             "name": "ADMIN_ROLE",
             "nameLocation": "694:10:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "670:60:43",
             "stateVariable": true,
             "storageLocation": "default",
@@ -13764,7 +13764,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 11206,
+              "id": 11227,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "670:7:43",
@@ -13777,7 +13777,7 @@
               "arguments": [
                 {
                   "hexValue": "41444d494e5f524f4c45",
-                  "id": 11208,
+                  "id": 11229,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -13799,7 +13799,7 @@
                     "typeString": "literal_string \"ADMIN_ROLE\""
                   }
                 ],
-                "id": 11207,
+                "id": 11228,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
@@ -13810,7 +13810,7 @@
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 11209,
+              "id": 11230,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -13831,12 +13831,12 @@
           {
             "constant": true,
             "functionSelector": "d5391393",
-            "id": 11215,
+            "id": 11236,
             "mutability": "constant",
             "name": "MINTER_ROLE",
             "nameLocation": "761:11:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "737:62:43",
             "stateVariable": true,
             "storageLocation": "default",
@@ -13845,7 +13845,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 11211,
+              "id": 11232,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "737:7:43",
@@ -13858,7 +13858,7 @@
               "arguments": [
                 {
                   "hexValue": "4d494e5445525f524f4c45",
-                  "id": 11213,
+                  "id": 11234,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -13880,7 +13880,7 @@
                     "typeString": "literal_string \"MINTER_ROLE\""
                   }
                 ],
-                "id": 11212,
+                "id": 11233,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
@@ -13891,7 +13891,7 @@
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 11214,
+              "id": 11235,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -13912,36 +13912,36 @@
           {
             "constant": false,
             "functionSelector": "079ef0cf",
-            "id": 11218,
+            "id": 11239,
             "mutability": "mutable",
             "name": "waningLightBase",
             "nameLocation": "831:15:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "808:38:43",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_WaningLightBase_$9858",
+              "typeIdentifier": "t_contract$_WaningLightBase_$9879",
               "typeString": "contract WaningLightBase"
             },
             "typeName": {
-              "id": 11217,
+              "id": 11238,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 11216,
+                "id": 11237,
                 "name": "WaningLightBase",
                 "nameLocations": [
                   "808:15:43"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 9858,
+                "referencedDeclaration": 9879,
                 "src": "808:15:43"
               },
-              "referencedDeclaration": 9858,
+              "referencedDeclaration": 9879,
               "src": "808:15:43",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_WaningLightBase_$9858",
+                "typeIdentifier": "t_contract$_WaningLightBase_$9879",
                 "typeString": "contract WaningLightBase"
               }
             },
@@ -13950,36 +13950,36 @@
           {
             "constant": false,
             "functionSelector": "9d018070",
-            "id": 11221,
+            "id": 11242,
             "mutability": "mutable",
             "name": "waningLightMetadata",
             "nameLocation": "880:19:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "853:46:43",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_WaningLightMetadata_$11186",
+              "typeIdentifier": "t_contract$_WaningLightMetadata_$11207",
               "typeString": "contract WaningLightMetadata"
             },
             "typeName": {
-              "id": 11220,
+              "id": 11241,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 11219,
+                "id": 11240,
                 "name": "WaningLightMetadata",
                 "nameLocations": [
                   "853:19:43"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 11186,
+                "referencedDeclaration": 11207,
                 "src": "853:19:43"
               },
-              "referencedDeclaration": 11186,
+              "referencedDeclaration": 11207,
               "src": "853:19:43",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_WaningLightMetadata_$11186",
+                "typeIdentifier": "t_contract$_WaningLightMetadata_$11207",
                 "typeString": "contract WaningLightMetadata"
               }
             },
@@ -13988,12 +13988,12 @@
           {
             "constant": false,
             "functionSelector": "d5abeb01",
-            "id": 11223,
+            "id": 11244,
             "mutability": "mutable",
             "name": "maxSupply",
             "nameLocation": "923:9:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "908:24:43",
             "stateVariable": true,
             "storageLocation": "default",
@@ -14002,7 +14002,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 11222,
+              "id": 11243,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "908:7:43",
@@ -14016,12 +14016,12 @@
           {
             "constant": false,
             "functionSelector": "6817c76c",
-            "id": 11225,
+            "id": 11246,
             "mutability": "mutable",
             "name": "mintPrice",
             "nameLocation": "954:9:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "939:24:43",
             "stateVariable": true,
             "storageLocation": "default",
@@ -14030,7 +14030,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 11224,
+              "id": 11245,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "939:7:43",
@@ -14044,12 +14044,12 @@
           {
             "constant": false,
             "functionSelector": "c1bd8cf9",
-            "id": 11227,
+            "id": 11248,
             "mutability": "mutable",
             "name": "mintedSupply",
             "nameLocation": "985:12:43",
             "nodeType": "VariableDeclaration",
-            "scope": 11438,
+            "scope": 11459,
             "src": "970:27:43",
             "stateVariable": true,
             "storageLocation": "default",
@@ -14058,7 +14058,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 11226,
+              "id": 11247,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "970:7:43",
@@ -14072,23 +14072,23 @@
           {
             "anonymous": false,
             "eventSelector": "25b428dfde728ccfaddad7e29e4ac23c24ed7fd1a6e3e3f91894a9a073f5dfff",
-            "id": 11235,
+            "id": 11256,
             "name": "Minted",
             "nameLocation": "1012:6:43",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 11234,
+              "id": 11255,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11229,
+                  "id": 11250,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "minter",
                   "nameLocation": "1045:6:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11235,
+                  "scope": 11256,
                   "src": "1029:22:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14097,7 +14097,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 11228,
+                    "id": 11249,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1029:7:43",
@@ -14111,13 +14111,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 11231,
+                  "id": 11252,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "tokenId",
                   "nameLocation": "1078:7:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11235,
+                  "scope": 11256,
                   "src": "1062:23:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14126,7 +14126,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 11230,
+                    "id": 11251,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1062:7:43",
@@ -14139,13 +14139,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 11233,
+                  "id": 11254,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "timestamp",
                   "nameLocation": "1104:9:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11235,
+                  "scope": 11256,
                   "src": "1096:17:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14154,7 +14154,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 11232,
+                    "id": 11253,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1096:7:43",
@@ -14172,7 +14172,7 @@
           },
           {
             "body": {
-              "id": 11290,
+              "id": 11311,
               "nodeType": "Block",
               "src": "1321:415:43",
               "statements": [
@@ -14181,7 +14181,7 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 11248,
+                      "id": 11269,
                       "name": "__ERC721Enumerable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -14192,7 +14192,7 @@
                         "typeString": "function ()"
                       }
                     },
-                    "id": 11249,
+                    "id": 11270,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -14208,7 +14208,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11250,
+                  "id": 11271,
                   "nodeType": "ExpressionStatement",
                   "src": "1332:25:43"
                 },
@@ -14217,7 +14217,7 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 11251,
+                      "id": 11272,
                       "name": "__AccessControl_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -14228,7 +14228,7 @@
                         "typeString": "function ()"
                       }
                     },
-                    "id": 11252,
+                    "id": 11273,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -14244,7 +14244,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11253,
+                  "id": 11274,
                   "nodeType": "ExpressionStatement",
                   "src": "1368:22:43"
                 },
@@ -14252,11 +14252,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 11255,
+                        "id": 11276,
                         "name": "ADMIN_ROLE",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11210,
+                        "referencedDeclaration": 11231,
                         "src": "1414:10:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -14265,7 +14265,7 @@
                       },
                       {
                         "expression": {
-                          "id": 11256,
+                          "id": 11277,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -14276,7 +14276,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 11257,
+                        "id": 11278,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -14302,7 +14302,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 11254,
+                      "id": 11275,
                       "name": "_grantRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -14313,7 +14313,7 @@
                         "typeString": "function (bytes32,address)"
                       }
                     },
-                    "id": 11258,
+                    "id": 11279,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -14329,7 +14329,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11259,
+                  "id": 11280,
                   "nodeType": "ExpressionStatement",
                   "src": "1403:34:43"
                 },
@@ -14337,11 +14337,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 11261,
+                        "id": 11282,
                         "name": "MINTER_ROLE",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11215,
+                        "referencedDeclaration": 11236,
                         "src": "1459:11:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -14350,7 +14350,7 @@
                       },
                       {
                         "expression": {
-                          "id": 11262,
+                          "id": 11283,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -14361,7 +14361,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 11263,
+                        "id": 11284,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -14387,7 +14387,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 11260,
+                      "id": 11281,
                       "name": "_grantRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -14398,7 +14398,7 @@
                         "typeString": "function (bytes32,address)"
                       }
                     },
-                    "id": 11264,
+                    "id": 11285,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -14414,26 +14414,26 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11265,
+                  "id": 11286,
                   "nodeType": "ExpressionStatement",
                   "src": "1448:35:43"
                 },
                 {
                   "expression": {
-                    "id": 11270,
+                    "id": 11291,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11266,
+                      "id": 11287,
                       "name": "waningLightBase",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11218,
+                      "referencedDeclaration": 11239,
                       "src": "1496:15:43",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_WaningLightBase_$9858",
+                        "typeIdentifier": "t_contract$_WaningLightBase_$9879",
                         "typeString": "contract WaningLightBase"
                       }
                     },
@@ -14442,11 +14442,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 11268,
+                          "id": 11289,
                           "name": "waningLightBaseAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 11237,
+                          "referencedDeclaration": 11258,
                           "src": "1530:22:43",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -14461,18 +14461,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 11267,
+                        "id": 11288,
                         "name": "WaningLightBase",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9858,
+                        "referencedDeclaration": 9879,
                         "src": "1514:15:43",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_WaningLightBase_$9858_$",
+                          "typeIdentifier": "t_type$_t_contract$_WaningLightBase_$9879_$",
                           "typeString": "type(contract WaningLightBase)"
                         }
                       },
-                      "id": 11269,
+                      "id": 11290,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -14484,36 +14484,36 @@
                       "src": "1514:39:43",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_WaningLightBase_$9858",
+                        "typeIdentifier": "t_contract$_WaningLightBase_$9879",
                         "typeString": "contract WaningLightBase"
                       }
                     },
                     "src": "1496:57:43",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_WaningLightBase_$9858",
+                      "typeIdentifier": "t_contract$_WaningLightBase_$9879",
                       "typeString": "contract WaningLightBase"
                     }
                   },
-                  "id": 11271,
+                  "id": 11292,
                   "nodeType": "ExpressionStatement",
                   "src": "1496:57:43"
                 },
                 {
                   "expression": {
-                    "id": 11276,
+                    "id": 11297,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11272,
+                      "id": 11293,
                       "name": "waningLightMetadata",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11221,
+                      "referencedDeclaration": 11242,
                       "src": "1564:19:43",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_WaningLightMetadata_$11186",
+                        "typeIdentifier": "t_contract$_WaningLightMetadata_$11207",
                         "typeString": "contract WaningLightMetadata"
                       }
                     },
@@ -14522,11 +14522,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 11274,
+                          "id": 11295,
                           "name": "waningLightMetadataAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 11239,
+                          "referencedDeclaration": 11260,
                           "src": "1606:26:43",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -14541,18 +14541,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 11273,
+                        "id": 11294,
                         "name": "WaningLightMetadata",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11186,
+                        "referencedDeclaration": 11207,
                         "src": "1586:19:43",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_WaningLightMetadata_$11186_$",
+                          "typeIdentifier": "t_type$_t_contract$_WaningLightMetadata_$11207_$",
                           "typeString": "type(contract WaningLightMetadata)"
                         }
                       },
-                      "id": 11275,
+                      "id": 11296,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -14564,33 +14564,33 @@
                       "src": "1586:47:43",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_WaningLightMetadata_$11186",
+                        "typeIdentifier": "t_contract$_WaningLightMetadata_$11207",
                         "typeString": "contract WaningLightMetadata"
                       }
                     },
                     "src": "1564:69:43",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_WaningLightMetadata_$11186",
+                      "typeIdentifier": "t_contract$_WaningLightMetadata_$11207",
                       "typeString": "contract WaningLightMetadata"
                     }
                   },
-                  "id": 11277,
+                  "id": 11298,
                   "nodeType": "ExpressionStatement",
                   "src": "1564:69:43"
                 },
                 {
                   "expression": {
-                    "id": 11280,
+                    "id": 11301,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11278,
+                      "id": 11299,
                       "name": "maxSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11223,
+                      "referencedDeclaration": 11244,
                       "src": "1646:9:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -14600,11 +14600,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 11279,
+                      "id": 11300,
                       "name": "_maxSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11241,
+                      "referencedDeclaration": 11262,
                       "src": "1658:10:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -14617,23 +14617,23 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 11281,
+                  "id": 11302,
                   "nodeType": "ExpressionStatement",
                   "src": "1646:22:43"
                 },
                 {
                   "expression": {
-                    "id": 11284,
+                    "id": 11305,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11282,
+                      "id": 11303,
                       "name": "mintPrice",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11225,
+                      "referencedDeclaration": 11246,
                       "src": "1679:9:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -14643,11 +14643,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 11283,
+                      "id": 11304,
                       "name": "_mintPrice",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11243,
+                      "referencedDeclaration": 11264,
                       "src": "1691:10:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -14660,23 +14660,23 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 11285,
+                  "id": 11306,
                   "nodeType": "ExpressionStatement",
                   "src": "1679:22:43"
                 },
                 {
                   "expression": {
-                    "id": 11288,
+                    "id": 11309,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11286,
+                      "id": 11307,
                       "name": "mintedSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11227,
+                      "referencedDeclaration": 11248,
                       "src": "1712:12:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -14687,7 +14687,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "30",
-                      "id": 11287,
+                      "id": 11308,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -14707,22 +14707,22 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 11289,
+                  "id": 11310,
                   "nodeType": "ExpressionStatement",
                   "src": "1712:16:43"
                 }
               ]
             },
             "functionSelector": "eb990c59",
-            "id": 11291,
+            "id": 11312,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 11246,
+                "id": 11267,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 11245,
+                  "id": 11266,
                   "name": "initializer",
                   "nameLocations": [
                     "1309:11:43"
@@ -14739,17 +14739,17 @@
             "nameLocation": "1138:10:43",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 11244,
+              "id": 11265,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11237,
+                  "id": 11258,
                   "mutability": "mutable",
                   "name": "waningLightBaseAddress",
                   "nameLocation": "1167:22:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11291,
+                  "scope": 11312,
                   "src": "1159:30:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14758,7 +14758,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 11236,
+                    "id": 11257,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1159:7:43",
@@ -14772,12 +14772,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 11239,
+                  "id": 11260,
                   "mutability": "mutable",
                   "name": "waningLightMetadataAddress",
                   "nameLocation": "1208:26:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11291,
+                  "scope": 11312,
                   "src": "1200:34:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14786,7 +14786,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 11238,
+                    "id": 11259,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1200:7:43",
@@ -14800,12 +14800,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 11241,
+                  "id": 11262,
                   "mutability": "mutable",
                   "name": "_maxSupply",
                   "nameLocation": "1253:10:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11291,
+                  "scope": 11312,
                   "src": "1245:18:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14814,7 +14814,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 11240,
+                    "id": 11261,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1245:7:43",
@@ -14827,12 +14827,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 11243,
+                  "id": 11264,
                   "mutability": "mutable",
                   "name": "_mintPrice",
                   "nameLocation": "1282:10:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11291,
+                  "scope": 11312,
                   "src": "1274:18:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14841,7 +14841,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 11242,
+                    "id": 11263,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1274:7:43",
@@ -14856,12 +14856,12 @@
               "src": "1148:151:43"
             },
             "returnParameters": {
-              "id": 11247,
+              "id": 11268,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1321:0:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "1129:607:43",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -14869,7 +14869,7 @@
           },
           {
             "body": {
-              "id": 11301,
+              "id": 11322,
               "nodeType": "Block",
               "src": "1766:90:43",
               "statements": [
@@ -14881,17 +14881,17 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 11296,
+                        "id": 11317,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 11294,
+                          "id": 11315,
                           "name": "mintedSupply",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 11227,
+                          "referencedDeclaration": 11248,
                           "src": "1785:12:43",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -14901,11 +14901,11 @@
                         "nodeType": "BinaryOperation",
                         "operator": "<",
                         "rightExpression": {
-                          "id": 11295,
+                          "id": 11316,
                           "name": "maxSupply",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 11223,
+                          "referencedDeclaration": 11244,
                           "src": "1800:9:43",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -14920,7 +14920,7 @@
                       },
                       {
                         "hexValue": "4d6178696d756d20737570706c792072656163686564",
-                        "id": 11297,
+                        "id": 11318,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -14946,7 +14946,7 @@
                           "typeString": "literal_string \"Maximum supply reached\""
                         }
                       ],
-                      "id": 11293,
+                      "id": 11314,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -14960,7 +14960,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 11298,
+                    "id": 11319,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -14976,23 +14976,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11299,
+                  "id": 11320,
                   "nodeType": "ExpressionStatement",
                   "src": "1777:59:43"
                 },
                 {
-                  "id": 11300,
+                  "id": 11321,
                   "nodeType": "PlaceholderStatement",
                   "src": "1847:1:43"
                 }
               ]
             },
-            "id": 11302,
+            "id": 11323,
             "name": "saleIsOpen",
             "nameLocation": "1753:10:43",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 11292,
+              "id": 11313,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1763:2:43"
@@ -15003,7 +15003,7 @@
           },
           {
             "body": {
-              "id": 11376,
+              "id": 11397,
               "nodeType": "Block",
               "src": "1959:546:43",
               "statements": [
@@ -15015,14 +15015,14 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 11316,
+                        "id": 11337,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 11313,
+                            "id": 11334,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -15033,7 +15033,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 11314,
+                          "id": 11335,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -15050,11 +15050,11 @@
                         "nodeType": "BinaryOperation",
                         "operator": ">=",
                         "rightExpression": {
-                          "id": 11315,
+                          "id": 11336,
                           "name": "mintPrice",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 11225,
+                          "referencedDeclaration": 11246,
                           "src": "1991:9:43",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -15069,7 +15069,7 @@
                       },
                       {
                         "hexValue": "496e73756666696369656e742045746865722073656e74",
-                        "id": 11317,
+                        "id": 11338,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -15095,7 +15095,7 @@
                           "typeString": "literal_string \"Insufficient Ether sent\""
                         }
                       ],
-                      "id": 11312,
+                      "id": 11333,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -15109,7 +15109,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 11318,
+                    "id": 11339,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -15125,23 +15125,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11319,
+                  "id": 11340,
                   "nodeType": "ExpressionStatement",
                   "src": "1970:58:43"
                 },
                 {
                   "assignments": [
-                    11321
+                    11342
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 11321,
+                      "id": 11342,
                       "mutability": "mutable",
                       "name": "tokenId",
                       "nameLocation": "2049:7:43",
                       "nodeType": "VariableDeclaration",
-                      "scope": 11376,
+                      "scope": 11397,
                       "src": "2041:15:43",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -15150,7 +15150,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 11320,
+                        "id": 11341,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "2041:7:43",
@@ -15162,23 +15162,23 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 11325,
+                  "id": 11346,
                   "initialValue": {
                     "commonType": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 11324,
+                    "id": 11345,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 11322,
+                      "id": 11343,
                       "name": "mintedSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11227,
+                      "referencedDeclaration": 11248,
                       "src": "2059:12:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -15189,7 +15189,7 @@
                     "operator": "+",
                     "rightExpression": {
                       "hexValue": "31",
-                      "id": 11323,
+                      "id": 11344,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -15216,11 +15216,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 11327,
+                        "id": 11348,
                         "name": "to",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11304,
+                        "referencedDeclaration": 11325,
                         "src": "2096:2:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -15228,11 +15228,11 @@
                         }
                       },
                       {
-                        "id": 11328,
+                        "id": 11349,
                         "name": "tokenId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11321,
+                        "referencedDeclaration": 11342,
                         "src": "2100:7:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -15251,7 +15251,7 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 11326,
+                      "id": 11347,
                       "name": "_safeMint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -15265,7 +15265,7 @@
                         "typeString": "function (address,uint256)"
                       }
                     },
-                    "id": 11329,
+                    "id": 11350,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -15281,23 +15281,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11330,
+                  "id": 11351,
                   "nodeType": "ExpressionStatement",
                   "src": "2086:22:43"
                 },
                 {
                   "expression": {
-                    "id": 11333,
+                    "id": 11354,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11331,
+                      "id": 11352,
                       "name": "mintedSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11227,
+                      "referencedDeclaration": 11248,
                       "src": "2121:12:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -15307,11 +15307,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 11332,
+                      "id": 11353,
                       "name": "tokenId",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11321,
+                      "referencedDeclaration": 11342,
                       "src": "2136:7:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -15324,7 +15324,7 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 11334,
+                  "id": 11355,
                   "nodeType": "ExpressionStatement",
                   "src": "2121:22:43"
                 },
@@ -15333,7 +15333,7 @@
                     "arguments": [
                       {
                         "expression": {
-                          "id": 11336,
+                          "id": 11357,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -15344,7 +15344,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 11337,
+                        "id": 11358,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -15359,11 +15359,11 @@
                         }
                       },
                       {
-                        "id": 11338,
+                        "id": 11359,
                         "name": "tokenId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11321,
+                        "referencedDeclaration": 11342,
                         "src": "2178:7:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -15372,7 +15372,7 @@
                       },
                       {
                         "expression": {
-                          "id": 11339,
+                          "id": 11360,
                           "name": "block",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -15383,7 +15383,7 @@
                             "typeString": "block"
                           }
                         },
-                        "id": 11340,
+                        "id": 11361,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -15413,18 +15413,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 11335,
+                      "id": 11356,
                       "name": "Minted",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11235,
+                      "referencedDeclaration": 11256,
                       "src": "2159:6:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$_t_uint256_$returns$__$",
                         "typeString": "function (address,uint256,uint256)"
                       }
                     },
-                    "id": 11341,
+                    "id": 11362,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -15440,7 +15440,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11342,
+                  "id": 11363,
                   "nodeType": "EmitStatement",
                   "src": "2154:49:43"
                 },
@@ -15450,14 +15450,14 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 11346,
+                    "id": 11367,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 11343,
+                        "id": 11364,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -15468,7 +15468,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 11344,
+                      "id": 11365,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -15485,11 +15485,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": ">",
                     "rightExpression": {
-                      "id": 11345,
+                      "id": 11366,
                       "name": "mintPrice",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11225,
+                      "referencedDeclaration": 11246,
                       "src": "2232:9:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -15502,27 +15502,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 11364,
+                  "id": 11385,
                   "nodeType": "IfStatement",
                   "src": "2216:143:43",
                   "trueBody": {
-                    "id": 11363,
+                    "id": 11384,
                     "nodeType": "Block",
                     "src": "2243:116:43",
                     "statements": [
                       {
                         "assignments": [
-                          11348
+                          11369
                         ],
                         "declarations": [
                           {
                             "constant": false,
-                            "id": 11348,
+                            "id": 11369,
                             "mutability": "mutable",
                             "name": "change",
                             "nameLocation": "2266:6:43",
                             "nodeType": "VariableDeclaration",
-                            "scope": 11363,
+                            "scope": 11384,
                             "src": "2258:14:43",
                             "stateVariable": false,
                             "storageLocation": "default",
@@ -15531,7 +15531,7 @@
                               "typeString": "uint256"
                             },
                             "typeName": {
-                              "id": 11347,
+                              "id": 11368,
                               "name": "uint256",
                               "nodeType": "ElementaryTypeName",
                               "src": "2258:7:43",
@@ -15543,20 +15543,20 @@
                             "visibility": "internal"
                           }
                         ],
-                        "id": 11353,
+                        "id": 11374,
                         "initialValue": {
                           "commonType": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 11352,
+                          "id": 11373,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
                             "expression": {
-                              "id": 11349,
+                              "id": 11370,
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -15567,7 +15567,7 @@
                                 "typeString": "msg"
                               }
                             },
-                            "id": 11350,
+                            "id": 11371,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -15584,11 +15584,11 @@
                           "nodeType": "BinaryOperation",
                           "operator": "-",
                           "rightExpression": {
-                            "id": 11351,
+                            "id": 11372,
                             "name": "mintPrice",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11225,
+                            "referencedDeclaration": 11246,
                             "src": "2287:9:43",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -15608,11 +15608,11 @@
                         "expression": {
                           "arguments": [
                             {
-                              "id": 11360,
+                              "id": 11381,
                               "name": "change",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 11348,
+                              "referencedDeclaration": 11369,
                               "src": "2340:6:43",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -15631,7 +15631,7 @@
                               "arguments": [
                                 {
                                   "expression": {
-                                    "id": 11356,
+                                    "id": 11377,
                                     "name": "msg",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
@@ -15642,7 +15642,7 @@
                                       "typeString": "msg"
                                     }
                                   },
-                                  "id": 11357,
+                                  "id": 11378,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -15664,7 +15664,7 @@
                                     "typeString": "address"
                                   }
                                 ],
-                                "id": 11355,
+                                "id": 11376,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -15676,7 +15676,7 @@
                                   "typeString": "type(address payable)"
                                 },
                                 "typeName": {
-                                  "id": 11354,
+                                  "id": 11375,
                                   "name": "address",
                                   "nodeType": "ElementaryTypeName",
                                   "src": "2311:8:43",
@@ -15684,7 +15684,7 @@
                                   "typeDescriptions": {}
                                 }
                               },
-                              "id": 11358,
+                              "id": 11379,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -15700,7 +15700,7 @@
                                 "typeString": "address payable"
                               }
                             },
-                            "id": 11359,
+                            "id": 11380,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -15714,7 +15714,7 @@
                               "typeString": "function (uint256)"
                             }
                           },
-                          "id": 11361,
+                          "id": 11382,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -15730,7 +15730,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 11362,
+                        "id": 11383,
                         "nodeType": "ExpressionStatement",
                         "src": "2311:36:43"
                       }
@@ -15741,11 +15741,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 11373,
+                        "id": 11394,
                         "name": "mintPrice",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11225,
+                        "referencedDeclaration": 11246,
                         "src": "2487:9:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -15765,14 +15765,14 @@
                           {
                             "arguments": [
                               {
-                                "id": 11369,
+                                "id": 11390,
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
                                 "referencedDeclaration": 4294967268,
                                 "src": "2471:4:43",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_contract$_WaningLightMinting_$11438",
+                                  "typeIdentifier": "t_contract$_WaningLightMinting_$11459",
                                   "typeString": "contract WaningLightMinting"
                                 }
                               }
@@ -15780,11 +15780,11 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_WaningLightMinting_$11438",
+                                  "typeIdentifier": "t_contract$_WaningLightMinting_$11459",
                                   "typeString": "contract WaningLightMinting"
                                 }
                               ],
-                              "id": 11368,
+                              "id": 11389,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -15796,14 +15796,14 @@
                                 "typeString": "type(address)"
                               },
                               "typeName": {
-                                "id": 11367,
+                                "id": 11388,
                                 "name": "address",
                                 "nodeType": "ElementaryTypeName",
                                 "src": "2463:7:43",
                                 "typeDescriptions": {}
                               }
                             },
-                            "id": 11370,
+                            "id": 11391,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -15827,7 +15827,7 @@
                               "typeString": "address"
                             }
                           ],
-                          "id": 11366,
+                          "id": 11387,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -15839,7 +15839,7 @@
                             "typeString": "type(address payable)"
                           },
                           "typeName": {
-                            "id": 11365,
+                            "id": 11386,
                             "name": "address",
                             "nodeType": "ElementaryTypeName",
                             "src": "2455:8:43",
@@ -15847,7 +15847,7 @@
                             "typeDescriptions": {}
                           }
                         },
-                        "id": 11371,
+                        "id": 11392,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -15863,7 +15863,7 @@
                           "typeString": "address payable"
                         }
                       },
-                      "id": 11372,
+                      "id": 11393,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -15877,7 +15877,7 @@
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 11374,
+                    "id": 11395,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -15893,28 +15893,28 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11375,
+                  "id": 11396,
                   "nodeType": "ExpressionStatement",
                   "src": "2455:42:43"
                 }
               ]
             },
             "functionSelector": "54ba0f27",
-            "id": 11377,
+            "id": 11398,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 11307,
+                "id": 11328,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 11306,
+                  "id": 11327,
                   "name": "saleIsOpen",
                   "nameLocations": [
                     "1926:10:43"
                   ],
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 11302,
+                  "referencedDeclaration": 11323,
                   "src": "1926:10:43"
                 },
                 "nodeType": "ModifierInvocation",
@@ -15923,11 +15923,11 @@
               {
                 "arguments": [
                   {
-                    "id": 11309,
+                    "id": 11330,
                     "name": "MINTER_ROLE",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 11215,
+                    "referencedDeclaration": 11236,
                     "src": "1946:11:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
@@ -15935,10 +15935,10 @@
                     }
                   }
                 ],
-                "id": 11310,
+                "id": 11331,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 11308,
+                  "id": 11329,
                   "name": "onlyRole",
                   "nameLocations": [
                     "1937:8:43"
@@ -15955,17 +15955,17 @@
             "nameLocation": "1873:7:43",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 11305,
+              "id": 11326,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11304,
+                  "id": 11325,
                   "mutability": "mutable",
                   "name": "to",
                   "nameLocation": "1899:2:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11377,
+                  "scope": 11398,
                   "src": "1891:10:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -15974,7 +15974,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 11303,
+                    "id": 11324,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1891:7:43",
@@ -15990,12 +15990,12 @@
               "src": "1880:28:43"
             },
             "returnParameters": {
-              "id": 11311,
+              "id": 11332,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1959:0:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "1864:641:43",
             "stateMutability": "payable",
             "virtual": false,
@@ -16003,23 +16003,23 @@
           },
           {
             "body": {
-              "id": 11389,
+              "id": 11410,
               "nodeType": "Block",
               "src": "2587:43:43",
               "statements": [
                 {
                   "expression": {
-                    "id": 11387,
+                    "id": 11408,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 11385,
+                      "id": 11406,
                       "name": "mintPrice",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11225,
+                      "referencedDeclaration": 11246,
                       "src": "2598:9:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -16029,11 +16029,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 11386,
+                      "id": 11407,
                       "name": "newMintPrice",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11379,
+                      "referencedDeclaration": 11400,
                       "src": "2610:12:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -16046,25 +16046,25 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 11388,
+                  "id": 11409,
                   "nodeType": "ExpressionStatement",
                   "src": "2598:24:43"
                 }
               ]
             },
             "functionSelector": "f4a0a528",
-            "id": 11390,
+            "id": 11411,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": [
                   {
-                    "id": 11382,
+                    "id": 11403,
                     "name": "ADMIN_ROLE",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 11210,
+                    "referencedDeclaration": 11231,
                     "src": "2575:10:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
@@ -16072,10 +16072,10 @@
                     }
                   }
                 ],
-                "id": 11383,
+                "id": 11404,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 11381,
+                  "id": 11402,
                   "name": "onlyRole",
                   "nameLocations": [
                     "2566:8:43"
@@ -16092,17 +16092,17 @@
             "nameLocation": "2522:12:43",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 11380,
+              "id": 11401,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11379,
+                  "id": 11400,
                   "mutability": "mutable",
                   "name": "newMintPrice",
                   "nameLocation": "2543:12:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11390,
+                  "scope": 11411,
                   "src": "2535:20:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -16111,7 +16111,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 11378,
+                    "id": 11399,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2535:7:43",
@@ -16126,12 +16126,12 @@
               "src": "2534:22:43"
             },
             "returnParameters": {
-              "id": 11384,
+              "id": 11405,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2587:0:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "2513:117:43",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -16139,7 +16139,7 @@
           },
           {
             "body": {
-              "id": 11399,
+              "id": 11420,
               "nodeType": "Block",
               "src": "2689:27:43",
               "statements": [
@@ -16148,7 +16148,7 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 11396,
+                      "id": 11417,
                       "name": "_pause",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -16159,7 +16159,7 @@
                         "typeString": "function ()"
                       }
                     },
-                    "id": 11397,
+                    "id": 11418,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -16175,25 +16175,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11398,
+                  "id": 11419,
                   "nodeType": "ExpressionStatement",
                   "src": "2700:8:43"
                 }
               ]
             },
             "functionSelector": "55367ba9",
-            "id": 11400,
+            "id": 11421,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": [
                   {
-                    "id": 11393,
+                    "id": 11414,
                     "name": "ADMIN_ROLE",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 11210,
+                    "referencedDeclaration": 11231,
                     "src": "2677:10:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
@@ -16201,10 +16201,10 @@
                     }
                   }
                 ],
-                "id": 11394,
+                "id": 11415,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 11392,
+                  "id": 11413,
                   "name": "onlyRole",
                   "nameLocations": [
                     "2668:8:43"
@@ -16221,18 +16221,18 @@
             "nameLocation": "2647:9:43",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 11391,
+              "id": 11412,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2656:2:43"
             },
             "returnParameters": {
-              "id": 11395,
+              "id": 11416,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2689:0:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "2638:78:43",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -16240,7 +16240,7 @@
           },
           {
             "body": {
-              "id": 11409,
+              "id": 11430,
               "nodeType": "Block",
               "src": "2777:29:43",
               "statements": [
@@ -16249,7 +16249,7 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 11406,
+                      "id": 11427,
                       "name": "_unpause",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -16260,7 +16260,7 @@
                         "typeString": "function ()"
                       }
                     },
-                    "id": 11407,
+                    "id": 11428,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -16276,25 +16276,25 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 11408,
+                  "id": 11429,
                   "nodeType": "ExpressionStatement",
                   "src": "2788:10:43"
                 }
               ]
             },
             "functionSelector": "bb33d729",
-            "id": 11410,
+            "id": 11431,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
                 "arguments": [
                   {
-                    "id": 11403,
+                    "id": 11424,
                     "name": "ADMIN_ROLE",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 11210,
+                    "referencedDeclaration": 11231,
                     "src": "2765:10:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
@@ -16302,10 +16302,10 @@
                     }
                   }
                 ],
-                "id": 11404,
+                "id": 11425,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 11402,
+                  "id": 11423,
                   "name": "onlyRole",
                   "nameLocations": [
                     "2756:8:43"
@@ -16322,18 +16322,18 @@
             "nameLocation": "2733:11:43",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 11401,
+              "id": 11422,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2744:2:43"
             },
             "returnParameters": {
-              "id": 11405,
+              "id": 11426,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2777:0:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "2724:82:43",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -16344,7 +16344,7 @@
               1765
             ],
             "body": {
-              "id": 11420,
+              "id": 11441,
               "nodeType": "Block",
               "src": "2881:54:43",
               "statements": [
@@ -16354,18 +16354,18 @@
                     "expression": {
                       "argumentTypes": [],
                       "expression": {
-                        "id": 11416,
+                        "id": 11437,
                         "name": "waningLightBase",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11218,
+                        "referencedDeclaration": 11239,
                         "src": "2899:15:43",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_WaningLightBase_$9858",
+                          "typeIdentifier": "t_contract$_WaningLightBase_$9879",
                           "typeString": "contract WaningLightBase"
                         }
                       },
-                      "id": 11417,
+                      "id": 11438,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -16373,14 +16373,14 @@
                       "memberLocation": "2915:10:43",
                       "memberName": "getBaseURI",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 9759,
+                      "referencedDeclaration": 9780,
                       "src": "2899:26:43",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$__$returns$_t_string_memory_ptr_$",
                         "typeString": "function () view external returns (string memory)"
                       }
                     },
-                    "id": 11418,
+                    "id": 11439,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -16396,14 +16396,14 @@
                       "typeString": "string memory"
                     }
                   },
-                  "functionReturnParameters": 11415,
-                  "id": 11419,
+                  "functionReturnParameters": 11436,
+                  "id": 11440,
                   "nodeType": "Return",
                   "src": "2892:35:43"
                 }
               ]
             },
-            "id": 11421,
+            "id": 11442,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -16411,29 +16411,29 @@
             "nameLocation": "2823:8:43",
             "nodeType": "FunctionDefinition",
             "overrides": {
-              "id": 11412,
+              "id": 11433,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "2848:8:43"
             },
             "parameters": {
-              "id": 11411,
+              "id": 11432,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2831:2:43"
             },
             "returnParameters": {
-              "id": 11415,
+              "id": 11436,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11414,
+                  "id": 11435,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11421,
+                  "scope": 11442,
                   "src": "2866:13:43",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -16442,7 +16442,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 11413,
+                    "id": 11434,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "2866:6:43",
@@ -16456,7 +16456,7 @@
               ],
               "src": "2865:15:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "2814:121:43",
             "stateMutability": "view",
             "virtual": false,
@@ -16468,7 +16468,7 @@
               2682
             ],
             "body": {
-              "id": 11436,
+              "id": 11457,
               "nodeType": "Block",
               "src": "3155:62:43",
               "statements": [
@@ -16476,11 +16476,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 11433,
+                        "id": 11454,
                         "name": "interfaceId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11423,
+                        "referencedDeclaration": 11444,
                         "src": "3197:11:43",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes4",
@@ -16496,18 +16496,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 11431,
+                        "id": 11452,
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 4294967271,
                         "src": "3173:5:43",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_super$_WaningLightMinting_$11438_$",
+                          "typeIdentifier": "t_type$_t_super$_WaningLightMinting_$11459_$",
                           "typeString": "type(contract super WaningLightMinting)"
                         }
                       },
-                      "id": 11432,
+                      "id": 11453,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -16522,7 +16522,7 @@
                         "typeString": "function (bytes4) view returns (bool)"
                       }
                     },
-                    "id": 11434,
+                    "id": 11455,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -16538,15 +16538,15 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 11430,
-                  "id": 11435,
+                  "functionReturnParameters": 11451,
+                  "id": 11456,
                   "nodeType": "Return",
                   "src": "3166:43:43"
                 }
               ]
             },
             "functionSelector": "01ffc9a7",
-            "id": 11437,
+            "id": 11458,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -16554,11 +16554,11 @@
             "nameLocation": "2952:17:43",
             "nodeType": "FunctionDefinition",
             "overrides": {
-              "id": 11427,
+              "id": 11448,
               "nodeType": "OverrideSpecifier",
               "overrides": [
                 {
-                  "id": 11425,
+                  "id": 11446,
                   "name": "ERC721EnumerableUpgradeable",
                   "nameLocations": [
                     "3071:27:43"
@@ -16568,7 +16568,7 @@
                   "src": "3071:27:43"
                 },
                 {
-                  "id": 11426,
+                  "id": 11447,
                   "name": "AccessControlUpgradeable",
                   "nameLocations": [
                     "3100:24:43"
@@ -16581,17 +16581,17 @@
               "src": "3062:63:43"
             },
             "parameters": {
-              "id": 11424,
+              "id": 11445,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11423,
+                  "id": 11444,
                   "mutability": "mutable",
                   "name": "interfaceId",
                   "nameLocation": "2987:11:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11437,
+                  "scope": 11458,
                   "src": "2980:18:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -16600,7 +16600,7 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 11422,
+                    "id": 11443,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
                     "src": "2980:6:43",
@@ -16615,17 +16615,17 @@
               "src": "2969:36:43"
             },
             "returnParameters": {
-              "id": 11430,
+              "id": 11451,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 11429,
+                  "id": 11450,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 11437,
+                  "scope": 11458,
                   "src": "3144:4:43",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -16634,7 +16634,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 11428,
+                    "id": 11449,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "3144:4:43",
@@ -16648,14 +16648,14 @@
               ],
               "src": "3143:6:43"
             },
-            "scope": 11438,
+            "scope": 11459,
             "src": "2943:274:43",
             "stateMutability": "view",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 11439,
+        "scope": 11460,
         "src": "487:2733:43",
         "usedErrors": []
       }
@@ -16670,12 +16670,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x8CEDc9cCbB5Ed1D911f2AF45d431cd3a7842F680",
-      "transactionHash": "0x31ea3cb905c58e3e4eec31b340f6ccf11385c0144d8f86fc9f123c1b4c6043b0"
+      "address": "0x7B4998411fFF0761E2dCD2083D64666B253A1659",
+      "transactionHash": "0x09db4274c7878833643d0c9942499e9d3cb0ba656d53f3ab5cfec6c790745d71"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-27T02:44:18.673Z",
+  "updatedAt": "2023-10-28T01:20:35.954Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

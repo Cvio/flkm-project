@@ -4012,7 +4012,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_array$_t_struct$_Activity_$9873_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Activity_$9873_memory_ptr_$dyn_memory_ptr__fromStack_reversed",
+            "name": "abi_encode_tuple_t_array$_t_struct$_Activity_$9894_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Activity_$9894_memory_ptr_$dyn_memory_ptr__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -8856,7 +8856,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function copy_memory_to_memory_with_cleanup(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        mstore(add(dst, length), 0)\n    }\n    function abi_encode_string(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        copy_memory_to_memory_with_cleanup(add(value, 0x20), add(pos, 0x20), length)\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_t_uint256_t_string_memory_ptr__to_t_uint256_t_string_memory_ptr__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), 64)\n        tail := abi_encode_string(value1, add(headStart, 64))\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(0, 0) }\n        value0 := value\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function abi_decode_tuple_t_uint256t_string_memory_ptr(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := calldataload(headStart)\n        let offset := calldataload(add(headStart, 32))\n        let _1 := 0xffffffffffffffff\n        if gt(offset, _1) { revert(0, 0) }\n        let _2 := add(headStart, offset)\n        if iszero(slt(add(_2, 0x1f), dataEnd)) { revert(0, 0) }\n        let _3 := calldataload(_2)\n        if gt(_3, _1) { panic_error_0x41() }\n        let _4 := not(31)\n        let memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(and(add(_3, 0x1f), _4), 63), _4))\n        if or(gt(newFreePtr, _1), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _3)\n        if gt(add(add(_2, _3), 32), dataEnd) { revert(0, 0) }\n        calldatacopy(add(memPtr, 32), add(_2, 32), _3)\n        mstore(add(add(memPtr, _3), 32), 0)\n        value1 := memPtr\n    }\n    function abi_decode_tuple_t_bytes32(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_bytes32t_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := calldataload(headStart)\n        let value := calldataload(add(headStart, 32))\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n        value1 := value\n    }\n    function abi_encode_tuple_t_array$_t_struct$_Activity_$9873_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Activity_$9873_memory_ptr_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        let _2 := 64\n        pos := add(headStart, _2)\n        let tail_2 := add(add(headStart, shl(5, length)), _2)\n        let srcPtr := add(value0, _1)\n        let i := 0\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, add(sub(tail_2, headStart), not(63)))\n            let _3 := mload(srcPtr)\n            mstore(tail_2, mload(_3))\n            let memberValue0 := mload(add(_3, _1))\n            mstore(add(tail_2, _1), _2)\n            tail_2 := abi_encode_string(memberValue0, add(tail_2, _2))\n            srcPtr := add(srcPtr, _1)\n            pos := add(pos, _1)\n        }\n        tail := tail_2\n    }\n    function abi_encode_tuple_t_array$_t_uint256_$dyn_memory_ptr__to_t_array$_t_uint256_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        pos := add(headStart, 64)\n        let srcPtr := add(value0, _1)\n        let i := 0\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, mload(srcPtr))\n            pos := add(pos, _1)\n            srcPtr := add(srcPtr, _1)\n        }\n        tail := pos\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := shr(1, data)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function abi_encode_tuple_t_stringliteral_c42e6f213cb252dbb58053bcbc469c8ef3e91890f0261efae8e5d5a1aecda226__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 22)\n        mstore(add(headStart, 64), \"Caller is not an admin\")\n        tail := add(headStart, 96)\n    }\n    function array_dataslot_string_storage(ptr) -> data\n    {\n        mstore(0, ptr)\n        data := keccak256(0, 0x20)\n    }\n    function clean_up_bytearray_end_slots_string_storage(array, len, startIndex)\n    {\n        if gt(len, 31)\n        {\n            let _1 := 0\n            mstore(_1, array)\n            let data := keccak256(_1, 0x20)\n            let deleteStart := add(data, shr(5, add(startIndex, 31)))\n            if lt(startIndex, 0x20) { deleteStart := data }\n            let _2 := add(data, shr(5, add(len, 31)))\n            let start := deleteStart\n            for { } lt(start, _2) { start := add(start, 1) }\n            { sstore(start, _1) }\n        }\n    }\n    function extract_used_part_and_set_length_of_short_byte_array(data, len) -> used\n    {\n        used := or(and(data, not(shr(shl(3, len), not(0)))), shl(1, len))\n    }\n    function copy_byte_array_to_storage_from_t_string_memory_ptr_to_t_string_storage(slot, src)\n    {\n        let newLen := mload(src)\n        if gt(newLen, 0xffffffffffffffff) { panic_error_0x41() }\n        clean_up_bytearray_end_slots_string_storage(slot, extract_byte_array_length(sload(slot)), newLen)\n        let srcOffset := 0\n        let srcOffset_1 := 0x20\n        srcOffset := srcOffset_1\n        switch gt(newLen, 31)\n        case 1 {\n            let loopEnd := and(newLen, not(31))\n            let dstPtr := array_dataslot_string_storage(slot)\n            let i := 0\n            for { } lt(i, loopEnd) { i := add(i, srcOffset_1) }\n            {\n                sstore(dstPtr, mload(add(src, srcOffset)))\n                dstPtr := add(dstPtr, 1)\n                srcOffset := add(srcOffset, srcOffset_1)\n            }\n            if lt(loopEnd, newLen)\n            {\n                let lastValue := mload(add(src, srcOffset))\n                sstore(dstPtr, and(lastValue, not(shr(and(shl(3, newLen), 248), not(0)))))\n            }\n            sstore(slot, add(shl(1, newLen), 1))\n        }\n        default {\n            let value := 0\n            if newLen\n            {\n                value := mload(add(src, srcOffset))\n            }\n            sstore(slot, extract_used_part_and_set_length_of_short_byte_array(value, newLen))\n        }\n    }\n    function abi_encode_tuple_t_stringliteral_6323ce5c112e64cca2a40bf5feb503be2d6a08397b01c65bb8dc01d3a523e9f4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 21)\n        mstore(add(headStart, 64), \"Invalid activity type\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_fb06fa8ff2141e8ed74502f6792273793f25f0e9d3cf15344f3f5a0d4948fd4b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 47)\n        mstore(add(headStart, 64), \"AccessControl: can only renounce\")\n        mstore(add(headStart, 96), \" roles for self\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7a2a4e26842155ea933fe6eb6e3137eb5a296dcdf55721c552be7b4c3cc23759__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"Initializable: contract is alrea\")\n        mstore(add(headStart, 96), \"dy initialized\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_rational_1_by_1__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xff))\n    }\n    function panic_error_0x32()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x32)\n        revert(0, 0x24)\n    }\n    function abi_encode_tuple_t_stringliteral_d688db918bb9dd50354922faa108595679886fe9ff08046ad1ffe30aaea55f8b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Initializable: contract is not i\")\n        mstore(add(headStart, 96), \"nitializing\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_da0d07ce4a2849fbfc4cb9d6f939e9bd93016c372ca4a5ff14fe06caf3d67874_t_string_memory_ptr_t_stringliteral_f986ce851518a691bccd44ea42a5a185d1b866ef6cb07984a09b81694d20ab69_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, \"AccessControl: account \")\n        let length := mload(value0)\n        copy_memory_to_memory_with_cleanup(add(value0, 0x20), add(pos, 23), length)\n        let _1 := add(pos, length)\n        mstore(add(_1, 23), \" is missing role \")\n        let length_1 := mload(value1)\n        copy_memory_to_memory_with_cleanup(add(value1, 0x20), add(_1, 40), length_1)\n        end := add(add(_1, length_1), 40)\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_string(value0, add(headStart, 32))\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function decrement_t_uint256(value) -> ret\n    {\n        if iszero(value) { panic_error_0x11() }\n        ret := add(value, not(0))\n    }\n    function abi_encode_tuple_t_stringliteral_04fc88320d7c9f639317c75102c103ff0044d3075a5c627e24e76e5bbb2733c2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Strings: hex length insufficient\")\n        tail := add(headStart, 96)\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function copy_memory_to_memory_with_cleanup(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        mstore(add(dst, length), 0)\n    }\n    function abi_encode_string(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        copy_memory_to_memory_with_cleanup(add(value, 0x20), add(pos, 0x20), length)\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_t_uint256_t_string_memory_ptr__to_t_uint256_t_string_memory_ptr__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), 64)\n        tail := abi_encode_string(value1, add(headStart, 64))\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := calldataload(headStart)\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(0, 0) }\n        value0 := value\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function abi_decode_tuple_t_uint256t_string_memory_ptr(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := calldataload(headStart)\n        let offset := calldataload(add(headStart, 32))\n        let _1 := 0xffffffffffffffff\n        if gt(offset, _1) { revert(0, 0) }\n        let _2 := add(headStart, offset)\n        if iszero(slt(add(_2, 0x1f), dataEnd)) { revert(0, 0) }\n        let _3 := calldataload(_2)\n        if gt(_3, _1) { panic_error_0x41() }\n        let _4 := not(31)\n        let memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(and(add(_3, 0x1f), _4), 63), _4))\n        if or(gt(newFreePtr, _1), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _3)\n        if gt(add(add(_2, _3), 32), dataEnd) { revert(0, 0) }\n        calldatacopy(add(memPtr, 32), add(_2, 32), _3)\n        mstore(add(add(memPtr, _3), 32), 0)\n        value1 := memPtr\n    }\n    function abi_decode_tuple_t_bytes32(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_bytes32t_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n        value0 := calldataload(headStart)\n        let value := calldataload(add(headStart, 32))\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n        value1 := value\n    }\n    function abi_encode_tuple_t_array$_t_struct$_Activity_$9894_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Activity_$9894_memory_ptr_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        let _2 := 64\n        pos := add(headStart, _2)\n        let tail_2 := add(add(headStart, shl(5, length)), _2)\n        let srcPtr := add(value0, _1)\n        let i := 0\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, add(sub(tail_2, headStart), not(63)))\n            let _3 := mload(srcPtr)\n            mstore(tail_2, mload(_3))\n            let memberValue0 := mload(add(_3, _1))\n            mstore(add(tail_2, _1), _2)\n            tail_2 := abi_encode_string(memberValue0, add(tail_2, _2))\n            srcPtr := add(srcPtr, _1)\n            pos := add(pos, _1)\n        }\n        tail := tail_2\n    }\n    function abi_encode_tuple_t_array$_t_uint256_$dyn_memory_ptr__to_t_array$_t_uint256_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        pos := add(headStart, 64)\n        let srcPtr := add(value0, _1)\n        let i := 0\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, mload(srcPtr))\n            pos := add(pos, _1)\n            srcPtr := add(srcPtr, _1)\n        }\n        tail := pos\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := shr(1, data)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function abi_encode_tuple_t_stringliteral_c42e6f213cb252dbb58053bcbc469c8ef3e91890f0261efae8e5d5a1aecda226__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 22)\n        mstore(add(headStart, 64), \"Caller is not an admin\")\n        tail := add(headStart, 96)\n    }\n    function array_dataslot_string_storage(ptr) -> data\n    {\n        mstore(0, ptr)\n        data := keccak256(0, 0x20)\n    }\n    function clean_up_bytearray_end_slots_string_storage(array, len, startIndex)\n    {\n        if gt(len, 31)\n        {\n            let _1 := 0\n            mstore(_1, array)\n            let data := keccak256(_1, 0x20)\n            let deleteStart := add(data, shr(5, add(startIndex, 31)))\n            if lt(startIndex, 0x20) { deleteStart := data }\n            let _2 := add(data, shr(5, add(len, 31)))\n            let start := deleteStart\n            for { } lt(start, _2) { start := add(start, 1) }\n            { sstore(start, _1) }\n        }\n    }\n    function extract_used_part_and_set_length_of_short_byte_array(data, len) -> used\n    {\n        used := or(and(data, not(shr(shl(3, len), not(0)))), shl(1, len))\n    }\n    function copy_byte_array_to_storage_from_t_string_memory_ptr_to_t_string_storage(slot, src)\n    {\n        let newLen := mload(src)\n        if gt(newLen, 0xffffffffffffffff) { panic_error_0x41() }\n        clean_up_bytearray_end_slots_string_storage(slot, extract_byte_array_length(sload(slot)), newLen)\n        let srcOffset := 0\n        let srcOffset_1 := 0x20\n        srcOffset := srcOffset_1\n        switch gt(newLen, 31)\n        case 1 {\n            let loopEnd := and(newLen, not(31))\n            let dstPtr := array_dataslot_string_storage(slot)\n            let i := 0\n            for { } lt(i, loopEnd) { i := add(i, srcOffset_1) }\n            {\n                sstore(dstPtr, mload(add(src, srcOffset)))\n                dstPtr := add(dstPtr, 1)\n                srcOffset := add(srcOffset, srcOffset_1)\n            }\n            if lt(loopEnd, newLen)\n            {\n                let lastValue := mload(add(src, srcOffset))\n                sstore(dstPtr, and(lastValue, not(shr(and(shl(3, newLen), 248), not(0)))))\n            }\n            sstore(slot, add(shl(1, newLen), 1))\n        }\n        default {\n            let value := 0\n            if newLen\n            {\n                value := mload(add(src, srcOffset))\n            }\n            sstore(slot, extract_used_part_and_set_length_of_short_byte_array(value, newLen))\n        }\n    }\n    function abi_encode_tuple_t_stringliteral_6323ce5c112e64cca2a40bf5feb503be2d6a08397b01c65bb8dc01d3a523e9f4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 21)\n        mstore(add(headStart, 64), \"Invalid activity type\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_fb06fa8ff2141e8ed74502f6792273793f25f0e9d3cf15344f3f5a0d4948fd4b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 47)\n        mstore(add(headStart, 64), \"AccessControl: can only renounce\")\n        mstore(add(headStart, 96), \" roles for self\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7a2a4e26842155ea933fe6eb6e3137eb5a296dcdf55721c552be7b4c3cc23759__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 46)\n        mstore(add(headStart, 64), \"Initializable: contract is alrea\")\n        mstore(add(headStart, 96), \"dy initialized\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_rational_1_by_1__to_t_uint8__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xff))\n    }\n    function panic_error_0x32()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x32)\n        revert(0, 0x24)\n    }\n    function abi_encode_tuple_t_stringliteral_d688db918bb9dd50354922faa108595679886fe9ff08046ad1ffe30aaea55f8b__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Initializable: contract is not i\")\n        mstore(add(headStart, 96), \"nitializing\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_da0d07ce4a2849fbfc4cb9d6f939e9bd93016c372ca4a5ff14fe06caf3d67874_t_string_memory_ptr_t_stringliteral_f986ce851518a691bccd44ea42a5a185d1b866ef6cb07984a09b81694d20ab69_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, \"AccessControl: account \")\n        let length := mload(value0)\n        copy_memory_to_memory_with_cleanup(add(value0, 0x20), add(pos, 23), length)\n        let _1 := add(pos, length)\n        mstore(add(_1, 23), \" is missing role \")\n        let length_1 := mload(value1)\n        copy_memory_to_memory_with_cleanup(add(value1, 0x20), add(_1, 40), length_1)\n        end := add(add(_1, length_1), 40)\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_string(value0, add(headStart, 32))\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function checked_mul_t_uint256(x, y) -> product\n    {\n        product := mul(x, y)\n        if iszero(or(iszero(x), eq(y, div(product, x)))) { panic_error_0x11() }\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        sum := add(x, y)\n        if gt(x, sum) { panic_error_0x11() }\n    }\n    function decrement_t_uint256(value) -> ret\n    {\n        if iszero(value) { panic_error_0x11() }\n        ret := add(value, not(0))\n    }\n    function abi_encode_tuple_t_stringliteral_04fc88320d7c9f639317c75102c103ff0044d3075a5c627e24e76e5bbb2733c2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Strings: hex length insufficient\")\n        tail := add(headStart, 96)\n    }\n}",
       "id": 46,
       "language": "Yul",
       "name": "#utility.yul"
@@ -8879,7 +8879,7 @@
         3597
       ],
       "DaoAnalytics": [
-        10099
+        10120
       ],
       "ERC165Upgradeable": [
         3870
@@ -8903,12 +8903,12 @@
         3826
       ]
     },
-    "id": 10100,
+    "id": 10121,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 9860,
+        "id": 9881,
         "literals": [
           "solidity",
           "^",
@@ -8921,10 +8921,10 @@
       {
         "absolutePath": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
         "file": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
-        "id": 9861,
+        "id": 9882,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 10100,
+        "scope": 10121,
         "sourceUnit": 336,
         "src": "61:81:37",
         "symbolAliases": [],
@@ -8935,7 +8935,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 9862,
+              "id": 9883,
               "name": "AccessControlUpgradeable",
               "nameLocations": [
                 "209:24:37"
@@ -8944,7 +8944,7 @@
               "referencedDeclaration": 335,
               "src": "209:24:37"
             },
-            "id": 9863,
+            "id": 9884,
             "nodeType": "InheritanceSpecifier",
             "src": "209:24:37"
           }
@@ -8953,9 +8953,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 10099,
+        "id": 10120,
         "linearizedBaseContracts": [
-          10099,
+          10120,
           335,
           3870,
           3882,
@@ -8970,12 +8970,12 @@
           {
             "constant": true,
             "functionSelector": "75b238fc",
-            "id": 9868,
+            "id": 9889,
             "mutability": "constant",
             "name": "ADMIN_ROLE",
             "nameLocation": "265:10:37",
             "nodeType": "VariableDeclaration",
-            "scope": 10099,
+            "scope": 10120,
             "src": "241:60:37",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8984,7 +8984,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 9864,
+              "id": 9885,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "241:7:37",
@@ -8997,7 +8997,7 @@
               "arguments": [
                 {
                   "hexValue": "41444d494e5f524f4c45",
-                  "id": 9866,
+                  "id": 9887,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -9019,7 +9019,7 @@
                     "typeString": "literal_string \"ADMIN_ROLE\""
                   }
                 ],
-                "id": 9865,
+                "id": 9886,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
@@ -9030,7 +9030,7 @@
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 9867,
+              "id": 9888,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -9050,16 +9050,16 @@
           },
           {
             "canonicalName": "DaoAnalytics.Activity",
-            "id": 9873,
+            "id": 9894,
             "members": [
               {
                 "constant": false,
-                "id": 9870,
+                "id": 9891,
                 "mutability": "mutable",
                 "name": "timestamp",
                 "nameLocation": "390:9:37",
                 "nodeType": "VariableDeclaration",
-                "scope": 9873,
+                "scope": 9894,
                 "src": "382:17:37",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -9068,7 +9068,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 9869,
+                  "id": 9890,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "382:7:37",
@@ -9081,12 +9081,12 @@
               },
               {
                 "constant": false,
-                "id": 9872,
+                "id": 9893,
                 "mutability": "mutable",
                 "name": "description",
                 "nameLocation": "417:11:37",
                 "nodeType": "VariableDeclaration",
-                "scope": 9873,
+                "scope": 9894,
                 "src": "410:18:37",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -9095,7 +9095,7 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 9871,
+                  "id": 9892,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
                   "src": "410:6:37",
@@ -9110,52 +9110,52 @@
             "name": "Activity",
             "nameLocation": "362:8:37",
             "nodeType": "StructDefinition",
-            "scope": 10099,
+            "scope": 10120,
             "src": "355:81:37",
             "visibility": "public"
           },
           {
             "constant": false,
             "functionSelector": "013cf08b",
-            "id": 9877,
+            "id": 9898,
             "mutability": "mutable",
             "name": "proposals",
             "nameLocation": "516:9:37",
             "nodeType": "VariableDeclaration",
-            "scope": 10099,
+            "scope": 10120,
             "src": "498:27:37",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
               "typeString": "struct DaoAnalytics.Activity[]"
             },
             "typeName": {
               "baseType": {
-                "id": 9875,
+                "id": 9896,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 9874,
+                  "id": 9895,
                   "name": "Activity",
                   "nameLocations": [
                     "498:8:37"
                   ],
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 9873,
+                  "referencedDeclaration": 9894,
                   "src": "498:8:37"
                 },
-                "referencedDeclaration": 9873,
+                "referencedDeclaration": 9894,
                 "src": "498:8:37",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Activity_$9873_storage_ptr",
+                  "typeIdentifier": "t_struct$_Activity_$9894_storage_ptr",
                   "typeString": "struct DaoAnalytics.Activity"
                 }
               },
-              "id": 9876,
+              "id": 9897,
               "nodeType": "ArrayTypeName",
               "src": "498:10:37",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr",
                 "typeString": "struct DaoAnalytics.Activity[]"
               }
             },
@@ -9164,45 +9164,45 @@
           {
             "constant": false,
             "functionSelector": "5df81330",
-            "id": 9881,
+            "id": 9902,
             "mutability": "mutable",
             "name": "votes",
             "nameLocation": "550:5:37",
             "nodeType": "VariableDeclaration",
-            "scope": 10099,
+            "scope": 10120,
             "src": "532:23:37",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
               "typeString": "struct DaoAnalytics.Activity[]"
             },
             "typeName": {
               "baseType": {
-                "id": 9879,
+                "id": 9900,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 9878,
+                  "id": 9899,
                   "name": "Activity",
                   "nameLocations": [
                     "532:8:37"
                   ],
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 9873,
+                  "referencedDeclaration": 9894,
                   "src": "532:8:37"
                 },
-                "referencedDeclaration": 9873,
+                "referencedDeclaration": 9894,
                 "src": "532:8:37",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Activity_$9873_storage_ptr",
+                  "typeIdentifier": "t_struct$_Activity_$9894_storage_ptr",
                   "typeString": "struct DaoAnalytics.Activity"
                 }
               },
-              "id": 9880,
+              "id": 9901,
               "nodeType": "ArrayTypeName",
               "src": "532:10:37",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr",
                 "typeString": "struct DaoAnalytics.Activity[]"
               }
             },
@@ -9211,45 +9211,45 @@
           {
             "constant": false,
             "functionSelector": "9ace38c2",
-            "id": 9885,
+            "id": 9906,
             "mutability": "mutable",
             "name": "transactions",
             "nameLocation": "580:12:37",
             "nodeType": "VariableDeclaration",
-            "scope": 10099,
+            "scope": 10120,
             "src": "562:30:37",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
               "typeString": "struct DaoAnalytics.Activity[]"
             },
             "typeName": {
               "baseType": {
-                "id": 9883,
+                "id": 9904,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 9882,
+                  "id": 9903,
                   "name": "Activity",
                   "nameLocations": [
                     "562:8:37"
                   ],
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 9873,
+                  "referencedDeclaration": 9894,
                   "src": "562:8:37"
                 },
-                "referencedDeclaration": 9873,
+                "referencedDeclaration": 9894,
                 "src": "562:8:37",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Activity_$9873_storage_ptr",
+                  "typeIdentifier": "t_struct$_Activity_$9894_storage_ptr",
                   "typeString": "struct DaoAnalytics.Activity"
                 }
               },
-              "id": 9884,
+              "id": 9905,
               "nodeType": "ArrayTypeName",
               "src": "562:10:37",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr",
                 "typeString": "struct DaoAnalytics.Activity[]"
               }
             },
@@ -9258,45 +9258,45 @@
           {
             "constant": false,
             "functionSelector": "48a249d6",
-            "id": 9889,
+            "id": 9910,
             "mutability": "mutable",
             "name": "membershipChanges",
             "nameLocation": "617:17:37",
             "nodeType": "VariableDeclaration",
-            "scope": 10099,
+            "scope": 10120,
             "src": "599:35:37",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
               "typeString": "struct DaoAnalytics.Activity[]"
             },
             "typeName": {
               "baseType": {
-                "id": 9887,
+                "id": 9908,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 9886,
+                  "id": 9907,
                   "name": "Activity",
                   "nameLocations": [
                     "599:8:37"
                   ],
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 9873,
+                  "referencedDeclaration": 9894,
                   "src": "599:8:37"
                 },
-                "referencedDeclaration": 9873,
+                "referencedDeclaration": 9894,
                 "src": "599:8:37",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Activity_$9873_storage_ptr",
+                  "typeIdentifier": "t_struct$_Activity_$9894_storage_ptr",
                   "typeString": "struct DaoAnalytics.Activity"
                 }
               },
-              "id": 9888,
+              "id": 9909,
               "nodeType": "ArrayTypeName",
               "src": "599:10:37",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr",
                 "typeString": "struct DaoAnalytics.Activity[]"
               }
             },
@@ -9305,23 +9305,23 @@
           {
             "anonymous": false,
             "eventSelector": "e2ca8dc2e11007d3590b0be9ba3210ab24b34a0a98706de1b0bb52a066d6d18a",
-            "id": 9897,
+            "id": 9918,
             "name": "NewActivity",
             "nameLocation": "683:11:37",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 9896,
+              "id": 9917,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 9891,
+                  "id": 9912,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "activityType",
                   "nameLocation": "721:12:37",
                   "nodeType": "VariableDeclaration",
-                  "scope": 9897,
+                  "scope": 9918,
                   "src": "705:28:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9330,7 +9330,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 9890,
+                    "id": 9911,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "705:7:37",
@@ -9343,13 +9343,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 9893,
+                  "id": 9914,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "timestamp",
                   "nameLocation": "752:9:37",
                   "nodeType": "VariableDeclaration",
-                  "scope": 9897,
+                  "scope": 9918,
                   "src": "744:17:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9358,7 +9358,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 9892,
+                    "id": 9913,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "744:7:37",
@@ -9371,13 +9371,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 9895,
+                  "id": 9916,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "description",
                   "nameLocation": "779:11:37",
                   "nodeType": "VariableDeclaration",
-                  "scope": 9897,
+                  "scope": 9918,
                   "src": "772:18:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9386,7 +9386,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 9894,
+                    "id": 9915,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "772:6:37",
@@ -9404,7 +9404,7 @@
           },
           {
             "body": {
-              "id": 9911,
+              "id": 9932,
               "nodeType": "Block",
               "src": "847:88:37",
               "statements": [
@@ -9413,7 +9413,7 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 9902,
+                      "id": 9923,
                       "name": "__AccessControl_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -9424,7 +9424,7 @@
                         "typeString": "function ()"
                       }
                     },
-                    "id": 9903,
+                    "id": 9924,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9440,7 +9440,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 9904,
+                  "id": 9925,
                   "nodeType": "ExpressionStatement",
                   "src": "858:22:37"
                 },
@@ -9448,11 +9448,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 9906,
+                        "id": 9927,
                         "name": "ADMIN_ROLE",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9868,
+                        "referencedDeclaration": 9889,
                         "src": "904:10:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -9461,7 +9461,7 @@
                       },
                       {
                         "expression": {
-                          "id": 9907,
+                          "id": 9928,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -9472,7 +9472,7 @@
                             "typeString": "msg"
                           }
                         },
-                        "id": 9908,
+                        "id": 9929,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -9498,7 +9498,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 9905,
+                      "id": 9926,
                       "name": "_grantRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -9509,7 +9509,7 @@
                         "typeString": "function (bytes32,address)"
                       }
                     },
-                    "id": 9909,
+                    "id": 9930,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9525,22 +9525,22 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 9910,
+                  "id": 9931,
                   "nodeType": "ExpressionStatement",
                   "src": "893:34:37"
                 }
               ]
             },
             "functionSelector": "8129fc1c",
-            "id": 9912,
+            "id": 9933,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 9900,
+                "id": 9921,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 9899,
+                  "id": 9920,
                   "name": "initializer",
                   "nameLocations": [
                     "835:11:37"
@@ -9557,18 +9557,18 @@
             "nameLocation": "815:10:37",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 9898,
+              "id": 9919,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "825:2:37"
             },
             "returnParameters": {
-              "id": 9901,
+              "id": 9922,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "847:0:37"
             },
-            "scope": 10099,
+            "scope": 10120,
             "src": "806:129:37",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -9576,7 +9576,7 @@
           },
           {
             "body": {
-              "id": 9996,
+              "id": 10017,
               "nodeType": "Block",
               "src": "1086:680:37",
               "statements": [
@@ -9586,11 +9586,11 @@
                       {
                         "arguments": [
                           {
-                            "id": 9921,
+                            "id": 9942,
                             "name": "ADMIN_ROLE",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 9868,
+                            "referencedDeclaration": 9889,
                             "src": "1113:10:37",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -9599,7 +9599,7 @@
                           },
                           {
                             "expression": {
-                              "id": 9922,
+                              "id": 9943,
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -9610,7 +9610,7 @@
                                 "typeString": "msg"
                               }
                             },
-                            "id": 9923,
+                            "id": 9944,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -9636,7 +9636,7 @@
                               "typeString": "address"
                             }
                           ],
-                          "id": 9920,
+                          "id": 9941,
                           "name": "hasRole",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -9647,7 +9647,7 @@
                             "typeString": "function (bytes32,address) view returns (bool)"
                           }
                         },
-                        "id": 9924,
+                        "id": 9945,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -9665,7 +9665,7 @@
                       },
                       {
                         "hexValue": "43616c6c6572206973206e6f7420616e2061646d696e",
-                        "id": 9925,
+                        "id": 9946,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -9691,7 +9691,7 @@
                           "typeString": "literal_string \"Caller is not an admin\""
                         }
                       ],
-                      "id": 9919,
+                      "id": 9940,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -9705,7 +9705,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 9926,
+                    "id": 9947,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9721,23 +9721,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 9927,
+                  "id": 9948,
                   "nodeType": "ExpressionStatement",
                   "src": "1097:66:37"
                 },
                 {
                   "assignments": [
-                    9929
+                    9950
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 9929,
+                      "id": 9950,
                       "mutability": "mutable",
                       "name": "timestamp",
                       "nameLocation": "1182:9:37",
                       "nodeType": "VariableDeclaration",
-                      "scope": 9996,
+                      "scope": 10017,
                       "src": "1174:17:37",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -9746,7 +9746,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 9928,
+                        "id": 9949,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "1174:7:37",
@@ -9758,10 +9758,10 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 9932,
+                  "id": 9953,
                   "initialValue": {
                     "expression": {
-                      "id": 9930,
+                      "id": 9951,
                       "name": "block",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -9772,7 +9772,7 @@
                         "typeString": "block"
                       }
                     },
-                    "id": 9931,
+                    "id": 9952,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9791,56 +9791,56 @@
                 },
                 {
                   "assignments": [
-                    9935
+                    9956
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 9935,
+                      "id": 9956,
                       "mutability": "mutable",
                       "name": "newActivity",
                       "nameLocation": "1236:11:37",
                       "nodeType": "VariableDeclaration",
-                      "scope": 9996,
+                      "scope": 10017,
                       "src": "1220:27:37",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                        "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                         "typeString": "struct DaoAnalytics.Activity"
                       },
                       "typeName": {
-                        "id": 9934,
+                        "id": 9955,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
-                          "id": 9933,
+                          "id": 9954,
                           "name": "Activity",
                           "nameLocations": [
                             "1220:8:37"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 9873,
+                          "referencedDeclaration": 9894,
                           "src": "1220:8:37"
                         },
-                        "referencedDeclaration": 9873,
+                        "referencedDeclaration": 9894,
                         "src": "1220:8:37",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Activity_$9873_storage_ptr",
+                          "typeIdentifier": "t_struct$_Activity_$9894_storage_ptr",
                           "typeString": "struct DaoAnalytics.Activity"
                         }
                       },
                       "visibility": "internal"
                     }
                   ],
-                  "id": 9940,
+                  "id": 9961,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 9937,
+                        "id": 9958,
                         "name": "timestamp",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9929,
+                        "referencedDeclaration": 9950,
                         "src": "1259:9:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -9848,11 +9848,11 @@
                         }
                       },
                       {
-                        "id": 9938,
+                        "id": 9959,
                         "name": "description",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9916,
+                        "referencedDeclaration": 9937,
                         "src": "1270:11:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -9871,18 +9871,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 9936,
+                      "id": 9957,
                       "name": "Activity",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 9873,
+                      "referencedDeclaration": 9894,
                       "src": "1250:8:37",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_struct$_Activity_$9873_storage_ptr_$",
+                        "typeIdentifier": "t_type$_t_struct$_Activity_$9894_storage_ptr_$",
                         "typeString": "type(struct DaoAnalytics.Activity storage pointer)"
                       }
                     },
-                    "id": 9939,
+                    "id": 9960,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9894,7 +9894,7 @@
                     "src": "1250:32:37",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                      "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                       "typeString": "struct DaoAnalytics.Activity memory"
                     }
                   },
@@ -9907,17 +9907,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 9943,
+                    "id": 9964,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 9941,
+                      "id": 9962,
                       "name": "activityType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 9914,
+                      "referencedDeclaration": 9935,
                       "src": "1299:12:37",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -9928,7 +9928,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 9942,
+                      "id": 9963,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -9954,17 +9954,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 9953,
+                      "id": 9974,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-                        "id": 9951,
+                        "id": 9972,
                         "name": "activityType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9914,
+                        "referencedDeclaration": 9935,
                         "src": "1382:12:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -9975,7 +9975,7 @@
                       "operator": "==",
                       "rightExpression": {
                         "hexValue": "31",
-                        "id": 9952,
+                        "id": 9973,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10001,17 +10001,17 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 9963,
+                        "id": 9984,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 9961,
+                          "id": 9982,
                           "name": "activityType",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 9914,
+                          "referencedDeclaration": 9935,
                           "src": "1461:12:37",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -10022,7 +10022,7 @@
                         "operator": "==",
                         "rightExpression": {
                           "hexValue": "32",
-                          "id": 9962,
+                          "id": 9983,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -10048,17 +10048,17 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 9973,
+                          "id": 9994,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 9971,
+                            "id": 9992,
                             "name": "activityType",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 9914,
+                            "referencedDeclaration": 9935,
                             "src": "1547:12:37",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -10069,7 +10069,7 @@
                           "operator": "==",
                           "rightExpression": {
                             "hexValue": "33",
-                            "id": 9972,
+                            "id": 9993,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -10090,7 +10090,7 @@
                           }
                         },
                         "falseBody": {
-                          "id": 9985,
+                          "id": 10006,
                           "nodeType": "Block",
                           "src": "1634:58:37",
                           "statements": [
@@ -10099,7 +10099,7 @@
                                 "arguments": [
                                   {
                                     "hexValue": "496e76616c69642061637469766974792074797065",
-                                    "id": 9982,
+                                    "id": 10003,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -10121,7 +10121,7 @@
                                       "typeString": "literal_string \"Invalid activity type\""
                                     }
                                   ],
-                                  "id": 9981,
+                                  "id": 10002,
                                   "name": "revert",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [
@@ -10135,7 +10135,7 @@
                                     "typeString": "function (string memory) pure"
                                   }
                                 },
-                                "id": 9983,
+                                "id": 10004,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -10151,17 +10151,17 @@
                                   "typeString": "tuple()"
                                 }
                               },
-                              "id": 9984,
+                              "id": 10005,
                               "nodeType": "ExpressionStatement",
                               "src": "1649:31:37"
                             }
                           ]
                         },
-                        "id": 9986,
+                        "id": 10007,
                         "nodeType": "IfStatement",
                         "src": "1543:149:37",
                         "trueBody": {
-                          "id": 9980,
+                          "id": 10001,
                           "nodeType": "Block",
                           "src": "1566:62:37",
                           "statements": [
@@ -10169,14 +10169,14 @@
                               "expression": {
                                 "arguments": [
                                   {
-                                    "id": 9977,
+                                    "id": 9998,
                                     "name": "newActivity",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 9935,
+                                    "referencedDeclaration": 9956,
                                     "src": "1604:11:37",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                      "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                       "typeString": "struct DaoAnalytics.Activity memory"
                                     }
                                   }
@@ -10184,23 +10184,23 @@
                                 "expression": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                      "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                       "typeString": "struct DaoAnalytics.Activity memory"
                                     }
                                   ],
                                   "expression": {
-                                    "id": 9974,
+                                    "id": 9995,
                                     "name": "membershipChanges",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 9889,
+                                    "referencedDeclaration": 9910,
                                     "src": "1581:17:37",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                                      "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                                       "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                                     }
                                   },
-                                  "id": 9976,
+                                  "id": 9997,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -10210,11 +10210,11 @@
                                   "nodeType": "MemberAccess",
                                   "src": "1581:22:37",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9873_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$",
+                                    "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9894_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$",
                                     "typeString": "function (struct DaoAnalytics.Activity storage ref[] storage pointer,struct DaoAnalytics.Activity storage ref)"
                                   }
                                 },
-                                "id": 9978,
+                                "id": 9999,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -10230,18 +10230,18 @@
                                   "typeString": "tuple()"
                                 }
                               },
-                              "id": 9979,
+                              "id": 10000,
                               "nodeType": "ExpressionStatement",
                               "src": "1581:35:37"
                             }
                           ]
                         }
                       },
-                      "id": 9987,
+                      "id": 10008,
                       "nodeType": "IfStatement",
                       "src": "1457:235:37",
                       "trueBody": {
-                        "id": 9970,
+                        "id": 9991,
                         "nodeType": "Block",
                         "src": "1480:57:37",
                         "statements": [
@@ -10249,14 +10249,14 @@
                             "expression": {
                               "arguments": [
                                 {
-                                  "id": 9967,
+                                  "id": 9988,
                                   "name": "newActivity",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 9935,
+                                  "referencedDeclaration": 9956,
                                   "src": "1513:11:37",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                    "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                     "typeString": "struct DaoAnalytics.Activity memory"
                                   }
                                 }
@@ -10264,23 +10264,23 @@
                               "expression": {
                                 "argumentTypes": [
                                   {
-                                    "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                    "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                     "typeString": "struct DaoAnalytics.Activity memory"
                                   }
                                 ],
                                 "expression": {
-                                  "id": 9964,
+                                  "id": 9985,
                                   "name": "transactions",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 9885,
+                                  "referencedDeclaration": 9906,
                                   "src": "1495:12:37",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                                    "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                                     "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                                   }
                                 },
-                                "id": 9966,
+                                "id": 9987,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -10290,11 +10290,11 @@
                                 "nodeType": "MemberAccess",
                                 "src": "1495:17:37",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9873_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$",
+                                  "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9894_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$",
                                   "typeString": "function (struct DaoAnalytics.Activity storage ref[] storage pointer,struct DaoAnalytics.Activity storage ref)"
                                 }
                               },
-                              "id": 9968,
+                              "id": 9989,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -10310,18 +10310,18 @@
                                 "typeString": "tuple()"
                               }
                             },
-                            "id": 9969,
+                            "id": 9990,
                             "nodeType": "ExpressionStatement",
                             "src": "1495:30:37"
                           }
                         ]
                       }
                     },
-                    "id": 9988,
+                    "id": 10009,
                     "nodeType": "IfStatement",
                     "src": "1378:314:37",
                     "trueBody": {
-                      "id": 9960,
+                      "id": 9981,
                       "nodeType": "Block",
                       "src": "1401:50:37",
                       "statements": [
@@ -10329,14 +10329,14 @@
                           "expression": {
                             "arguments": [
                               {
-                                "id": 9957,
+                                "id": 9978,
                                 "name": "newActivity",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 9935,
+                                "referencedDeclaration": 9956,
                                 "src": "1427:11:37",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                  "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                   "typeString": "struct DaoAnalytics.Activity memory"
                                 }
                               }
@@ -10344,23 +10344,23 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                  "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                   "typeString": "struct DaoAnalytics.Activity memory"
                                 }
                               ],
                               "expression": {
-                                "id": 9954,
+                                "id": 9975,
                                 "name": "votes",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 9881,
+                                "referencedDeclaration": 9902,
                                 "src": "1416:5:37",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                                  "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                                   "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                                 }
                               },
-                              "id": 9956,
+                              "id": 9977,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -10370,11 +10370,11 @@
                               "nodeType": "MemberAccess",
                               "src": "1416:10:37",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9873_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$",
+                                "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9894_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$",
                                 "typeString": "function (struct DaoAnalytics.Activity storage ref[] storage pointer,struct DaoAnalytics.Activity storage ref)"
                               }
                             },
-                            "id": 9958,
+                            "id": 9979,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -10390,18 +10390,18 @@
                               "typeString": "tuple()"
                             }
                           },
-                          "id": 9959,
+                          "id": 9980,
                           "nodeType": "ExpressionStatement",
                           "src": "1416:23:37"
                         }
                       ]
                     }
                   },
-                  "id": 9989,
+                  "id": 10010,
                   "nodeType": "IfStatement",
                   "src": "1295:397:37",
                   "trueBody": {
-                    "id": 9950,
+                    "id": 9971,
                     "nodeType": "Block",
                     "src": "1318:54:37",
                     "statements": [
@@ -10409,14 +10409,14 @@
                         "expression": {
                           "arguments": [
                             {
-                              "id": 9947,
+                              "id": 9968,
                               "name": "newActivity",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 9935,
+                              "referencedDeclaration": 9956,
                               "src": "1348:11:37",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                 "typeString": "struct DaoAnalytics.Activity memory"
                               }
                             }
@@ -10424,23 +10424,23 @@
                           "expression": {
                             "argumentTypes": [
                               {
-                                "typeIdentifier": "t_struct$_Activity_$9873_memory_ptr",
+                                "typeIdentifier": "t_struct$_Activity_$9894_memory_ptr",
                                 "typeString": "struct DaoAnalytics.Activity memory"
                               }
                             ],
                             "expression": {
-                              "id": 9944,
+                              "id": 9965,
                               "name": "proposals",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 9877,
+                              "referencedDeclaration": 9898,
                               "src": "1333:9:37",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                                "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                                 "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                               }
                             },
-                            "id": 9946,
+                            "id": 9967,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -10450,11 +10450,11 @@
                             "nodeType": "MemberAccess",
                             "src": "1333:14:37",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9873_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr_$",
+                              "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$_t_struct$_Activity_$9894_storage_$returns$__$bound_to$_t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr_$",
                               "typeString": "function (struct DaoAnalytics.Activity storage ref[] storage pointer,struct DaoAnalytics.Activity storage ref)"
                             }
                           },
-                          "id": 9948,
+                          "id": 9969,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -10470,7 +10470,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 9949,
+                        "id": 9970,
                         "nodeType": "ExpressionStatement",
                         "src": "1333:27:37"
                       }
@@ -10481,11 +10481,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 9991,
+                        "id": 10012,
                         "name": "activityType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9914,
+                        "referencedDeclaration": 9935,
                         "src": "1721:12:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -10493,11 +10493,11 @@
                         }
                       },
                       {
-                        "id": 9992,
+                        "id": 10013,
                         "name": "timestamp",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9929,
+                        "referencedDeclaration": 9950,
                         "src": "1735:9:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -10505,11 +10505,11 @@
                         }
                       },
                       {
-                        "id": 9993,
+                        "id": 10014,
                         "name": "description",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9916,
+                        "referencedDeclaration": 9937,
                         "src": "1746:11:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -10532,18 +10532,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 9990,
+                      "id": 10011,
                       "name": "NewActivity",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 9897,
+                      "referencedDeclaration": 9918,
                       "src": "1709:11:37",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (uint256,uint256,string memory)"
                       }
                     },
-                    "id": 9994,
+                    "id": 10015,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -10559,14 +10559,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 9995,
+                  "id": 10016,
                   "nodeType": "EmitStatement",
                   "src": "1704:54:37"
                 }
               ]
             },
             "functionSelector": "2143c4a0",
-            "id": 9997,
+            "id": 10018,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -10574,17 +10574,17 @@
             "nameLocation": "991:11:37",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 9917,
+              "id": 9938,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 9914,
+                  "id": 9935,
                   "mutability": "mutable",
                   "name": "activityType",
                   "nameLocation": "1021:12:37",
                   "nodeType": "VariableDeclaration",
-                  "scope": 9997,
+                  "scope": 10018,
                   "src": "1013:20:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -10593,7 +10593,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 9913,
+                    "id": 9934,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1013:7:37",
@@ -10606,12 +10606,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 9916,
+                  "id": 9937,
                   "mutability": "mutable",
                   "name": "description",
                   "nameLocation": "1058:11:37",
                   "nodeType": "VariableDeclaration",
-                  "scope": 9997,
+                  "scope": 10018,
                   "src": "1044:25:37",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -10620,7 +10620,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 9915,
+                    "id": 9936,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1044:6:37",
@@ -10635,12 +10635,12 @@
               "src": "1002:74:37"
             },
             "returnParameters": {
-              "id": 9918,
+              "id": 9939,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1086:0:37"
             },
-            "scope": 10099,
+            "scope": 10120,
             "src": "982:784:37",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -10648,23 +10648,23 @@
           },
           {
             "body": {
-              "id": 10044,
+              "id": 10065,
               "nodeType": "Block",
               "src": "1913:248:37",
               "statements": [
                 {
                   "assignments": [
-                    10007
+                    10028
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 10007,
+                      "id": 10028,
                       "mutability": "mutable",
                       "name": "counts",
                       "nameLocation": "1941:6:37",
                       "nodeType": "VariableDeclaration",
-                      "scope": 10044,
+                      "scope": 10065,
                       "src": "1924:23:37",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -10674,7 +10674,7 @@
                       },
                       "typeName": {
                         "baseType": {
-                          "id": 10005,
+                          "id": 10026,
                           "name": "uint256",
                           "nodeType": "ElementaryTypeName",
                           "src": "1924:7:37",
@@ -10683,7 +10683,7 @@
                             "typeString": "uint256"
                           }
                         },
-                        "id": 10006,
+                        "id": 10027,
                         "nodeType": "ArrayTypeName",
                         "src": "1924:9:37",
                         "typeDescriptions": {
@@ -10694,12 +10694,12 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 10013,
+                  "id": 10034,
                   "initialValue": {
                     "arguments": [
                       {
                         "hexValue": "34",
-                        "id": 10011,
+                        "id": 10032,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10721,7 +10721,7 @@
                           "typeString": "int_const 4"
                         }
                       ],
-                      "id": 10010,
+                      "id": 10031,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -10734,7 +10734,7 @@
                       },
                       "typeName": {
                         "baseType": {
-                          "id": 10008,
+                          "id": 10029,
                           "name": "uint256",
                           "nodeType": "ElementaryTypeName",
                           "src": "1954:7:37",
@@ -10743,7 +10743,7 @@
                             "typeString": "uint256"
                           }
                         },
-                        "id": 10009,
+                        "id": 10030,
                         "nodeType": "ArrayTypeName",
                         "src": "1954:9:37",
                         "typeDescriptions": {
@@ -10752,7 +10752,7 @@
                         }
                       }
                     },
-                    "id": 10012,
+                    "id": 10033,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -10773,28 +10773,28 @@
                 },
                 {
                   "expression": {
-                    "id": 10019,
+                    "id": 10040,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 10014,
+                        "id": 10035,
                         "name": "counts",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 10007,
+                        "referencedDeclaration": 10028,
                         "src": "1977:6:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                           "typeString": "uint256[] memory"
                         }
                       },
-                      "id": 10016,
+                      "id": 10037,
                       "indexExpression": {
                         "hexValue": "30",
-                        "id": 10015,
+                        "id": 10036,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10823,18 +10823,18 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 10017,
+                        "id": 10038,
                         "name": "proposals",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9877,
+                        "referencedDeclaration": 9898,
                         "src": "1989:9:37",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                           "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                         }
                       },
-                      "id": 10018,
+                      "id": 10039,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -10854,34 +10854,34 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 10020,
+                  "id": 10041,
                   "nodeType": "ExpressionStatement",
                   "src": "1977:28:37"
                 },
                 {
                   "expression": {
-                    "id": 10026,
+                    "id": 10047,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 10021,
+                        "id": 10042,
                         "name": "counts",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 10007,
+                        "referencedDeclaration": 10028,
                         "src": "2016:6:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                           "typeString": "uint256[] memory"
                         }
                       },
-                      "id": 10023,
+                      "id": 10044,
                       "indexExpression": {
                         "hexValue": "31",
-                        "id": 10022,
+                        "id": 10043,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10910,18 +10910,18 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 10024,
+                        "id": 10045,
                         "name": "votes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9881,
+                        "referencedDeclaration": 9902,
                         "src": "2028:5:37",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                           "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                         }
                       },
-                      "id": 10025,
+                      "id": 10046,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -10941,34 +10941,34 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 10027,
+                  "id": 10048,
                   "nodeType": "ExpressionStatement",
                   "src": "2016:24:37"
                 },
                 {
                   "expression": {
-                    "id": 10033,
+                    "id": 10054,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 10028,
+                        "id": 10049,
                         "name": "counts",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 10007,
+                        "referencedDeclaration": 10028,
                         "src": "2051:6:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                           "typeString": "uint256[] memory"
                         }
                       },
-                      "id": 10030,
+                      "id": 10051,
                       "indexExpression": {
                         "hexValue": "32",
-                        "id": 10029,
+                        "id": 10050,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10997,18 +10997,18 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 10031,
+                        "id": 10052,
                         "name": "transactions",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9885,
+                        "referencedDeclaration": 9906,
                         "src": "2063:12:37",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                           "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                         }
                       },
-                      "id": 10032,
+                      "id": 10053,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -11028,34 +11028,34 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 10034,
+                  "id": 10055,
                   "nodeType": "ExpressionStatement",
                   "src": "2051:31:37"
                 },
                 {
                   "expression": {
-                    "id": 10040,
+                    "id": 10061,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 10035,
+                        "id": 10056,
                         "name": "counts",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 10007,
+                        "referencedDeclaration": 10028,
                         "src": "2093:6:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                           "typeString": "uint256[] memory"
                         }
                       },
-                      "id": 10037,
+                      "id": 10058,
                       "indexExpression": {
                         "hexValue": "33",
-                        "id": 10036,
+                        "id": 10057,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -11084,18 +11084,18 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 10038,
+                        "id": 10059,
                         "name": "membershipChanges",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 9889,
+                        "referencedDeclaration": 9910,
                         "src": "2105:17:37",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                           "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                         }
                       },
-                      "id": 10039,
+                      "id": 10060,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -11115,32 +11115,32 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 10041,
+                  "id": 10062,
                   "nodeType": "ExpressionStatement",
                   "src": "2093:36:37"
                 },
                 {
                   "expression": {
-                    "id": 10042,
+                    "id": 10063,
                     "name": "counts",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 10007,
+                    "referencedDeclaration": 10028,
                     "src": "2147:6:37",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                       "typeString": "uint256[] memory"
                     }
                   },
-                  "functionReturnParameters": 10002,
-                  "id": 10043,
+                  "functionReturnParameters": 10023,
+                  "id": 10064,
                   "nodeType": "Return",
                   "src": "2140:13:37"
                 }
               ]
             },
             "functionSelector": "e9ae974e",
-            "id": 10045,
+            "id": 10066,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -11148,23 +11148,23 @@
             "nameLocation": "1852:17:37",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 9998,
+              "id": 10019,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1869:2:37"
             },
             "returnParameters": {
-              "id": 10002,
+              "id": 10023,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 10001,
+                  "id": 10022,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 10045,
+                  "scope": 10066,
                   "src": "1895:16:37",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -11174,7 +11174,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 9999,
+                      "id": 10020,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "1895:7:37",
@@ -11183,7 +11183,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 10000,
+                    "id": 10021,
                     "nodeType": "ArrayTypeName",
                     "src": "1895:9:37",
                     "typeDescriptions": {
@@ -11196,7 +11196,7 @@
               ],
               "src": "1894:18:37"
             },
-            "scope": 10099,
+            "scope": 10120,
             "src": "1843:318:37",
             "stateMutability": "view",
             "virtual": false,
@@ -11204,7 +11204,7 @@
           },
           {
             "body": {
-              "id": 10097,
+              "id": 10118,
               "nodeType": "Block",
               "src": "2341:554:37",
               "statements": [
@@ -11216,7 +11216,7 @@
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
                         },
-                        "id": 10061,
+                        "id": 10082,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -11226,17 +11226,17 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 10057,
+                          "id": 10078,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 10055,
+                            "id": 10076,
                             "name": "activityType",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 10047,
+                            "referencedDeclaration": 10068,
                             "src": "2374:12:37",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -11247,7 +11247,7 @@
                           "operator": ">=",
                           "rightExpression": {
                             "hexValue": "30",
-                            "id": 10056,
+                            "id": 10077,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -11274,17 +11274,17 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 10060,
+                          "id": 10081,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 10058,
+                            "id": 10079,
                             "name": "activityType",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 10047,
+                            "referencedDeclaration": 10068,
                             "src": "2395:12:37",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -11295,7 +11295,7 @@
                           "operator": "<=",
                           "rightExpression": {
                             "hexValue": "33",
-                            "id": 10059,
+                            "id": 10080,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -11323,7 +11323,7 @@
                       },
                       {
                         "hexValue": "496e76616c69642061637469766974792074797065",
-                        "id": 10062,
+                        "id": 10083,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -11349,7 +11349,7 @@
                           "typeString": "literal_string \"Invalid activity type\""
                         }
                       ],
-                      "id": 10054,
+                      "id": 10075,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -11363,7 +11363,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 10063,
+                    "id": 10084,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -11379,7 +11379,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 10064,
+                  "id": 10085,
                   "nodeType": "ExpressionStatement",
                   "src": "2352:109:37"
                 },
@@ -11389,17 +11389,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 10067,
+                    "id": 10088,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 10065,
+                      "id": 10086,
                       "name": "activityType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 10047,
+                      "referencedDeclaration": 10068,
                       "src": "2478:12:37",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -11410,7 +11410,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 10066,
+                      "id": 10087,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -11436,17 +11436,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 10073,
+                      "id": 10094,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-                        "id": 10071,
+                        "id": 10092,
                         "name": "activityType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 10047,
+                        "referencedDeclaration": 10068,
                         "src": "2550:12:37",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -11457,7 +11457,7 @@
                       "operator": "==",
                       "rightExpression": {
                         "hexValue": "31",
-                        "id": 10072,
+                        "id": 10093,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -11483,17 +11483,17 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 10079,
+                        "id": 10100,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 10077,
+                          "id": 10098,
                           "name": "activityType",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 10047,
+                          "referencedDeclaration": 10068,
                           "src": "2618:12:37",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -11504,7 +11504,7 @@
                         "operator": "==",
                         "rightExpression": {
                           "hexValue": "32",
-                          "id": 10078,
+                          "id": 10099,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -11530,17 +11530,17 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 10085,
+                          "id": 10106,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 10083,
+                            "id": 10104,
                             "name": "activityType",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 10047,
+                            "referencedDeclaration": 10068,
                             "src": "2693:12:37",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -11551,7 +11551,7 @@
                           "operator": "==",
                           "rightExpression": {
                             "hexValue": "33",
-                            "id": 10084,
+                            "id": 10105,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -11571,116 +11571,116 @@
                             "typeString": "bool"
                           }
                         },
-                        "id": 10089,
+                        "id": 10110,
                         "nodeType": "IfStatement",
                         "src": "2689:74:37",
                         "trueBody": {
-                          "id": 10088,
+                          "id": 10109,
                           "nodeType": "Block",
                           "src": "2712:51:37",
                           "statements": [
                             {
                               "expression": {
-                                "id": 10086,
+                                "id": 10107,
                                 "name": "membershipChanges",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 9889,
+                                "referencedDeclaration": 9910,
                                 "src": "2734:17:37",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                                  "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                                   "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                                 }
                               },
-                              "functionReturnParameters": 10053,
-                              "id": 10087,
+                              "functionReturnParameters": 10074,
+                              "id": 10108,
                               "nodeType": "Return",
                               "src": "2727:24:37"
                             }
                           ]
                         }
                       },
-                      "id": 10090,
+                      "id": 10111,
                       "nodeType": "IfStatement",
                       "src": "2614:149:37",
                       "trueBody": {
-                        "id": 10082,
+                        "id": 10103,
                         "nodeType": "Block",
                         "src": "2637:46:37",
                         "statements": [
                           {
                             "expression": {
-                              "id": 10080,
+                              "id": 10101,
                               "name": "transactions",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 9885,
+                              "referencedDeclaration": 9906,
                               "src": "2659:12:37",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                                "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                                 "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                               }
                             },
-                            "functionReturnParameters": 10053,
-                            "id": 10081,
+                            "functionReturnParameters": 10074,
+                            "id": 10102,
                             "nodeType": "Return",
                             "src": "2652:19:37"
                           }
                         ]
                       }
                     },
-                    "id": 10091,
+                    "id": 10112,
                     "nodeType": "IfStatement",
                     "src": "2546:217:37",
                     "trueBody": {
-                      "id": 10076,
+                      "id": 10097,
                       "nodeType": "Block",
                       "src": "2569:39:37",
                       "statements": [
                         {
                           "expression": {
-                            "id": 10074,
+                            "id": 10095,
                             "name": "votes",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 9881,
+                            "referencedDeclaration": 9902,
                             "src": "2591:5:37",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                              "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                               "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                             }
                           },
-                          "functionReturnParameters": 10053,
-                          "id": 10075,
+                          "functionReturnParameters": 10074,
+                          "id": 10096,
                           "nodeType": "Return",
                           "src": "2584:12:37"
                         }
                       ]
                     }
                   },
-                  "id": 10092,
+                  "id": 10113,
                   "nodeType": "IfStatement",
                   "src": "2474:289:37",
                   "trueBody": {
-                    "id": 10070,
+                    "id": 10091,
                     "nodeType": "Block",
                     "src": "2497:43:37",
                     "statements": [
                       {
                         "expression": {
-                          "id": 10068,
+                          "id": 10089,
                           "name": "proposals",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 9877,
+                          "referencedDeclaration": 9898,
                           "src": "2519:9:37",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage",
+                            "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage",
                             "typeString": "struct DaoAnalytics.Activity storage ref[] storage ref"
                           }
                         },
-                        "functionReturnParameters": 10053,
-                        "id": 10069,
+                        "functionReturnParameters": 10074,
+                        "id": 10090,
                         "nodeType": "Return",
                         "src": "2512:16:37"
                       }
@@ -11692,7 +11692,7 @@
                     "arguments": [
                       {
                         "hexValue": "496e76616c69642061637469766974792074797065",
-                        "id": 10094,
+                        "id": 10115,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -11714,7 +11714,7 @@
                           "typeString": "literal_string \"Invalid activity type\""
                         }
                       ],
-                      "id": 10093,
+                      "id": 10114,
                       "name": "revert",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -11728,7 +11728,7 @@
                         "typeString": "function (string memory) pure"
                       }
                     },
-                    "id": 10095,
+                    "id": 10116,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -11744,14 +11744,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 10096,
+                  "id": 10117,
                   "nodeType": "ExpressionStatement",
                   "src": "2856:31:37"
                 }
               ]
             },
             "functionSelector": "c68588db",
-            "id": 10098,
+            "id": 10119,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -11759,17 +11759,17 @@
             "nameLocation": "2242:18:37",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 10048,
+              "id": 10069,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 10047,
+                  "id": 10068,
                   "mutability": "mutable",
                   "name": "activityType",
                   "nameLocation": "2279:12:37",
                   "nodeType": "VariableDeclaration",
-                  "scope": 10098,
+                  "scope": 10119,
                   "src": "2271:20:37",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -11778,7 +11778,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 10046,
+                    "id": 10067,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2271:7:37",
@@ -11793,50 +11793,50 @@
               "src": "2260:38:37"
             },
             "returnParameters": {
-              "id": 10053,
+              "id": 10074,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 10052,
+                  "id": 10073,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 10098,
+                  "scope": 10119,
                   "src": "2322:17:37",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Activity_$9873_memory_ptr_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Activity_$9894_memory_ptr_$dyn_memory_ptr",
                     "typeString": "struct DaoAnalytics.Activity[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 10050,
+                      "id": 10071,
                       "nodeType": "UserDefinedTypeName",
                       "pathNode": {
-                        "id": 10049,
+                        "id": 10070,
                         "name": "Activity",
                         "nameLocations": [
                           "2322:8:37"
                         ],
                         "nodeType": "IdentifierPath",
-                        "referencedDeclaration": 9873,
+                        "referencedDeclaration": 9894,
                         "src": "2322:8:37"
                       },
-                      "referencedDeclaration": 9873,
+                      "referencedDeclaration": 9894,
                       "src": "2322:8:37",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Activity_$9873_storage_ptr",
+                        "typeIdentifier": "t_struct$_Activity_$9894_storage_ptr",
                         "typeString": "struct DaoAnalytics.Activity"
                       }
                     },
-                    "id": 10051,
+                    "id": 10072,
                     "nodeType": "ArrayTypeName",
                     "src": "2322:10:37",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Activity_$9873_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Activity_$9894_storage_$dyn_storage_ptr",
                       "typeString": "struct DaoAnalytics.Activity[]"
                     }
                   },
@@ -11845,14 +11845,14 @@
               ],
               "src": "2321:19:37"
             },
-            "scope": 10099,
+            "scope": 10120,
             "src": "2233:662:37",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 10100,
+        "scope": 10121,
         "src": "184:2714:37",
         "usedErrors": []
       }
@@ -11865,7 +11865,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-27T02:44:10.598Z",
+  "updatedAt": "2023-10-28T01:20:25.369Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
