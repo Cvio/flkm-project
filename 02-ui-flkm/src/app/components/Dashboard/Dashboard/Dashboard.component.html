@@ -6,6 +6,7 @@
     <p>Name: {{ userName || "J" }}</p>
     <p>Email: {{ userEmail || "Doe" }}</p>
     <p>Balance: {{ accountBalance || "Zero!" }} &#x210F;</p>
+    <p>Reputation: {{ userReputation || "Not available" }}</p>
   </div>
   <div class="navigation">
     <button (click)="createProject()">Create Project</button>

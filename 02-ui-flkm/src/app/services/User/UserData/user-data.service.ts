@@ -3,12 +3,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs/operators';
+import Web3 from 'web3';
+import { Web3Service } from '../../Web3/web3.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient, private router: Router) {}
+  private web3: Web3; // Web3 instance
+  private contract: any; // contract variable
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private web3Service: Web3Service
+  ) {
+    this.web3 = new Web3(Web3.givenProvider || 'ws://127.0.0.1:7545');
+    // import smart contract
+    const contractArtifact = require('../../../../../../build/contracts/ReputationNFT.json');
+    // smart contract ABI and address
+    const contractABI = contractArtifact.abi;
+    const contractAddress = '0xcFD44D960dFEE1B202CF9915b4350E856E81752f';
+    this.contract = new this.web3.eth.Contract(contractABI, contractAddress);
+  }
 
   getUserData(): Observable<any> {
     // Retrieve the token from localStorage
@@ -48,6 +65,17 @@ export class UserService {
     });
 
     return this.http.get<any>('http://localhost:3000/api/user-projects');
+  }
+  // async fetchUserReputation(userAddress: string): Promise<any> {
+  //   return await this.contract.methods
+  //     .showUserReputationLevel(userAddress)
+  //     .call();
+  // }
+
+  // New method to fetch user reputation from blockchain
+  async fetchUserReputation(userAddress: string): Promise<any> {
+    const contract = await this.web3Service.getContractInstance(); // Assuming you have a method to get contract instance
+    return await contract.methods.showUserReputationLevel(userAddress).call();
   }
 
   logOut() {

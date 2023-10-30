@@ -14,19 +14,12 @@
 // let newBalance = await instance.balanceOf("0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08");
 // console.log("New Balance: ", newBalance.toString());
 
-// await instance.grantRole(
-//   web3.utils.soliditySha3("MINTER_ROLE"),
-//   "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08",
-//   { from: "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08" }
-// );
+// await instance.grantRole(web3.utils.soliditySha3("MINTER_ROLE"),"0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08",{ from: "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08" });
 
-// await instance.hasRole(
-//   web3.utils.soliditySha3("ADMIN_ROLE"),
-//   "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08"
-// );
+// await instance.hasRole(web3.utils.soliditySha3("ADMIN_ROLE"),"0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08");
+
+// let instance = await ReputationNFT.at("0x723Bf430C887376f4a2E49B1991C9ce44666548A");
 
 // await instance.mintNFT("0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08");
 
-// await instance.getUserReputationLevel(
-//   "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08"
-// );
+// await instance.showUserReputationLevel("0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08");

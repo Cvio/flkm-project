@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from '../../../services/Authentication/Registration/registration.service';
 import { Router } from '@angular/router';
+import { Web3Service } from '../../../services/Web3/web3.service';
 
 @Component({
   selector: 'app-registration',
@@ -19,13 +20,20 @@ export class RegistrationComponent implements OnInit {
   registrationSuccess: boolean = false;
   registrationError: string | null = null;
 
+  public account!: string;
+
   constructor(
     private fb: FormBuilder,
     private registrationService: RegistrationService,
-    private router: Router
+    private router: Router,
+    private web3Service: Web3Service
   ) {}
 
-  ngOnInit(): void {}
+  async ngOnInit() {
+    const accounts = await this.web3Service.getAccounts();
+    // this.account = accounts[0];
+    this.account = '0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08';
+  }
 
   onSubmit() {
     if (this.registrationForm.valid) {

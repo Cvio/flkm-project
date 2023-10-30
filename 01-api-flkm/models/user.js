@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   emailVerificationToken: { type: String, unique: true, sparse: true }, // sparse: true allows multiple documents without a token
   emailVerified: { type: Boolean, default: false },
   emailVerificationTokenExpiresAt: { type: Date, default: undefined },
+  ethereumAddress: { type: String, unique: true, sparse: true },
 });
 
 // Hash the password before saving

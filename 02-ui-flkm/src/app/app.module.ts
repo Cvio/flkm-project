@@ -17,6 +17,7 @@ import { UploadResourceComponent } from './components/Marketplace/UploadResource
 import { ModelUploadComponent } from './components/Model/ModelUpload/model-upload.component';
 import { ModelListComponent } from './components/Model/ModelList/model-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Web3Component } from './components/Web3/web3/web3.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UploadResourceComponent,
     ModelUploadComponent,
     ModelListComponent,
+    Web3Component,
   ],
   imports: [
     BrowserModule,

@@ -3,21 +3,35 @@ const express = require("express");
 const crypto = require("crypto"); // Required for generating tokens
 const bcrypt = require("bcrypt"); // Required for password hashing
 const jwt = require("jsonwebtoken");
+
 const authenticate = require("../auth/auth-middleware");
 const User = require("../models/user"); // Import your User model
 const Project = require("../models/project");
 
+// this is ridiculous - find out why this has to be wrapped to work
+const { Web3 } = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+
 const authRoutes = express.Router();
 
-// Test endpoint
+// test endpoint
 authRoutes.get("/auth-test", (req, res) => {
   res.send("Hello, auth!");
 });
 
 // Authentication & User Management API Endpoints
 authRoutes.post("/register", async (req, res) => {
+  // import smart contract
+  const contractArtifact = require("../../build/contracts/ReputationNFT.json");
+  // smart contract ABI and address
+  const contractABI = contractArtifact.abi;
+  const contractAddress = "0xcFD44D960dFEE1B202CF9915b4350E856E81752f";
+  const userAddress = "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08";
+  // Init contract
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, ethereumAddress } = req.body;
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,27 +43,51 @@ authRoutes.post("/register", async (req, res) => {
 
     const { sendVerificationEmail } = require("../services/email-service");
 
-    // Create a new user document
+    // create a new user
     const user = new User({
       username,
       email,
       password: hashedPassword,
       emailVerificationToken,
+      ethereumAddress: "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08",
     });
+
+    // validate the ethereum address
+    if (
+      !user.ethereumAddress ||
+      !/^0x[a-fA-F0-9]{40}$/.test(user.ethereumAddress)
+    ) {
+      return res.status(400).json({ message: "Invalid Ethereum address" });
+    }
 
     await user.save();
 
     // Send verification email
     sendVerificationEmail(email, emailVerificationToken);
+    try {
+      // Mint NFT after successful registration
+      const mintTx = await contract.methods
+        .mintNFT(userAddress)
+        .send({ from: userAddress });
 
+      // Log the transaction hash and owner address to the console
+      console.log("Mint Transaction:", mintTx.transactionHash);
+      console.log("Owner Address:", userAddress);
+    } catch (error) {
+      console.log("testing");
+    }
+
+    // Send a single response
     res.status(201).json({
-      message: "User registered successfully. Please verify your email.",
+      message: "User registered and NFT minted successfully.",
+      //mintTransaction: mintTx.transactionHash,
+      ownerAddress: userAddress,
     });
   } catch (error) {
-    console.error("Error registering user:", error);
+    console.error("Error:", error);
     res
       .status(500)
-      .json({ message: "Error registering user", error: error.message });
+      .json({ message: "An error occurred", error: error.message });
   }
 });
 
