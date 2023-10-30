@@ -1,4 +1,4 @@
-# **CowlDAO Knowledge Exchange: Comprehensive Ecosystem Overview**
+# **CowlDAO Federated Learning Marketplace: Comprehensive Ecosystem Overview**
 
 ## **1. Introduction:**
 
