@@ -18,6 +18,7 @@ import { ModelUploadComponent } from './components/Model/ModelUpload/model-uploa
 import { ModelListComponent } from './components/Model/ModelList/model-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Web3Component } from './components/Web3/web3/web3.component';
+import { UserDataComponent } from './components/User/UserData/user-data/user-data.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { Web3Component } from './components/Web3/web3/web3.component';
     ModelUploadComponent,
     ModelListComponent,
     Web3Component,
+    UserDataComponent,
   ],
   imports: [
     BrowserModule,

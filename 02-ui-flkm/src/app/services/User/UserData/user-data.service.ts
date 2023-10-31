@@ -78,6 +78,26 @@ export class UserService {
     return await contract.methods.showUserReputationLevel(userAddress).call();
   }
 
+  async mintNFT(cid: string): Promise<boolean> {
+    try {
+      const accounts = await this.web3Service.getAccounts();
+      const userAddress = accounts[0]; // Assuming the user's address is the first one
+      const contract = this.web3Service.getContractInstance();
+
+      // Call the smart contract function to mint the NFT
+      // Replace 'mintNFT' with the actual function name in your smart contract
+      // and add any additional arguments that the function requires
+      await contract.methods
+        .mintNFT(userAddress, cid)
+        .send({ from: userAddress });
+
+      return true;
+    } catch (error) {
+      console.error('Error minting NFT:', error);
+      return false;
+    }
+  }
+
   logOut() {
     localStorage.removeItem('authToken');
     this.router.navigate(['/api/login']);

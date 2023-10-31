@@ -33815,12 +33815,12 @@
         }
       },
       "links": {},
-      "address": "0x9af26b2accC5e237d228478BB48b8d88f2eec32d",
-      "transactionHash": "0xf52f29631e3fb29835a7180cd3802bb75bf69a0060fd663765431ad670d8c069"
+      "address": "0x949FD4a1F67ABa4565Ec22E6384C1ea11a5af934",
+      "transactionHash": "0x34d604f89e90776efc54b4e606c9d572bc17bd02b2d6e1fa0dc5e44ff581a27a"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-30T01:13:23.057Z",
+  "updatedAt": "2023-10-31T03:12:02.597Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Contract for decentralized autonomous organization.",

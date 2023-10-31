@@ -32500,12 +32500,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xE093553461d350660eCffd03667c40eDE2a2299F",
-      "transactionHash": "0x9dce187c0885552c9d55ba0b00cc9f32f0fba1209a78897a24e71c5b002731d1"
+      "address": "0xF1bD5528ce84D9F4aD40A2Eec6A005503005e5B2",
+      "transactionHash": "0xd9f06fa588711111a46d0a0af961f0a2b3144304e360d96adfecb4dafeaee65f"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-30T01:13:24.152Z",
+  "updatedAt": "2023-10-31T03:12:03.779Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "This contract manages the staking, proposals, delegations, and governance levels of the token holders.",

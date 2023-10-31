@@ -8,6 +8,9 @@
     <p>Balance: {{ accountBalance || "Zero!" }} &#x210F;</p>
     <p>Reputation: {{ userReputation || "Not available" }}</p>
   </div>
+  <div *ngIf="nftImageURI">
+    <img [src]="nftImageURI" alt="NFT Image" width="100" />
+  </div>
   <div class="navigation">
     <button (click)="createProject()">Create Project</button>
     <button (click)="navigateToUploadResource()">Upload Resource</button>

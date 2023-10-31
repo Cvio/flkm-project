@@ -1,11 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
+
 import "./CowlMarketplaceBase.sol";
 
-contract ReputationNFT is ERC721Upgradeable, AccessControlUpgradeable {
+contract ReputationNFT is
+    ERC721Upgradeable,
+    ERC721URIStorageUpgradeable,
+    AccessControlUpgradeable
+{
     CowlMarketplaceBase public marketplaceContract; // Reference to the FederatedMarketplace
 
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
@@ -26,7 +32,11 @@ contract ReputationNFT is ERC721Upgradeable, AccessControlUpgradeable {
     )
         public
         view
-        override(ERC721Upgradeable, AccessControlUpgradeable)
+        override(
+            ERC721Upgradeable,
+            ERC721URIStorageUpgradeable,
+            AccessControlUpgradeable
+        )
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
@@ -46,13 +56,37 @@ contract ReputationNFT is ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     // Function to mint an NFT based on a user's reputation level
-    function mintNFT(address user) external onlyRole(ADMIN_ROLE) {
+    function mintNFT(
+        address user,
+        string memory tokenURI
+    ) external onlyRole(ADMIN_ROLE) {
         // Check the user's reputation level
         CowlMarketplaceBase.ReputationLevel level = getUserReputationLevel(
             user
         );
 
         // Mint an NFT based on the user's reputation level
-        _safeMint(user, uint256(level));
+        uint256 tokenId = uint256(level);
+        _safeMint(user, tokenId);
+
+        // Set the token URI (IPFS CID)
+        _setTokenURI(tokenId, tokenURI);
+    }
+
+    function _burn(
+        uint256 tokenId
+    ) internal override(ERC721Upgradeable, ERC721URIStorageUpgradeable) {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(
+        uint256 tokenId
+    )
+        public
+        view
+        override(ERC721Upgradeable, ERC721URIStorageUpgradeable)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
     }
 }
