@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/User/UserData/user-data.service';
-
-import { createHelia } from 'helia';
-const helia = await createHelia();
+import IPFS from 'ipfs';
 
 @Component({
   selector: 'app-user-data',
@@ -11,10 +9,13 @@ const helia = await createHelia();
 })
 export class UserDataComponent implements OnInit {
   selectedFile: File | null = null;
+  private ipfsNode: any;
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): void {}
+  async ngOnInit(): Promise<void> {
+    this.ipfsNode = await IPFS.create();
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -26,9 +27,9 @@ export class UserDataComponent implements OnInit {
 
   async uploadToIPFS(file: File): Promise<string> {
     try {
-      const helia = await createHelia(); // Create a Helia instance
-      // const added = await helia.add(file); // Add the file to IPFS
-      // return added.path; // Return the CID
+      const fileBuffer = await file.arrayBuffer();
+      const result = await this.ipfsNode.add(fileBuffer);
+      return result.cid.toString();
     } catch (error) {
       console.error('Error uploading to IPFS:', error);
       return '';
