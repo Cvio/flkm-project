@@ -42,5 +42,8 @@
     "truffle-hdwallet-provider": "^1.0.17",
     "uuid": "^9.0.1",
     "web3": "^4.2.1"
+  },
+  "devDependencies": {
+    "@angular/cli": "^16.2.8"
   }
 }
