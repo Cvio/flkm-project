@@ -58,7 +58,7 @@ contract ReputationNFT is
     // Function to mint an NFT based on a user's reputation level
     function mintNFT(
         address user,
-        string memory tokenURI
+        string memory tokenPath
     ) external onlyRole(ADMIN_ROLE) {
         // Check the user's reputation level
         CowlMarketplaceBase.ReputationLevel level = getUserReputationLevel(
@@ -70,7 +70,7 @@ contract ReputationNFT is
         _safeMint(user, tokenId);
 
         // Set the token URI (IPFS CID)
-        _setTokenURI(tokenId, tokenURI);
+        _setTokenURI(tokenId, tokenPath);
     }
 
     function _burn(
