@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   projectName: string | undefined;
   description: string | undefined;
   dataset: string | undefined;
+  nftImageURI: string | undefined;
 
   constructor(
     private UserService: UserService,
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
         this.userEmail = this.userData.email;
         this.accountBalance = this.userData.hbarBalance;
         this.fetchUserReputation();
+        this.fetchNFTImage();
 
         this.projectData = response.userProjects;
         if (this.projectData && this.projectData.length > 0) {
@@ -94,6 +96,11 @@ export class DashboardComponent implements OnInit {
       console.error('Error fetching user reputation:', error);
       this.userReputation = 'Error fetching reputation';
     }
+  }
+
+  async fetchNFTImage() {
+    const userAddress = '0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08'; // Replace with dynamic address later
+    this.nftImageURI = await this.web3Service.fetchTokenURI(userAddress);
   }
 
   mapReputationToLevel(reputation: number): string {

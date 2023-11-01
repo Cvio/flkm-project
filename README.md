@@ -1,8 +1,8 @@
-# **CowlDAO Knowledge Exchange: Comprehensive Ecosystem Overview**
+# **CowlDAO Federated Learning Marketplace: Comprehensive Ecosystem Overview**
 
 ## **1. Introduction:**
 
-The CowlDAO Knowledge Exchange ecosystem is a visionary endeavor to revolutionize how knowledge is shared, accessed, and valued, leveraging cutting-edge blockchain technology. This document is a comprehensive detailing of the myriad components, dynamics, interactions, and the inherent synergies embedded within the ecosystem, underscored by principles of transparency, fairness, value exchange, and robust community engagement.
+The CowlDAO Federated Learning Marketplace ecosystem is a visionary endeavor to revolutionize how knowledge is shared, accessed, and valued, leveraging cutting-edge blockchain technology. This document is a comprehensive detailing of the myriad components, dynamics, interactions, and the inherent synergies embedded within the ecosystem, underscored by principles of transparency, fairness, value exchange, and robust community engagement.
 
 ### 🌐 **Objective and Vision:**
 To revolutionize the data ecosystem by establishing **CowlDAO**, a secure, decentralized platform, enabling data owners and consumers to leverage advanced technologies for enhanced data utility, innovative learning methodologies, and value realization, thereby fueling advancements in multiple domains and fostering a harmonious and progressive decentralized environment.
