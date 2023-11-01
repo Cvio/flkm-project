@@ -18,7 +18,8 @@ declare var window: Window;
 })
 export class Web3Service {
   public web3: Web3;
-  private contractAddress = '0xcFD44D960dFEE1B202CF9915b4350E856E81752f'; // Replace with your contract address
+  //private contractAddress = '0xcFD44D960dFEE1B202CF9915b4350E856E81752f'; // Replace with your contract address
+  private contractAddress = '0xF6A99e00959191ea6461025Fc0839aEd8ce93D21';
   public contract: any;
 
   constructor() {

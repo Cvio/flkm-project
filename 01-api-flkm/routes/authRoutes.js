@@ -25,7 +25,8 @@ authRoutes.post("/register", async (req, res) => {
   const contractArtifact = require("../../build/contracts/ReputationNFT.json");
   // smart contract ABI and address
   const contractABI = contractArtifact.abi;
-  const contractAddress = "0xcFD44D960dFEE1B202CF9915b4350E856E81752f";
+  //const contractAddress = "0xcFD44D960dFEE1B202CF9915b4350E856E81752f"; //sar
+  const contractAddress = "0xF6A99e00959191ea6461025Fc0839aEd8ce93D21";
   const userAddress = "0xeB6B42BFA9BCB83a72453AA2ef4D414BB9848b08";
   // Init contract
   const contract = new web3.eth.Contract(contractABI, contractAddress);

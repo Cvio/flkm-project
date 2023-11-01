@@ -23,7 +23,8 @@ export class UserService {
     const contractArtifact = require('../../../../../../build/contracts/ReputationNFT.json');
     // smart contract ABI and address
     const contractABI = contractArtifact.abi;
-    const contractAddress = '0xcFD44D960dFEE1B202CF9915b4350E856E81752f';
+    //const contractAddress = '0xcFD44D960dFEE1B202CF9915b4350E856E81752f';
+    const contractAddress = '0xF6A99e00959191ea6461025Fc0839aEd8ce93D21';
     this.contract = new this.web3.eth.Contract(contractABI, contractAddress);
   }
 
