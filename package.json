@@ -13,7 +13,7 @@
     "@chainlink/contracts": "^0.8.0",
     "@chainlink/contracts-ccip": "^0.7.6",
     "@hashgraph/sdk": "^2.32.0",
-    "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/contracts": "^4.9.6",
     "@openzeppelin/contracts-upgradeable": "^4.9.3",
     "@openzeppelin/truffle-upgrades": "^1.21.0",
     "bcrypt": "^5.1.1",
